@@ -39,7 +39,7 @@ class DogLoaderTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
         
-        XCTAssertNil(client.requestedUrl)
+        XCTAssertTrue(client.requestedUrls.isEmpty)
     }
     
     func test_load_requestDataFromURL() {
@@ -48,7 +48,17 @@ class DogLoaderTests: XCTestCase {
         
         sut.load()
         
-        XCTAssertNotNil(client.requestedUrl)
+        XCTAssertEqual(client.requestedUrls, [url])
+    }
+    
+    func test_loadTwice_requestDataFromURLTwice() {
+        let url = URL(string: "http://test-url.com")!
+        let (sut, client) = makeSUT(url: url)
+        
+        sut.load()
+        sut.load()
+        
+        XCTAssertEqual(client.requestedUrls, [url, url])
     }
 
     // MARK: - Helpers
@@ -60,10 +70,10 @@ class DogLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var requestedUrl: URL?
+        var requestedUrls = [URL]()
         
         func get(from url: URL) {
-            self.requestedUrl = url
+            self.requestedUrls.append(url)
         }
     }
 
