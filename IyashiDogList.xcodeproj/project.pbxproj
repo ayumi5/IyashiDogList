@@ -13,7 +13,6 @@
 		DA370BA2278E7170002B2A91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA370BA0278E7170002B2A91 /* Main.storyboard */; };
 		DA370BA4278E7172002B2A91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA370BA3278E7172002B2A91 /* Assets.xcassets */; };
 		DA370BA7278E7172002B2A91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA370BA5278E7172002B2A91 /* LaunchScreen.storyboard */; };
-		DA370BB2278E7172002B2A91 /* IyashiDogListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BB1278E7172002B2A91 /* IyashiDogListTests.swift */; };
 		DA370BBC278E7172002B2A91 /* IyashiDogListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */; };
 		DA370BBE278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */; };
 		DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */; };
@@ -46,7 +45,6 @@
 		DA370BA6278E7172002B2A91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA370BA8278E7172002B2A91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA370BAD278E7172002B2A91 /* IyashiDogListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA370BB1278E7172002B2A91 /* IyashiDogListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListTests.swift; sourceTree = "<group>"; };
 		DA370BB7278E7172002B2A91 /* IyashiDogListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITests.swift; sourceTree = "<group>"; };
 		DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 		DA370BB0278E7172002B2A91 /* IyashiDogListTests */ = {
 			isa = PBXGroup;
 			children = (
-				DA370BB1278E7172002B2A91 /* IyashiDogListTests.swift */,
 				DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */,
 			);
 			path = IyashiDogListTests;
@@ -271,7 +268,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA370BB2278E7172002B2A91 /* IyashiDogListTests.swift in Sources */,
 				DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
