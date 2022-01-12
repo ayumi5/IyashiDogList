@@ -18,12 +18,14 @@ import XCTest
 
 class RemoteDogLoader {
     let client: HTTPClient
+    let url: URL
     
-    init(client: HTTPClient) {
+    init(client: HTTPClient, url: URL = URL(string: "http://url.com")!) {
         self.client = client
+        self.url = url
     }
     
-    func load(from url: URL) {
+    func load() {
         client.get(from: url)
     }
 }
@@ -45,8 +47,8 @@ class DogLoaderTests: XCTestCase {
     func test_load_requestDataFromURL() {
         let url = URL(string: "http://a-url.com")!
         let client = HTTPClientSpy()
-        let sut = RemoteDogLoader(client: client)
-        sut.load(from: url)
+        let sut = RemoteDogLoader(client: client, url: url)
+        sut.load()
         XCTAssertNotNil(client.requestedUrl)
     }
 }
