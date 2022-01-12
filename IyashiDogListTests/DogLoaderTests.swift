@@ -30,10 +30,8 @@ class RemoteDogLoader {
     }
 }
 
-class HTTPClient {
-    func get(from url: URL) {
-    }
-    
+protocol HTTPClient {
+    func get(from url: URL)
 }
 
 class DogLoaderTests: XCTestCase {
@@ -56,7 +54,7 @@ class DogLoaderTests: XCTestCase {
 private class HTTPClientSpy: HTTPClient {
     var requestedUrl: URL?
     
-    override func get(from url: URL) {
+    func get(from url: URL) {
         self.requestedUrl = url
     }
 }
