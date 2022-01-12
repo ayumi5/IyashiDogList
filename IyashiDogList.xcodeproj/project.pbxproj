@@ -16,6 +16,7 @@
 		DA370BB2278E7172002B2A91 /* IyashiDogListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BB1278E7172002B2A91 /* IyashiDogListTests.swift */; };
 		DA370BBC278E7172002B2A91 /* IyashiDogListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */; };
 		DA370BBE278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */; };
+		DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		DA370BB7278E7172002B2A91 /* IyashiDogListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITests.swift; sourceTree = "<group>"; };
 		DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				DA370BB1278E7172002B2A91 /* IyashiDogListTests.swift */,
+				DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */,
 			);
 			path = IyashiDogListTests;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA370BB2278E7172002B2A91 /* IyashiDogListTests.swift in Sources */,
+				DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
