@@ -37,24 +37,34 @@ protocol HTTPClient {
 class DogLoaderTests: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy()
-        let _ = RemoteDogLoader(client: client)
+        let (_, client) = makeSUT()
+        
         XCTAssertNil(client.requestedUrl)
     }
     
     func test_load_requestDataFromURL() {
-        let url = URL(string: "http://a-url.com")!
-        let client = HTTPClientSpy()
-        let sut = RemoteDogLoader(client: client, url: url)
+        let url = URL(string: "http://test-url.com")!
+        let (sut, client) = makeSUT(url: url)
+        
         sut.load()
+        
         XCTAssertNotNil(client.requestedUrl)
     }
-}
 
-private class HTTPClientSpy: HTTPClient {
-    var requestedUrl: URL?
+    // MARK: - Helpers
     
-    func get(from url: URL) {
-        self.requestedUrl = url
+    private func makeSUT(url: URL = URL(string: "http://a-url.com")!) -> (sut: RemoteDogLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteDogLoader(client: client, url: url)
+        return (sut: sut, client: client)
     }
+    
+    private class HTTPClientSpy: HTTPClient {
+        var requestedUrl: URL?
+        
+        func get(from url: URL) {
+            self.requestedUrl = url
+        }
+    }
+
 }
