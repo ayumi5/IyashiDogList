@@ -43,6 +43,18 @@ class DogLoaderTests: XCTestCase {
         
         XCTAssertEqual(client.requestedUrls, [url, url])
     }
+    
+    func test_load_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        client.error = NSError(domain: "Test", code: 0)
+        var capturedError: RemoteDogLoader.Error?
+        
+        sut.load { error in
+            capturedError = error
+        }
+        
+        XCTAssertEqual(capturedError, .connectivity)
+    }
 
     // MARK: - Helpers
     
@@ -54,8 +66,11 @@ class DogLoaderTests: XCTestCase {
     
     private class HTTPClientSpy: HTTPClient {
         var requestedUrls = [URL]()
-        
-        func get(from url: URL) {
+        var error: Error?
+        func get(from url: URL, completion: @escaping (Error) -> Void) {
+            if let error = error {
+                completion(error)
+            }
             self.requestedUrls.append(url)
         }
     }
