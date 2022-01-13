@@ -65,16 +65,18 @@ class DogLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var requestedUrls = [URL]()
-        var completions = [(Error) -> Void]()
+        var messages =  [(url: URL, completion: (Error) -> Void)]()
+
+        var requestedUrls: [URL] {
+            return messages.map { $0.url }
+        }
         
         func get(from url: URL, completion: @escaping (Error) -> Void) {
-            self.completions.append(completion)
-            self.requestedUrls.append(url)
+            self.messages.append((url: url, completion: completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            self.completions[index](error)
+            self.messages[index].completion(error)
         }
     }
 }
