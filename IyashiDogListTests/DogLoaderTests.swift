@@ -55,6 +55,16 @@ class DogLoaderTests: XCTestCase {
 
         XCTAssertEqual(capturedErrors, [.connectivity])
     }
+    
+    func test_load_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        var capturedErrors = [RemoteDogLoader.Error]()
+        
+        sut.load { capturedErrors.append($0) }
+        client.complete(withStatusCode: 400)
+
+        XCTAssertEqual(capturedErrors, [.invalidData])
+    }
 
     // MARK: - Helpers
     
@@ -65,18 +75,27 @@ class DogLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var messages =  [(url: URL, completion: (Error) -> Void)]()
+        var messages =  [(url: URL, completion: (Error?, HTTPURLResponse?) -> Void)]()
 
         var requestedUrls: [URL] {
             return messages.map { $0.url }
         }
         
-        func get(from url: URL, completion: @escaping (Error) -> Void) {
+        func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void) {
             self.messages.append((url: url, completion: completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            self.messages[index].completion(error)
+            self.messages[index].completion(error, nil)
+        }
+        
+        func complete(withStatusCode: Int, at index: Int = 0) {
+            let response = HTTPURLResponse(
+                url: self.requestedUrls[index],
+                statusCode: 400,
+                httpVersion: nil,
+                headerFields: nil)
+            self.messages[index].completion(nil, response)
         }
     }
 }
