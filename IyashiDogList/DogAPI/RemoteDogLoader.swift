@@ -20,7 +20,7 @@ public final class RemoteDogLoader {
         self.url = url
     }
     
-    public func load(completion: @escaping (Error) -> Void = { _ in }) {
+    public func load(completion: @escaping (Error) -> Void) {
         client.get(from: url) { _ in
             completion(.connectivity)
         }

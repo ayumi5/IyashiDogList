@@ -29,7 +29,7 @@ class DogLoaderTests: XCTestCase {
         let url = URL(string: "http://test-url.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load()
+        sut.load { _ in }
         
         XCTAssertEqual(client.requestedUrls, [url])
     }
@@ -38,8 +38,8 @@ class DogLoaderTests: XCTestCase {
         let url = URL(string: "http://test-url.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load()
-        sut.load()
+        sut.load { _ in }
+        sut.load { _ in }
         
         XCTAssertEqual(client.requestedUrls, [url, url])
     }
