@@ -77,18 +77,18 @@ class DogLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        var messages =  [(url: URL, completion: (Error?, HTTPURLResponse?) -> Void)]()
+        var messages =  [(url: URL, completion: (HTTPClientResult?) -> Void)]()
 
         var requestedUrls: [URL] {
             return messages.map { $0.url }
         }
         
-        func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void) {
+        func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
             self.messages.append((url: url, completion: completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            self.messages[index].completion(error, nil)
+            self.messages[index].completion(.failure(error))
         }
         
         func complete(withStatusCode: Int, at index: Int = 0) {
@@ -96,8 +96,8 @@ class DogLoaderTests: XCTestCase {
                 url: self.requestedUrls[index],
                 statusCode: 400,
                 httpVersion: nil,
-                headerFields: nil)
-            self.messages[index].completion(nil, response)
+                headerFields: nil)!
+            self.messages[index].completion(.success(response))
         }
     }
 }

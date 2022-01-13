@@ -22,16 +22,26 @@ public final class RemoteDogLoader {
     }
     
     public func load(completion: @escaping (Error) -> Void) {
-        client.get(from: url) { _, response in
-            if let response = response, response.statusCode != 200 {
-                completion(.invalidData)
-            } else {
+        client.get(from: url) { result in
+            switch result {
+            case let .success(response):
+                if response.statusCode != 200 {
+                    completion(.invalidData)
+                }
+            case .failure:
                 completion(.connectivity)
+            default:
+                break
             }
         }
     }
 }
 
+public enum HTTPClientResult {
+    case success(HTTPURLResponse)
+    case failure(Error)
+}
+
 public protocol HTTPClient {
-    func get(from url: URL, completion: @escaping (Error?, HTTPURLResponse?) -> Void)
+    func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void)
 }
