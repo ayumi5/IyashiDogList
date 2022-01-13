@@ -16,6 +16,7 @@
 		DA370BBC278E7172002B2A91 /* IyashiDogListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */; };
 		DA370BBE278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */; };
 		DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */; };
+		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		DA370BBB278E7172002B2A91 /* IyashiDogListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITests.swift; sourceTree = "<group>"; };
 		DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoaderTests.swift; sourceTree = "<group>"; };
+		DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDogLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		DA370B99278E7170002B2A91 /* IyashiDogList */ = {
 			isa = PBXGroup;
 			children = (
+				DA370BCE278EB780002B2A91 /* DogAPI */,
 				DA370B9A278E7170002B2A91 /* AppDelegate.swift */,
 				DA370B9C278E7170002B2A91 /* SceneDelegate.swift */,
 				DA370B9E278E7170002B2A91 /* ViewController.swift */,
@@ -125,6 +128,14 @@
 				DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */,
 			);
 			path = IyashiDogListUITests;
+			sourceTree = "<group>";
+		};
+		DA370BCE278EB780002B2A91 /* DogAPI */ = {
+			isa = PBXGroup;
+			children = (
+				DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */,
+			);
+			path = DogAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */,
+				DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */,
 				DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */,
 				DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */,
 			);

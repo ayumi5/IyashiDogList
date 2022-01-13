@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import IyashiDogList
 
 /** TODO list
  - Load dogs from API
@@ -15,24 +16,6 @@ import XCTest
     - Shows an error message
  
  */
-
-class RemoteDogLoader {
-    let client: HTTPClient
-    let url: URL
-    
-    init(client: HTTPClient, url: URL = URL(string: "http://url.com")!) {
-        self.client = client
-        self.url = url
-    }
-    
-    func load() {
-        client.get(from: url)
-    }
-}
-
-protocol HTTPClient {
-    func get(from url: URL)
-}
 
 class DogLoaderTests: XCTestCase {
     
