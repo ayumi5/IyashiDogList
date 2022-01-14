@@ -46,36 +46,31 @@ class DogLoaderTests: XCTestCase {
     
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
-        let clientError = NSError(domain: "Test", code: 0)
         
-        var capturedErrors = [RemoteDogLoader.Error]()
-        
-        sut.load { capturedErrors.append($0) }
-        client.complete(with: clientError)
-
-        XCTAssertEqual(capturedErrors, [.connectivity])
+        expect(sut, with: .connectivity, when: {
+            let clientError = NSError(domain: "Test", code: 0)
+            client.complete(with: clientError)
+        })
     }
     
     func test_load_deliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
-            
         let statusCodes = [199, 201, 300, 400]
+        
         statusCodes.enumerated().forEach { index, code in
-            var capturedErrors = [RemoteDogLoader.Error]()
-            sut.load { capturedErrors.append($0) }
-            client.complete(withStatusCode: code, at: index)
-            XCTAssertEqual(capturedErrors, [.invalidData])
+            expect(sut, with: .invalidData, when: {
+                client.complete(withStatusCode: code, at: index)
+            })
         }
     }
     
     func test_load_deliversInvalidDataErrorOn200HTTPResponseWithInvalidJsonData() {
         let (sut, client) = makeSUT()
-        var capturedErrors = [RemoteDogLoader.Error]()
-        sut.load { capturedErrors.append($0) }
-        let invalidJson = Data("invalid json".utf8)
-        client.complete(withStatusCode: 200, data: invalidJson)
-        XCTAssertEqual(capturedErrors, [.invalidData])
         
+        expect(sut, with: .invalidData, when: {
+            let invalidJson = Data("invalid json".utf8)
+            client.complete(withStatusCode: 200, data: invalidJson)
+        })
     }
 
     // MARK: - Helpers
@@ -84,6 +79,13 @@ class DogLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteDogLoader(client: client, url: url)
         return (sut: sut, client: client)
+    }
+    
+    private func expect(_ sut: RemoteDogLoader, with error: RemoteDogLoader.Error, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        var capturedErrors = [RemoteDogLoader.Error]()
+        sut.load { capturedErrors.append($0) }
+        action()
+        XCTAssertEqual(capturedErrors, [error], file: file, line: line)
     }
     
     private class HTTPClientSpy: HTTPClient {
