@@ -67,6 +67,16 @@ class DogLoaderTests: XCTestCase {
             XCTAssertEqual(capturedErrors, [.invalidData])
         }
     }
+    
+    func test_load_deliversInvalidDataErrorOn200HTTPResponseWithInvalidJsonData() {
+        let (sut, client) = makeSUT()
+        var capturedErrors = [RemoteDogLoader.Error]()
+        sut.load { capturedErrors.append($0) }
+        let invalidJson = Data("invalid json".utf8)
+        client.complete(withStatusCode: 200, data: invalidJson)
+        XCTAssertEqual(capturedErrors, [.invalidData])
+        
+    }
 
     // MARK: - Helpers
     
@@ -91,13 +101,13 @@ class DogLoaderTests: XCTestCase {
             self.messages[index].completion(.failure(error))
         }
         
-        func complete(withStatusCode code: Int, at index: Int = 0) {
+        func complete(withStatusCode code: Int, data: Data = Data(), at index: Int = 0) {
             let response = HTTPURLResponse(
                 url: self.requestedUrls[index],
                 statusCode: code,
                 httpVersion: nil,
                 headerFields: nil)!
-            self.messages[index].completion(.success(response))
+            self.messages[index].completion(.success(response, data))
         }
     }
 }
