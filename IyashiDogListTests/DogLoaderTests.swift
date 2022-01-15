@@ -47,7 +47,7 @@ class DogLoaderTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, completeWith: .failure(.connectivity), when: {
+        expect(sut, completeWith: .failure(RemoteDogLoader.Error.connectivity), when: {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         })
@@ -58,7 +58,7 @@ class DogLoaderTests: XCTestCase {
         let statusCodes = [199, 201, 300, 400]
         
         statusCodes.enumerated().forEach { index, code in
-            expect(sut, completeWith: .failure(.invalidData), when: {
+            expect(sut, completeWith: .failure(RemoteDogLoader.Error.invalidData), when: {
                 client.complete(withStatusCode: code, at: index)
             })
         }
@@ -67,7 +67,7 @@ class DogLoaderTests: XCTestCase {
     func test_load_deliversInvalidDataErrorOn200HTTPResponseWithInvalidJsonData() {
         let (sut, client) = makeSUT()
         
-        expect(sut, completeWith: .failure(.invalidData), when: {
+        expect(sut, completeWith: .failure(RemoteDogLoader.Error.invalidData), when: {
             let invalidJson = Data("invalid json".utf8)
             client.complete(withStatusCode: 200, data: invalidJson)
         })
@@ -110,11 +110,23 @@ class DogLoaderTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    private func expect(_ sut: RemoteDogLoader, completeWith result: RemoteDogLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        var capturedResults = [RemoteDogLoader.Result]()
-        sut.load { capturedResults.append($0) }
+    private func expect(_ sut: RemoteDogLoader, completeWith expectedResult: RemoteDogLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = XCTestExpectation(description: "Wait for completion")
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedDogs), .success(expectedDogs)):
+                XCTAssertEqual(receivedDogs, expectedDogs, file: file, line: line)
+            case let (.failure(receivedError as RemoteDogLoader.Error), .failure(expectedError as RemoteDogLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+                break
+            default:
+                XCTFail("expeced to get \(expectedResult) but got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
         action()
-        XCTAssertEqual(capturedResults, [result], file: file, line: line)
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private class HTTPClientSpy: HTTPClient {

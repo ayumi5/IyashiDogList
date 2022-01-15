@@ -7,6 +7,8 @@
 
 import Foundation
 
-protocol DogLoader {
-    func load(completion: @escaping (RemoteDogLoader.Result) -> Void)
+public protocol DogLoader {
+    typealias Result = Swift.Result<[Dog], Error>
+    
+    func load(completion: @escaping (Result) -> Void)
 }

@@ -7,14 +7,11 @@
 
 import Foundation
 
-public final class RemoteDogLoader {
+public final class RemoteDogLoader: DogLoader {
     private let client: HTTPClient
     private let url: URL
     
-    public enum Result: Equatable {
-        case success([Dog])
-        case failure(Error)
-    }
+    public typealias Result = DogLoader.Result
     
     public enum Error: Swift.Error {
         case connectivity
@@ -32,7 +29,7 @@ public final class RemoteDogLoader {
             case let .success(data, response):
                 completion(DogItemsMapper.map(data, response))
             case .failure:
-                completion(.failure(.connectivity))
+                completion(.failure(RemoteDogLoader.Error.connectivity))
             default:
                 break
             }
@@ -57,7 +54,7 @@ final class DogItemsMapper {
         if response.statusCode == OK_200, let json = try? JSONDecoder().decode(DogRoot.self, from: data) {
             return .success(json.dogs)
         } else {
-            return .failure(.invalidData)
+            return .failure(RemoteDogLoader.Error.invalidData)
         }
     }
 }
