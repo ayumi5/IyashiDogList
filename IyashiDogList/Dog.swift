@@ -7,6 +7,10 @@
 
 import Foundation
 
-public struct Dog: Equatable {
-    var imageURL: URL
+public struct Dog: Equatable, Decodable {
+    public var imageURL: URL
+    
+    public init(imageURL: URL) {
+        self.imageURL = imageURL
+    }
 }
