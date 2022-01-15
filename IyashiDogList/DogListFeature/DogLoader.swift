@@ -8,5 +8,5 @@
 import Foundation
 
 protocol DogLoader {
-    func load(completion: (RemoteDogLoader.Result) -> Void)
+    func load(completion: @escaping (RemoteDogLoader.Result) -> Void)
 }
