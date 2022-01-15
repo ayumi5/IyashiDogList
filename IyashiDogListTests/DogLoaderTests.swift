@@ -47,7 +47,7 @@ class DogLoaderTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, completeWith: .failure(RemoteDogLoader.Error.connectivity), when: {
+        expect(sut, completeWith: failure(.connectivity), when: {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         })
@@ -58,7 +58,7 @@ class DogLoaderTests: XCTestCase {
         let statusCodes = [199, 201, 300, 400]
         
         statusCodes.enumerated().forEach { index, code in
-            expect(sut, completeWith: .failure(RemoteDogLoader.Error.invalidData), when: {
+            expect(sut, completeWith: failure(.invalidData), when: {
                 client.complete(withStatusCode: code, at: index)
             })
         }
@@ -67,7 +67,7 @@ class DogLoaderTests: XCTestCase {
     func test_load_deliversInvalidDataErrorOn200HTTPResponseWithInvalidJsonData() {
         let (sut, client) = makeSUT()
         
-        expect(sut, completeWith: .failure(RemoteDogLoader.Error.invalidData), when: {
+        expect(sut, completeWith: failure(.invalidData), when: {
             let invalidJson = Data("invalid json".utf8)
             client.complete(withStatusCode: 200, data: invalidJson)
         })
@@ -108,6 +108,10 @@ class DogLoaderTests: XCTestCase {
     private func makeItemsJSON(_ items: [Dog]) -> Data {
         let json = ["message": items.map { $0.imageURL.absoluteString }]
         return try! JSONSerialization.data(withJSONObject: json)
+    }
+    
+    private func failure(_ error: RemoteDogLoader.Error) -> RemoteDogLoader.Result {
+        return .failure(error)
     }
     
     private func expect(_ sut: RemoteDogLoader, completeWith expectedResult: RemoteDogLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
