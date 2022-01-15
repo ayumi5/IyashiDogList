@@ -134,7 +134,7 @@ class DogLoaderTests: XCTestCase {
                 statusCode: code,
                 httpVersion: nil,
                 headerFields: nil)!
-            self.messages[index].completion(.success(response, data))
+            self.messages[index].completion(.success(data, response))
         }
     }
 }

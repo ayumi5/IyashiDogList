@@ -29,7 +29,7 @@ public final class RemoteDogLoader {
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) { result in
             switch result {
-            case let .success(response, data):
+            case let .success(data, response):
                 completion(DogItemsMapper.map(data, response))
             case .failure:
                 completion(.failure(.connectivity))
