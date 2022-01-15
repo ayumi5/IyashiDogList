@@ -82,10 +82,10 @@ class DogLoaderTests: XCTestCase {
     }
     
     private func expect(_ sut: RemoteDogLoader, with error: RemoteDogLoader.Error, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        var capturedErrors = [RemoteDogLoader.Result]()
-        sut.load { capturedErrors.append($0) }
+        var capturedResults = [RemoteDogLoader.Result]()
+        sut.load { capturedResults.append($0) }
         action()
-        XCTAssertEqual(capturedErrors, [.failure(error)], file: file, line: line)
+        XCTAssertEqual(capturedResults, [.failure(error)], file: file, line: line)
     }
     
     private class HTTPClientSpy: HTTPClient {
