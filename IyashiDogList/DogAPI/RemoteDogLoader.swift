@@ -35,6 +35,7 @@ public final class RemoteDogLoader {
                 } else {      
                     do {
                         try JSONSerialization.jsonObject(with: data)
+                        completion(.success([]))
                     } catch {
                         completion(.failure(.invalidData))
                     }

@@ -72,6 +72,15 @@ class DogLoaderTests: XCTestCase {
             client.complete(withStatusCode: 200, data: invalidJson)
         })
     }
+    
+    func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJsonList() {
+        let (sut, client) = makeSUT()
+    
+        expect(sut, completeWith: .success([]), when: {
+            let emptyJson = Data("{ \"items\": [] }".utf8)
+            client.complete(withStatusCode: 200, data: emptyJson)
+        })
+    }
 
     // MARK: - Helpers
     
