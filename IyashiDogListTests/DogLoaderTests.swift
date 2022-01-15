@@ -84,15 +84,10 @@ class DogLoaderTests: XCTestCase {
     
     func test_load_deliversItemsOn200HTTPResponseWithValidJsonList() {
         let (sut, client) = makeSUT()
+        let item1 = makeItem(imageURL: URL(string: "http://test1-url.com")!)
+        let item2 = makeItem(imageURL: URL(string: "http://test2-url.com")!)
+        let jsonData = makeItemsJSON([item1,item2])
 
-        let item1 = Dog.init(imageURL: URL(string: "http://test1-url.com")!)
-        let item2 = Dog.init(imageURL: URL(string: "http://test2-url.com")!)
-        let itemsJson = [
-            "message":
-                [item1.imageURL.absoluteString,
-                 item2.imageURL.absoluteString]
-        ]
-        let jsonData = try! JSONSerialization.data(withJSONObject: itemsJson)
         expect(sut, completeWith: .success([item1, item2]), when: {
             client.complete(withStatusCode: 200, data: jsonData)
         })
@@ -104,6 +99,15 @@ class DogLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         let sut = RemoteDogLoader(client: client, url: url)
         return (sut: sut, client: client)
+    }
+    
+    private func makeItem(imageURL: URL) -> Dog {
+        return Dog(imageURL: imageURL)
+    }
+    
+    private func makeItemsJSON(_ items: [Dog]) -> Data {
+        let json = ["message": items.map { $0.imageURL.absoluteString }]
+        return try! JSONSerialization.data(withJSONObject: json)
     }
     
     private func expect(_ sut: RemoteDogLoader, completeWith result: RemoteDogLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
