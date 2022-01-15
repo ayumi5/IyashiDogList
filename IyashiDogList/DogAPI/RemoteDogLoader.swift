@@ -30,16 +30,7 @@ public final class RemoteDogLoader {
         client.get(from: url) { result in
             switch result {
             case let .success(response, data):
-                if response.statusCode != 200 {
-                    completion(.failure(.invalidData))
-                } else {
-                    do {
-                        let json = try JSONDecoder().decode(DogRoot.self, from: data)
-                        completion(.success(json.dogs))
-                    } catch {
-                        completion(.failure(.invalidData))
-                    }
-                }
+                completion(DogItemsMapper.map(data, response))
             case .failure:
                 completion(.failure(.connectivity))
             default:
@@ -49,10 +40,24 @@ public final class RemoteDogLoader {
     }
 }
 
-private struct DogRoot: Decodable {
-    var message: [URL]
+final class DogItemsMapper {
+    private init() {}
     
-    var dogs: [Dog] {
-        return message.map { Dog(imageURL: $0) }
+    private struct DogRoot: Decodable {
+        var message: [URL]
+        
+        var dogs: [Dog] {
+            return message.map { Dog(imageURL: $0) }
+        }
+    }
+    
+    static private let OK_200 = 200
+    
+    static func map(_ data: Data, _ response: HTTPURLResponse) -> RemoteDogLoader.Result {
+        if response.statusCode == OK_200, let json = try? JSONDecoder().decode(DogRoot.self, from: data) {
+            return .success(json.dogs)
+        } else {
+            return .failure(.invalidData)
+        }
     }
 }
