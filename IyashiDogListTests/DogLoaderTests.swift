@@ -77,8 +77,24 @@ class DogLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
     
         expect(sut, completeWith: .success([]), when: {
-            let emptyJson = Data("{ \"items\": [] }".utf8)
+            let emptyJson = Data("{ \"message\": [] }".utf8)
             client.complete(withStatusCode: 200, data: emptyJson)
+        })
+    }
+    
+    func test_load_deliversItemsOn200HTTPResponseWithValidJsonList() {
+        let (sut, client) = makeSUT()
+
+        let item1 = Dog.init(imageURL: URL(string: "http://test1-url.com")!)
+        let item2 = Dog.init(imageURL: URL(string: "http://test2-url.com")!)
+        let itemsJson = [
+            "message":
+                [item1.imageURL.absoluteString,
+                 item2.imageURL.absoluteString]
+        ]
+        let jsonData = try! JSONSerialization.data(withJSONObject: itemsJson)
+        expect(sut, completeWith: .success([item1, item2]), when: {
+            client.complete(withStatusCode: 200, data: jsonData)
         })
     }
 

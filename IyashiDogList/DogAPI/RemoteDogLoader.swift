@@ -32,10 +32,10 @@ public final class RemoteDogLoader {
             case let .success(response, data):
                 if response.statusCode != 200 {
                     completion(.failure(.invalidData))
-                } else {      
+                } else {
                     do {
-                        try JSONSerialization.jsonObject(with: data)
-                        completion(.success([]))
+                        let json = try JSONDecoder().decode(DogRoot.self, from: data)
+                        completion(.success(json.dogs))
                     } catch {
                         completion(.failure(.invalidData))
                     }
@@ -46,5 +46,13 @@ public final class RemoteDogLoader {
                 break
             }
         }
+    }
+}
+
+private struct DogRoot: Decodable {
+    var message: [URL]
+    
+    var dogs: [Dog] {
+        return message.map { Dog(imageURL: $0) }
     }
 }
