@@ -93,23 +93,25 @@ class DogLoaderTests: XCTestCase {
         })
     }
     
-//    func test_load_doesNotdeliverResultAfterSUTInstanceHasBeenDeallocated() {
-//        let client = HTTPClientSpy()
-//        var sut: RemoteDogLoader? = RemoteDogLoader(client: client)
-//        var capturedResults = [RemoteDogLoader.Result]()
-//        sut?.load { result in
-//            capturedResults.append(result)
-//        }
-//        sut = nil
-//        let emptyJson = Data("{ \"message\": [] }".utf8)
-//        client.complete(withStatusCode: 200, data: emptyJson)
-//
-//        XCTAssertTrue(capturedResults.isEmpty)
-//    }
+    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: RemoteDogLoader? = RemoteDogLoader(client: client)
+        var capturedResults = [RemoteDogLoader.Result]()
+        
+        sut?.load { result in
+            capturedResults.append(result)
+        }
+        
+        sut = nil
+        let emptyJson = makeItemsJSON([])
+        client.complete(withStatusCode: 200, data: emptyJson)
+
+        XCTAssertTrue(capturedResults.isEmpty)
+    }
 
     // MARK: - Helpers
     
-    private func makeSUT(url: URL = URL(string: "http://a-url.com")!) -> (sut: RemoteDogLoader, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "http://a-url.com")!) -> (sut: RemoteDogLoader,  client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteDogLoader(client: client, url: url)
         return (sut: sut, client: client)
