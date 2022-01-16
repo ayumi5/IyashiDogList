@@ -77,7 +77,7 @@ class DogLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
     
         expect(sut, completeWith: .success([]), when: {
-            let emptyJson = Data("{ \"message\": [] }".utf8)
+            let emptyJson = makeItemsJSON([])
             client.complete(withStatusCode: 200, data: emptyJson)
         })
     }
@@ -92,6 +92,20 @@ class DogLoaderTests: XCTestCase {
             client.complete(withStatusCode: 200, data: jsonData)
         })
     }
+    
+//    func test_load_doesNotdeliverResultAfterSUTInstanceHasBeenDeallocated() {
+//        let client = HTTPClientSpy()
+//        var sut: RemoteDogLoader? = RemoteDogLoader(client: client)
+//        var capturedResults = [RemoteDogLoader.Result]()
+//        sut?.load { result in
+//            capturedResults.append(result)
+//        }
+//        sut = nil
+//        let emptyJson = Data("{ \"message\": [] }".utf8)
+//        client.complete(withStatusCode: 200, data: emptyJson)
+//
+//        XCTAssertTrue(capturedResults.isEmpty)
+//    }
 
     // MARK: - Helpers
     
