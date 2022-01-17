@@ -20,6 +20,7 @@
 		DA7E75B8279253D40072DDCA /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
+		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		DA7E75B7279253D40072DDCA /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
+		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			children = (
 				DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */,
 				DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */,
+				DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */,
 			);
 			path = DogAPI;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */,
 				DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */,
 				DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */,
 				DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */,
