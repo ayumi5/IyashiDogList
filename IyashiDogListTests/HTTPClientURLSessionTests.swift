@@ -8,11 +8,51 @@
 import XCTest
 import IyashiDogList
 
-class HTTPClientURLSessionTests: XCTestCase {
+
+class HTTPClientURLSession {
+    func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
+        URLSession.shared.dataTask(with: url) {_, _, _ in
+        
+        }.resume()
+    }
 }
 
-private class URLSessionStub: URLProtocol {
+class HTTPClientURLSessionTests: XCTestCase {
+    func test_getFromURL_performsGetWithURL() {
+        URLProtocolStub.startInterceptingRequests()
+        let sut = HTTPClientURLSession()
+        let url = URL(string: "http://a-url.com")!
+        let exp = XCTestExpectation(description: "Wait for completion")
+        
+        URLProtocolStub.observeRequest { request in
+            XCTAssertEqual(request.url, url)
+            exp.fulfill()
+        }
+        sut.get(from: url) { _ in }
+        wait(for: [exp], timeout: 1.0)
+        URLProtocolStub.stopInterceptingRequests()
+    }
+}
+
+private class URLProtocolStub: URLProtocol {
+    static var observer: ((URLRequest) -> Void)?
+    
+    static func startInterceptingRequests() {
+        URLProtocol.registerClass(self)
+    }
+    
+    static func stopInterceptingRequests() {
+        URLProtocol.unregisterClass(self)
+    }
+    
+    static func observeRequest(completion: @escaping (URLRequest) -> Void) {
+        observer = completion
+    }
+    
     override class func canInit(with request: URLRequest) -> Bool {
+        if let observer = observer {
+            observer(request)
+        }
         return true
     }
     
