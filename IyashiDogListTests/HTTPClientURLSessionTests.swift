@@ -11,13 +11,19 @@ import IyashiDogList
 
 class HTTPClientURLSession {
     func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
-        URLSession.shared.dataTask(with: url) {_, _, error in
+        URLSession.shared.dataTask(with: url) {data, response, error in
             if let error = error {
                 completion(.failure(error))
+            } else if let _ = data, let _ = response {
+                
+            } else {
+                completion(.failure(InvalidResponseError()))
             }
         }.resume()
     }
 }
+
+public struct InvalidResponseError: Error {}
 
 class HTTPClientURLSessionTests: XCTestCase {
     override func setUp() {
@@ -61,19 +67,40 @@ class HTTPClientURLSessionTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func test_getFromURL_failsOnInvalidRepresentationCase() {
+        let sut = HTTPClientURLSession()
+        let url = URL(string: "http://a-url.com")!
+        URLProtocolStub.stub(url: url, data: nil, response: nil, error: nil)
+        let exp = XCTestExpectation(description: "Wait for completion")
+        
+        sut.get(from: url) { result in
+            switch result {
+            case let .failure(receivedError):
+                XCTAssertNotNil(receivedError)
+            default:
+                XCTFail("Expected failure, instead got \(String(describing: result))")
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
 }
 
 private class URLProtocolStub: URLProtocol {
     private static var stubs = [URL: Stub]()
     
     private struct Stub {
+        let data: Data?
+        let response: URLResponse?
         let error: Error?
     }
     
     static var observer: ((URLRequest) -> Void)?
     
-    static func stub(url: URL, error: Error? = nil) {
-        stubs[url] = Stub(error: error)
+    static func stub(url: URL, data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) {
+        stubs[url] = Stub(data: data, response: response, error: error)
     }
     
     static func startInterceptingRequests() {
@@ -101,6 +128,14 @@ private class URLProtocolStub: URLProtocol {
     
     override func startLoading() {
         guard let url = request.url, let stub = URLProtocolStub.stubs[url] else { return }
+        if let data = stub.data {
+            client?.urlProtocol(self, didLoad: data)
+        }
+        
+        if let response = stub.response {
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        }
+        
         if let error = stub.error {
             client?.urlProtocol(self, didFailWithError: error)
         }
