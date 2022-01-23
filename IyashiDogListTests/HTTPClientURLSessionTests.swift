@@ -49,24 +49,13 @@ class HTTPClientURLSessionTests: XCTestCase {
     
     func test_getFromURL_failsOnRequestError() {
         let error = NSError(domain: "test", code: 0)
-        let result = resultFor(data: nil, response: nil, error: error)
-        switch result {
-        case let .failure(receivedError as NSError):
-            XCTAssertEqual(error.domain, receivedError.domain)
-            XCTAssertEqual(error.code, receivedError.code)
-        default:
-            XCTFail("Expected failure with error: \(error), instead got \(String(describing: result))")
-        }
+        let receivedError = resultErrorFor(data: nil, response: nil, error: error) as NSError?
+        XCTAssertEqual(receivedError?.domain, error.domain)
+        XCTAssertEqual(receivedError?.code, error.code)
     }
     
-    func test_getFromURL_failsOnInvalidRepresentationCase() {
-        let result = resultFor(data: nil, response: nil, error: nil)
-        switch result {
-        case let .failure(receivedError):
-            XCTAssertNotNil(receivedError)
-        default:
-            XCTFail("Expected failure, instead got \(String(describing: result))")
-        }
+    func test_getFromURL_failsOnAllInvalidRepresentationCases() {
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
     }
     
     // MARK: - Helpers
@@ -92,6 +81,17 @@ class HTTPClientURLSessionTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         return result
+    }
+    
+    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?) -> Error? {
+        let result = resultFor(data: data, response: response, error: error)
+        switch result {
+        case let .failure(error):
+            return error
+        default:
+            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))")
+            return nil
+        }
     }
 
     private class URLProtocolStub: URLProtocol {
