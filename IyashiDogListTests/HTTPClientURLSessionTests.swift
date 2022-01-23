@@ -86,72 +86,74 @@ class HTTPClientURLSessionTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
-}
+    
+    
+    // MARK: - Helpers
+    private func makeSUT() -> HTTPClientURLSession {
+        return HTTPClientURLSession()
+    }
 
-// MARK: - Helpers
-private func makeSUT() -> HTTPClientURLSession {
-    return HTTPClientURLSession()
-}
+    private func anyURL() -> URL {
+        return URL(string: "http://a-url.com")!
+    }
 
-private func anyURL() -> URL {
-    return URL(string: "http://a-url.com")!
-}
-
-private class URLProtocolStub: URLProtocol {
-    private static var stubs = [URL: Stub]()
-    
-    private struct Stub {
-        let data: Data?
-        let response: URLResponse?
-        let error: Error?
-    }
-    
-    static var observer: ((URLRequest) -> Void)?
-    
-    static func stub(url: URL, data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) {
-        stubs[url] = Stub(data: data, response: response, error: error)
-    }
-    
-    static func startInterceptingRequests() {
-        URLProtocol.registerClass(self)
-    }
-    
-    static func stopInterceptingRequests() {
-        URLProtocol.unregisterClass(self)
-    }
-    
-    static func observeRequest(completion: @escaping (URLRequest) -> Void) {
-        observer = completion
-    }
-    
-    override class func canInit(with request: URLRequest) -> Bool {
-        if let observer = observer {
-            observer(request)
-        }
-        return true
-    }
-    
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        return request
-    }
-    
-    override func startLoading() {
-        guard let url = request.url, let stub = URLProtocolStub.stubs[url] else { return }
-        if let data = stub.data {
-            client?.urlProtocol(self, didLoad: data)
+    private class URLProtocolStub: URLProtocol {
+        private static var stubs = [URL: Stub]()
+        
+        private struct Stub {
+            let data: Data?
+            let response: URLResponse?
+            let error: Error?
         }
         
-        if let response = stub.response {
-            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        static var observer: ((URLRequest) -> Void)?
+        
+        static func stub(url: URL, data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) {
+            stubs[url] = Stub(data: data, response: response, error: error)
         }
         
-        if let error = stub.error {
-            client?.urlProtocol(self, didFailWithError: error)
+        static func startInterceptingRequests() {
+            URLProtocol.registerClass(self)
         }
-        client?.urlProtocolDidFinishLoading(self)
-    }
-    
-    override func stopLoading() {
         
+        static func stopInterceptingRequests() {
+            URLProtocol.unregisterClass(self)
+        }
+        
+        static func observeRequest(completion: @escaping (URLRequest) -> Void) {
+            observer = completion
+        }
+        
+        override class func canInit(with request: URLRequest) -> Bool {
+            if let observer = observer {
+                observer(request)
+            }
+            return true
+        }
+        
+        override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+            return request
+        }
+        
+        override func startLoading() {
+            guard let url = request.url, let stub = URLProtocolStub.stubs[url] else { return }
+            if let data = stub.data {
+                client?.urlProtocol(self, didLoad: data)
+            }
+            
+            if let response = stub.response {
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            }
+            
+            if let error = stub.error {
+                client?.urlProtocol(self, didFailWithError: error)
+            }
+            client?.urlProtocolDidFinishLoading(self)
+        }
+        
+        override func stopLoading() {
+            
+        }
     }
+
 }
