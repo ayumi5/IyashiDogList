@@ -80,7 +80,22 @@ class HTTPClientURLSessionTests: XCTestCase {
             XCTAssertEqual(response.url, anyHttpResponse.url)
             XCTAssertEqual(response.statusCode, anyHttpResponse.statusCode)
         default:
-            XCTFail("expected a success but got a failure with error")
+            XCTFail("Expected a success but got a failure with error")
+        }
+    }
+    
+    func test_getFromURL_succeedsOnURLHTTPResponseWithData() {
+        let anyData = Data("any data".utf8)
+        let anyHttpResponse = HTTPURLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+        let result = resultFor(data: anyData, response: anyHttpResponse, error: nil)
+        
+        switch result {
+        case let .success(data, response):
+            XCTAssertEqual(data, anyData)
+            XCTAssertEqual(response.url, anyHttpResponse.url)
+            XCTAssertEqual(response.statusCode, anyHttpResponse.statusCode)
+        default:
+            XCTFail("Expected a success but got a failure with error")
         }
     }
     
