@@ -21,6 +21,7 @@
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
 		DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
+		DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */; };
 		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
 		DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
 		DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSession.swift; sourceTree = "<group>"; };
 		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
 		DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSessionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +153,7 @@
 				DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */,
 				DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */,
 				DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */,
+				DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */,
 			);
 			path = DogAPI;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */,
 				DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */,
 				DA7E75B8279253D40072DDCA /* Dog.swift in Sources */,
+				DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */,
 				DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
