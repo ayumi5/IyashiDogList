@@ -94,9 +94,9 @@ class HTTPClientURLSessionTests: XCTestCase {
         return NSError(domain: "test", code: 0)
     }
     
-    private func resultFor(data: Data?, response: URLResponse?, error: Error?) -> HTTPClientResult? {
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClientResult? {
         var result: HTTPClientResult?
-        let sut = makeSUT()
+        let sut = makeSUT(file: file, line: line)
         let url = anyURL()
         URLProtocolStub.stub(url: url, data: data, response: response, error: error)
         let exp = XCTestExpectation(description: "Wait for completion")
@@ -110,24 +110,24 @@ class HTTPClientURLSessionTests: XCTestCase {
         return result
     }
     
-    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?) -> Error? {
-        let result = resultFor(data: data, response: response, error: error)
+    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+        let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         switch result {
         case let .failure(error):
             return error
         default:
-            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))")
+            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))", file: file, line: line)
             return nil
         }
     }
     
-    private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?) -> (data: Data, response: HTTPURLResponse)? {
-        let result = resultFor(data: data, response: response, error: error)
+    private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
+        let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         switch result {
         case let .success(data, response):
             return (data, response)
         default:
-            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))")
+            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))", file: file, line: line)
             return nil
         }
     }
