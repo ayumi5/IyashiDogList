@@ -72,31 +72,20 @@ class HTTPClientURLSessionTests: XCTestCase {
     
     func test_getFromURL_succeedsWithEmptyDataOnURLHTTPResponseWithNilData() {
         let anyHttpResponse = HTTPURLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-        let result = resultFor(data: nil, response: anyHttpResponse, error: nil)
+        let value = resultValuesFor(data: nil, response: anyHttpResponse, error: nil)
         let emptyData = Data()
-        switch result {
-        case let .success(data, response):
-            XCTAssertEqual(data, emptyData)
-            XCTAssertEqual(response.url, anyHttpResponse.url)
-            XCTAssertEqual(response.statusCode, anyHttpResponse.statusCode)
-        default:
-            XCTFail("Expected a success but got a failure with error")
-        }
+        XCTAssertEqual(value?.data, emptyData)
+        XCTAssertEqual(value?.response.url, anyHttpResponse.url)
+        XCTAssertEqual(value?.response.statusCode, anyHttpResponse.statusCode)
     }
     
     func test_getFromURL_succeedsOnURLHTTPResponseWithData() {
         let anyData = Data("any data".utf8)
         let anyHttpResponse = HTTPURLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-        let result = resultFor(data: anyData, response: anyHttpResponse, error: nil)
-        
-        switch result {
-        case let .success(data, response):
-            XCTAssertEqual(data, anyData)
-            XCTAssertEqual(response.url, anyHttpResponse.url)
-            XCTAssertEqual(response.statusCode, anyHttpResponse.statusCode)
-        default:
-            XCTFail("Expected a success but got a failure with error")
-        }
+        let value = resultValuesFor(data: anyData, response: anyHttpResponse, error: nil)
+        XCTAssertEqual(value?.data, anyData)
+        XCTAssertEqual(value?.response.url, anyHttpResponse.url)
+        XCTAssertEqual(value?.response.statusCode, anyHttpResponse.statusCode)
     }
     
     // MARK: - Helpers
@@ -129,6 +118,17 @@ class HTTPClientURLSessionTests: XCTestCase {
         switch result {
         case let .failure(error):
             return error
+        default:
+            XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))")
+            return nil
+        }
+    }
+    
+    private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?) -> (data: Data, response: HTTPURLResponse)? {
+        let result = resultFor(data: data, response: response, error: error)
+        switch result {
+        case let .success(data, response):
+            return (data, response)
         default:
             XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))")
             return nil
