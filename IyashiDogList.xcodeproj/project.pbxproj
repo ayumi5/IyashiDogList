@@ -20,6 +20,7 @@
 		DA7E75B8279253D40072DDCA /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
+		DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */; };
 		DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */; };
 		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
@@ -35,6 +36,13 @@
 			remoteInfo = IyashiDogList;
 		};
 		DA370BB8278E7172002B2A91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA370B96278E7170002B2A91;
+			remoteInfo = IyashiDogList;
+		};
+		DAABEF9727C32FC20042D23F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
 			proxyType = 1;
@@ -61,6 +69,8 @@
 		DA7E75B7279253D40072DDCA /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
+		DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSession.swift; sourceTree = "<group>"; };
 		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
@@ -89,6 +99,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAABEF9027C32FC20042D23F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -98,6 +115,7 @@
 				DA370B99278E7170002B2A91 /* IyashiDogList */,
 				DA370BB0278E7172002B2A91 /* IyashiDogListTests */,
 				DA370BBA278E7172002B2A91 /* IyashiDogListUITests */,
+				DAABEF9427C32FC20042D23F /* IyashiDogListAPIEndToEndTests */,
 				DA370B98278E7170002B2A91 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,6 +126,7 @@
 				DA370B97278E7170002B2A91 /* IyashiDogList.app */,
 				DA370BAD278E7172002B2A91 /* IyashiDogListTests.xctest */,
 				DA370BB7278E7172002B2A91 /* IyashiDogListUITests.xctest */,
+				DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,6 +184,14 @@
 				DA7E75BD279295870072DDCA /* DogLoader.swift */,
 			);
 			path = DogListFeature;
+			sourceTree = "<group>";
+		};
+		DAABEF9427C32FC20042D23F /* IyashiDogListAPIEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */,
+			);
+			path = IyashiDogListAPIEndToEndTests;
 			sourceTree = "<group>";
 		};
 		DAECA27D279E85CF00BE577C /* Helpers */ = {
@@ -231,6 +258,24 @@
 			productReference = DA370BB7278E7172002B2A91 /* IyashiDogListUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		DAABEF9227C32FC20042D23F /* IyashiDogListAPIEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAABEF9B27C32FC20042D23F /* Build configuration list for PBXNativeTarget "IyashiDogListAPIEndToEndTests" */;
+			buildPhases = (
+				DAABEF8F27C32FC20042D23F /* Sources */,
+				DAABEF9027C32FC20042D23F /* Frameworks */,
+				DAABEF9127C32FC20042D23F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAABEF9827C32FC20042D23F /* PBXTargetDependency */,
+			);
+			name = IyashiDogListAPIEndToEndTests;
+			productName = IyashiDogListAPIEndToEndTests;
+			productReference = DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -252,6 +297,10 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = DA370B96278E7170002B2A91;
 					};
+					DAABEF9227C32FC20042D23F = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = DA370B96278E7170002B2A91;
+					};
 				};
 			};
 			buildConfigurationList = DA370B92278E7170002B2A91 /* Build configuration list for PBXProject "IyashiDogList" */;
@@ -270,6 +319,7 @@
 				DA370B96278E7170002B2A91 /* IyashiDogList */,
 				DA370BAC278E7172002B2A91 /* IyashiDogListTests */,
 				DA370BB6278E7172002B2A91 /* IyashiDogListUITests */,
+				DAABEF9227C32FC20042D23F /* IyashiDogListAPIEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
@@ -293,6 +343,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DA370BB5278E7172002B2A91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAABEF9127C32FC20042D23F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -337,6 +394,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAABEF8F27C32FC20042D23F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -349,6 +414,11 @@
 			isa = PBXTargetDependency;
 			target = DA370B96278E7170002B2A91 /* IyashiDogList */;
 			targetProxy = DA370BB8278E7172002B2A91 /* PBXContainerItemProxy */;
+		};
+		DAABEF9827C32FC20042D23F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA370B96278E7170002B2A91 /* IyashiDogList */;
+			targetProxy = DAABEF9727C32FC20042D23F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -620,6 +690,42 @@
 			};
 			name = Release;
 		};
+		DAABEF9927C32FC20042D23F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumi.IyashiDogListAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IyashiDogList.app/IyashiDogList";
+			};
+			name = Debug;
+		};
+		DAABEF9A27C32FC20042D23F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumi.IyashiDogListAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IyashiDogList.app/IyashiDogList";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -655,6 +761,15 @@
 			buildConfigurations = (
 				DA370BC8278E7172002B2A91 /* Debug */,
 				DA370BC9278E7172002B2A91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAABEF9B27C32FC20042D23F /* Build configuration list for PBXNativeTarget "IyashiDogListAPIEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAABEF9927C32FC20042D23F /* Debug */,
+				DAABEF9A27C32FC20042D23F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
