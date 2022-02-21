@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class HTTPClientURLSession {
+public final class HTTPClientURLSession {
     public init() {}
     
     private struct InvalidResponseError: Error {}
