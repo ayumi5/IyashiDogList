@@ -34,10 +34,13 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         "https://images.dog.ceo/breeds/buhund-norwegian/hakon3.jpg"
     ]
     
-    private func makeSUT() -> RemoteDogLoader {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogLoader {
         let client = HTTPClientURLSession()
         let url = URL(string: "https://dog.ceo/api/breed/buhund/norwegian/images")!
-        return RemoteDogLoader(client: client, url: url)
+        let sut = RemoteDogLoader(client: client, url: url)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(client, file: file, line: line)
+        return sut
     }
     
     private func getDogResult(_ sut: RemoteDogLoader) -> DogLoader.Result? {
