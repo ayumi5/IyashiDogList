@@ -26,15 +26,23 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         switch receivedResult {
         case let .success(dogs):
             XCTAssertEqual(dogs.count, 3, "Expected 3 dogs are on a list")
-            XCTAssertEqual(dogs[0].imageURL.absoluteString, "https://images.dog.ceo/breeds/buhund-norwegian/hakon1.jpg")
-            XCTAssertEqual(dogs[1].imageURL.absoluteString, "https://images.dog.ceo/breeds/buhund-norwegian/hakon2.jpg")
-            XCTAssertEqual(dogs[2].imageURL.absoluteString, "https://images.dog.ceo/breeds/buhund-norwegian/hakon3.jpg")
+            XCTAssertEqual(dogs[0].imageURL.absoluteString, expectedImageURLStringList[0])
+            XCTAssertEqual(dogs[1].imageURL.absoluteString, expectedImageURLStringList[1])
+            XCTAssertEqual(dogs[2].imageURL.absoluteString, expectedImageURLStringList[2])
         case let .failure(error):
             XCTFail("Expected successful dog result. got \(error) instead")
         default:
             XCTFail("Expected successful dog result. got no result instead")
         }
     }
+    
+    // MARK: - Helpers
+    
+    private let expectedImageURLStringList = [
+        "https://images.dog.ceo/breeds/buhund-norwegian/hakon1.jpg",
+        "https://images.dog.ceo/breeds/buhund-norwegian/hakon2.jpg",
+        "https://images.dog.ceo/breeds/buhund-norwegian/hakon3.jpg"
+    ]
     
     private func makeSUT() -> RemoteDogLoader {
         let client = HTTPClientURLSession()
