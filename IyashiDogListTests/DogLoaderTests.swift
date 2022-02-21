@@ -8,15 +8,6 @@
 import XCTest
 import IyashiDogList
 
-/** TODO list
- - Load dogs from API
- - If successful
-    - Displays dogs
- - If failure
-    - Shows an error message
- 
- */
-
 class DogLoaderTests: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
