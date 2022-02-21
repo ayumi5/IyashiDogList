@@ -17,6 +17,7 @@
 		DA370BBE278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */; };
 		DA370BCD278E7620002B2A91 /* DogLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* DogLoaderTests.swift */; };
 		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
+		DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DA7E75B8279253D40072DDCA /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
@@ -399,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */,
+				DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
