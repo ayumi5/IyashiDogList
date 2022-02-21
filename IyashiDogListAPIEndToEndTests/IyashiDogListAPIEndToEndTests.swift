@@ -12,18 +12,8 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
     
     func test_endToEndTestServerGETDogResult_matchesFixedData() {
         let sut = makeSUT()
-        var receivedResult: DogLoader.Result?
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { result in
-            receivedResult = result
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 5.0)
-        
-        switch receivedResult {
+        switch getDogResult(sut) {
         case let .success(dogs):
             XCTAssertEqual(dogs.count, 3, "Expected 3 dogs are on a list")
             XCTAssertEqual(dogs[0].imageURL.absoluteString, expectedImageURLStringList[0])
@@ -48,5 +38,20 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         let client = HTTPClientURLSession()
         let url = URL(string: "https://dog.ceo/api/breed/buhund/norwegian/images")!
         return RemoteDogLoader(client: client, url: url)
+    }
+    
+    private func getDogResult(_ sut: RemoteDogLoader) -> DogLoader.Result? {
+        var receivedResult: DogLoader.Result?
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { result in
+            receivedResult = result
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 5.0)
+        
+        return receivedResult
     }
 }
