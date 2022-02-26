@@ -21,9 +21,14 @@ class LocalDogLoader {
 
 class DogStore {
     var deleteCachedDogCallCount = 0
+    var insertCacheCallCount = 0
     
     func deleteCache() {
         deleteCachedDogCallCount += 1
+    }
+    
+    func completeDeletion(with error: Error) {
+        
     }
 }
 
@@ -44,6 +49,17 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.deleteCachedDogCallCount, 1)
     }
     
+    func test_save_doesNotRequestInsertionOnDeletionError() {
+        let (sut, store) = makeSUT()
+        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        let deletionError = anyNSError()
+        
+        sut.save(dogs)
+        store.completeDeletion(with: deletionError)
+        
+        XCTAssertEqual(store.insertCacheCallCount, 0)
+    }
+    
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStore) {
@@ -60,6 +76,10 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     
     private func uniqueURL() -> URL {
         URL(string: "http://unique-url-\(UUID()).com")!
+    }
+    
+    private func anyNSError() -> Error {
+        NSError.init(domain: "any error", code: 0)
     }
     
 }
