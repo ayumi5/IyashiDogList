@@ -10,14 +10,17 @@ import IyashiDogList
 
 class LocalDogLoader {
     private let store: DogStore
-    init(store: DogStore) {
+    private let currentDate: () -> Date
+    
+    init(store: DogStore, currentDate: @escaping () -> Date) {
         self.store = store
+        self.currentDate = currentDate
     }
     
     func save(_ dogs: [Dog]) {
         store.deleteCache { [unowned self] error in
             if error == nil {
-                self.store.insert(dogs)
+                self.store.insert(dogs, timestamp: currentDate())
             }
         }
     }
@@ -28,6 +31,7 @@ class DogStore {
     
     var deleteCachedDogCallCount = 0
     var insertCacheCallCount = 0
+    var insertions = [(dogs: [Dog], timestamp: Date)]()
     private var deleleCompletions = [DeletionCompletion]()
     
     func deleteCache(completion: @escaping DeletionCompletion) {
@@ -43,8 +47,9 @@ class DogStore {
         deleleCompletions[index](nil)
     }
     
-    func insert(_ dogs: [Dog]) {
+    func insert(_ dogs: [Dog], timestamp: Date) {
         insertCacheCallCount += 1
+        insertions.append((dogs, timestamp))
     }
 }
 
@@ -86,11 +91,25 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.insertCacheCallCount, 1)
     }
     
+    func test_save_requestsCacheInsertionWithTimestmpOnSuccessfulDeletion() {
+        let timestamp = Date()
+        let (sut, store) = makeSUT(currentDate: { timestamp })
+        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        
+        
+        sut.save(dogs)
+        store.completeDeletionSuccessfully()
+        
+        XCTAssertEqual(store.insertions.count, 1)
+        XCTAssertEqual(store.insertions.first?.dogs, dogs)
+        XCTAssertEqual(store.insertions.first?.timestamp, timestamp)
+    }
+    
     
     // MARK: - Helpers
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStore) {
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStore) {
         let store = DogStore()
-        let sut = LocalDogLoader(store: store)
+        let sut = LocalDogLoader(store: store, currentDate: currentDate)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut: sut, store: store)
