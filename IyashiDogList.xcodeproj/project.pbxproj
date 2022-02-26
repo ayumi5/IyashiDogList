@@ -17,6 +17,7 @@
 		DA370BBE278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */; };
 		DA370BCD278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */; };
 		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
+		DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */; };
 		DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DA7E75B8279253D40072DDCA /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
@@ -67,6 +68,7 @@
 		DA370BBD278E7172002B2A91 /* IyashiDogListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDogFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDogLoader.swift; sourceTree = "<group>"; };
+		DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		DA7E75B7279253D40072DDCA /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		DA370BB0278E7172002B2A91 /* IyashiDogListTests */ = {
 			isa = PBXGroup;
 			children = (
+				DA43BD1827C9EE4C006F97B0 /* Dog Cache */,
 				DAECA27D279E85CF00BE577C /* Helpers */,
 				DA43BD1627C9ECE8006F97B0 /* Dog API */,
 			);
@@ -184,6 +187,14 @@
 				DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */,
 			);
 			path = "Dog API";
+			sourceTree = "<group>";
+		};
+		DA43BD1827C9EE4C006F97B0 /* Dog Cache */ = {
+			isa = PBXGroup;
+			children = (
+				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
+			);
+			path = "Dog Cache";
 			sourceTree = "<group>";
 		};
 		DA7E75BA27925ED60072DDCA /* DogListFeature */ = {
@@ -391,6 +402,7 @@
 				DA370BCD278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift in Sources */,
 				DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */,
 				DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
