@@ -14,21 +14,37 @@ class LocalDogLoader {
         self.store = store
     }
     
-    func save(_ items: [Dog]) {
-        store.deleteCache()
+    func save(_ dogs: [Dog]) {
+        store.deleteCache { [unowned self] error in
+            if error == nil {
+                self.store.insert(dogs)
+            }
+        }
     }
 }
 
 class DogStore {
+    typealias DeletionCompletion = (Error?) -> Void
+    
     var deleteCachedDogCallCount = 0
     var insertCacheCallCount = 0
+    private var deleleCompletions = [DeletionCompletion]()
     
-    func deleteCache() {
+    func deleteCache(completion: @escaping DeletionCompletion) {
         deleteCachedDogCallCount += 1
+        deleleCompletions.append(completion)
     }
     
-    func completeDeletion(with error: Error) {
-        
+    func completeDeletion(with error: Error, at index: Int = 0) {
+        deleleCompletions[index](error)
+    }
+    
+    func completeDeletionSuccessfully(at index: Int = 0) {
+        deleleCompletions[index](nil)
+    }
+    
+    func insert(_ dogs: [Dog]) {
+        insertCacheCallCount += 1
     }
 }
 
@@ -58,6 +74,16 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         store.completeDeletion(with: deletionError)
         
         XCTAssertEqual(store.insertCacheCallCount, 0)
+    }
+    
+    func test_save_requestsNewCacheInsertionOnSuccessfulDeletion() {
+        let (sut, store) = makeSUT()
+        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        
+        sut.save(dogs)
+        store.completeDeletionSuccessfully()
+        
+        XCTAssertEqual(store.insertCacheCallCount, 1)
     }
     
     
