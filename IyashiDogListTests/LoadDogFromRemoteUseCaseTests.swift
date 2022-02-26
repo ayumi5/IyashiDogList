@@ -1,5 +1,5 @@
 //
-//  DogLoaderTests.swift
+//  LoadDogFromRemoteUseCaseTests.swift
 //  IyashiDogListTests
 //
 //  Created by 宇高あゆみ on 2022/01/12.
@@ -8,7 +8,7 @@
 import XCTest
 import IyashiDogList
 
-class DogLoaderTests: XCTestCase {
+class LoadDogFromRemoteUseCaseTests: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
