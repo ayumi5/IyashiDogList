@@ -6,15 +6,25 @@
 //
 
 import XCTest
+import IyashiDogList
 
 class LocalDogLoader {
+    private let store: DogStore
     init(store: DogStore) {
-        
+        self.store = store
+    }
+    
+    func save(_ items: [Dog]) {
+        store.deleteCache()
     }
 }
 
 class DogStore {
     var deleteCachedDogCallCount = 0
+    
+    func deleteCache() {
+        deleteCachedDogCallCount += 1
+    }
 }
 
 class SaveDogCacheUseCaseTests: XCTestCase {
@@ -24,6 +34,26 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let _ = LocalDogLoader(store: store)
         
         XCTAssertEqual(store.deleteCachedDogCallCount, 0)
+    }
+    
+    func test_save_requestsCacheDeletion() {
+        let store = DogStore()
+        let sut = LocalDogLoader(store: store)
+        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        
+        sut.save(dogs)
+        
+        XCTAssertEqual(store.deleteCachedDogCallCount, 1)
+    }
+    
+    
+    // MARK: - Helpers
+    private func uniqueDog() -> Dog {
+        Dog(imageURL: uniqueURL())
+    }
+    
+    private func uniqueURL() -> URL {
+        URL(string: "http://unique-url-\(UUID()).com")!
     }
     
 }
