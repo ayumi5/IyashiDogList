@@ -46,10 +46,11 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     
     
     // MARK: - Helpers
-    private func makeSUT() -> (sut: LocalDogLoader, store: DogStore) {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStore) {
         let store = DogStore()
         let sut = LocalDogLoader(store: store)
-        
+        trackForMemoryLeaks(store, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return (sut: sut, store: store)
     }
     
