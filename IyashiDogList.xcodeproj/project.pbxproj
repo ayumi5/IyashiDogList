@@ -152,8 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				DAECA27D279E85CF00BE577C /* Helpers */,
-				DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */,
-				DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */,
+				DA43BD1627C9ECE8006F97B0 /* Dog API */,
 			);
 			path = IyashiDogListTests;
 			sourceTree = "<group>";
@@ -176,6 +175,15 @@
 				DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */,
 			);
 			path = DogAPI;
+			sourceTree = "<group>";
+		};
+		DA43BD1627C9ECE8006F97B0 /* Dog API */ = {
+			isa = PBXGroup;
+			children = (
+				DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */,
+				DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */,
+			);
+			path = "Dog API";
 			sourceTree = "<group>";
 		};
 		DA7E75BA27925ED60072DDCA /* DogListFeature */ = {
