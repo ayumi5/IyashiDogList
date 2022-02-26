@@ -30,15 +30,13 @@ class DogStore {
 class SaveDogCacheUseCaseTests: XCTestCase {
     
     func test_init_doesNotDeleteCacheUponCreation() {
-        let store = DogStore()
-        let _ = LocalDogLoader(store: store)
+        let (_, store) = makeSUT()
         
         XCTAssertEqual(store.deleteCachedDogCallCount, 0)
     }
     
     func test_save_requestsCacheDeletion() {
-        let store = DogStore()
-        let sut = LocalDogLoader(store: store)
+        let (sut, store) = makeSUT()
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         
         sut.save(dogs)
@@ -48,6 +46,13 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     
     
     // MARK: - Helpers
+    private func makeSUT() -> (sut: LocalDogLoader, store: DogStore) {
+        let store = DogStore()
+        let sut = LocalDogLoader(store: store)
+        
+        return (sut: sut, store: store)
+    }
+    
     private func uniqueDog() -> Dog {
         Dog(imageURL: uniqueURL())
     }
