@@ -29,11 +29,16 @@ class LocalDogLoader {
 class DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     
-    var insertions = [(dogs: [Dog], timestamp: Date)]()
-    var deleleCompletions = [DeletionCompletion]()
+    private var deleleCompletions = [DeletionCompletion]()
+    enum ReceivedMessage: Equatable {
+        case deleteCache
+        case insert([Dog], Date)
+    }
+    var messages = [ReceivedMessage]()
     
     func deleteCache(completion: @escaping DeletionCompletion) {
         deleleCompletions.append(completion)
+        messages.append(.deleteCache)
     }
     
     func completeDeletion(with error: Error, at index: Int = 0) {
@@ -45,7 +50,7 @@ class DogStore {
     }
     
     func insert(_ dogs: [Dog], timestamp: Date) {
-        insertions.append((dogs, timestamp))
+        messages.append(.insert(dogs, timestamp))
     }
 }
 
@@ -54,7 +59,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     func test_init_doesNotDeleteCacheUponCreation() {
         let (_, store) = makeSUT()
         
-        XCTAssertEqual(store.deleleCompletions.count, 0)
+        XCTAssertEqual(store.messages, [])
     }
     
     func test_save_requestsCacheDeletion() {
@@ -63,7 +68,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         
         sut.save(dogs)
         
-        XCTAssertEqual(store.deleleCompletions.count, 1)
+        XCTAssertEqual(store.messages, [.deleteCache])
     }
     
     func test_save_doesNotRequestInsertionOnDeletionError() {
@@ -74,17 +79,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         sut.save(dogs)
         store.completeDeletion(with: deletionError)
         
-        XCTAssertEqual(store.insertions.count, 0)
-    }
-    
-    func test_save_requestsNewCacheInsertionOnSuccessfulDeletion() {
-        let (sut, store) = makeSUT()
-        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
-        
-        sut.save(dogs)
-        store.completeDeletionSuccessfully()
-        
-        XCTAssertEqual(store.insertions.count, 1)
+        XCTAssertEqual(store.messages, [.deleteCache])
     }
     
     func test_save_requestsCacheInsertionWithTimestmpOnSuccessfulDeletion() {
@@ -92,13 +87,10 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { timestamp })
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         
-        
         sut.save(dogs)
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.insertions.count, 1)
-        XCTAssertEqual(store.insertions.first?.dogs, dogs)
-        XCTAssertEqual(store.insertions.first?.timestamp, timestamp)
+        XCTAssertEqual(store.messages, [.deleteCache, .insert(dogs, timestamp)])
     }
     
     
