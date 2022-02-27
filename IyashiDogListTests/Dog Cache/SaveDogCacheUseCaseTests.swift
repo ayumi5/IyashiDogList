@@ -29,13 +29,10 @@ class LocalDogLoader {
 class DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     
-    var deleteCachedDogCallCount = 0
-    var insertCacheCallCount = 0
     var insertions = [(dogs: [Dog], timestamp: Date)]()
-    private var deleleCompletions = [DeletionCompletion]()
+    var deleleCompletions = [DeletionCompletion]()
     
     func deleteCache(completion: @escaping DeletionCompletion) {
-        deleteCachedDogCallCount += 1
         deleleCompletions.append(completion)
     }
     
@@ -48,7 +45,6 @@ class DogStore {
     }
     
     func insert(_ dogs: [Dog], timestamp: Date) {
-        insertCacheCallCount += 1
         insertions.append((dogs, timestamp))
     }
 }
@@ -58,7 +54,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     func test_init_doesNotDeleteCacheUponCreation() {
         let (_, store) = makeSUT()
         
-        XCTAssertEqual(store.deleteCachedDogCallCount, 0)
+        XCTAssertEqual(store.deleleCompletions.count, 0)
     }
     
     func test_save_requestsCacheDeletion() {
@@ -67,7 +63,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         
         sut.save(dogs)
         
-        XCTAssertEqual(store.deleteCachedDogCallCount, 1)
+        XCTAssertEqual(store.deleleCompletions.count, 1)
     }
     
     func test_save_doesNotRequestInsertionOnDeletionError() {
@@ -78,7 +74,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         sut.save(dogs)
         store.completeDeletion(with: deletionError)
         
-        XCTAssertEqual(store.insertCacheCallCount, 0)
+        XCTAssertEqual(store.insertions.count, 0)
     }
     
     func test_save_requestsNewCacheInsertionOnSuccessfulDeletion() {
@@ -88,7 +84,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         sut.save(dogs)
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.insertCacheCallCount, 1)
+        XCTAssertEqual(store.insertions.count, 1)
     }
     
     func test_save_requestsCacheInsertionWithTimestmpOnSuccessfulDeletion() {
