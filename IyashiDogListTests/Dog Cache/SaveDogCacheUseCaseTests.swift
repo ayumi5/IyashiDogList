@@ -111,7 +111,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         URL(string: "http://unique-url-\(UUID()).com")!
     }
     
-    private func anyNSError() -> Error {
+    private func anyNSError() -> NSError {
         NSError.init(domain: "any error", code: 0)
     }
     
