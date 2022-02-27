@@ -114,55 +114,30 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     
     func test_save_deliversFailureOnDeletionError() {
         let (sut, store) = makeSUT()
-        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        
         let deletionError = anyNSError()
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for save completion")
-        
-        sut.save(dogs) { error in
-            receivedError = error
-            exp.fulfill()
-        }
-        store.completeDeletion(with: deletionError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, deletionError)
+        expect(sut, toCompleteWithError: deletionError, when: {
+            store.completeDeletion(with: deletionError)
+        })
     }
     
     func test_save_deliversFailureOnInsertionError() {
         let (sut, store) = makeSUT()
-        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         let insertionError = anyNSError()
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for save completion")
         
-        sut.save(dogs) { error in
-            receivedError = error
-            exp.fulfill()
-        }
-        store.completeDeletionSuccessfully()
-        store.completeInsertion(with: insertionError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, insertionError)
+        expect(sut, toCompleteWithError: insertionError, when: {
+            store.completeDeletionSuccessfully()
+            store.completeInsertion(with: insertionError)
+        })
     }
     
     func test_save_deliversSuccessOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
-        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for save completion")
         
-        sut.save(dogs) { error in
-            receivedError = error
-            exp.fulfill()
-        }
-        store.completeDeletionSuccessfully()
-        store.completeInsertionSuccessfully()
-        
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertNil(receivedError)
+        expect(sut, toCompleteWithError: nil, when: {
+            store.completeDeletionSuccessfully()
+            store.completeInsertionSuccessfully()
+        })
     }
     
     
@@ -173,6 +148,21 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut: sut, store: store)
+    }
+    
+    private func expect(_ sut: LocalDogLoader, toCompleteWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        var receivedError: Error?
+        
+        let exp = expectation(description: "Wait for save completion")
+        sut.save([uniqueDog(), uniqueDog()]) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
     }
     
     private func uniqueDog() -> Dog {
