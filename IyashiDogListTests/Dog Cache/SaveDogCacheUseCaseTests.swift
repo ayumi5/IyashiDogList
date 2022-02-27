@@ -17,10 +17,13 @@ class LocalDogLoader {
         self.currentDate = currentDate
     }
     
-    func save(_ dogs: [Dog]) {
+    func save(_ dogs: [Dog], completion: @escaping (Error?) -> Void) {
         store.deleteCache { [unowned self] error in
-            if error == nil {
+            if let error = error {
+                completion(error)
+            } else {
                 self.store.insert(dogs, timestamp: currentDate())
+                completion(nil)
             }
         }
     }
@@ -66,7 +69,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         
-        sut.save(dogs)
+        sut.save(dogs) { _ in }
         
         XCTAssertEqual(store.messages, [.deleteCache])
     }
@@ -76,7 +79,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         let deletionError = anyNSError()
         
-        sut.save(dogs)
+        sut.save(dogs) { _ in }
         store.completeDeletion(with: deletionError)
         
         XCTAssertEqual(store.messages, [.deleteCache])
@@ -87,10 +90,27 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { timestamp })
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
         
-        sut.save(dogs)
+        sut.save(dogs) { _ in }
         store.completeDeletionSuccessfully()
         
         XCTAssertEqual(store.messages, [.deleteCache, .insert(dogs, timestamp)])
+    }
+    
+    func test_save_deliversFailureOnDeletionError() {
+        let (sut, store) = makeSUT()
+        let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        let deletionError = anyNSError()
+        var receivedError: Error?
+        let exp = expectation(description: "Wait for save completion")
+        
+        sut.save(dogs) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        store.completeDeletion(with: deletionError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     
