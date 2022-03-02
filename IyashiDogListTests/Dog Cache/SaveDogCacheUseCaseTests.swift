@@ -139,48 +139,4 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     private func anyNSError() -> NSError {
         NSError.init(domain: "any error", code: 0)
     }
-    
-    class DogStoreSpy: DogStore {
-        typealias DeletionCompletion = (Error?) -> Void
-        typealias InsertionCompletion = (Error?) -> Void
-        
-        private var deleleCompletions = [DeletionCompletion]()
-        private var insertionCompletions = [InsertionCompletion]()
-        enum ReceivedMessage: Equatable {
-            case deleteCache
-            case insert([LocalDog], Date)
-        }
-        var messages = [ReceivedMessage]()
-        
-        func deleteCache(completion: @escaping DeletionCompletion) {
-            deleleCompletions.append(completion)
-            messages.append(.deleteCache)
-        }
-        
-        func completeDeletion(with error: Error, at index: Int = 0) {
-            deleleCompletions[index](error)
-        }
-        
-        func completeDeletionSuccessfully(at index: Int = 0) {
-            deleleCompletions[index](nil)
-        }
-        
-        func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion) {
-            messages.append(.insert(dogs, timestamp))
-            insertionCompletions.append(completion)
-        }
-        
-        func completeInsertion(with error: Error, at index: Int = 0) {
-            insertionCompletions[index](error)
-        }
-        
-        func completeInsertionSuccessfully(at index: Int = 0) {
-            insertionCompletions[index](nil)
-        }
-        
-        func retrieve() {
-            
-        }
-    }
-
 }
