@@ -40,11 +40,12 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let timestamp = Date()
         let (sut, store) = makeSUT(currentDate: { timestamp })
         let dogs: [Dog] = [uniqueDog(), uniqueDog()]
+        let localDogs = dogs.map { LocalDog(imageURL: $0.imageURL) }
         
         sut.save(dogs) { _ in }
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.messages, [.deleteCache, .insert(dogs, timestamp)])
+        XCTAssertEqual(store.messages, [.deleteCache, .insert(localDogs, timestamp)])
     }
     
     func test_save_deliversFailureOnDeletionError() {
@@ -147,7 +148,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         private var insertionCompletions = [InsertionCompletion]()
         enum ReceivedMessage: Equatable {
             case deleteCache
-            case insert([Dog], Date)
+            case insert([LocalDog], Date)
         }
         var messages = [ReceivedMessage]()
         
@@ -164,7 +165,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
             deleleCompletions[index](nil)
         }
         
-        func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion) {
+        func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion) {
             messages.append(.insert(dogs, timestamp))
             insertionCompletions.append(completion)
         }

@@ -31,11 +31,25 @@ public class LocalDogLoader {
     }
     
     private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {
-        store.insert(dogs, timestamp: currentDate()) { [weak self] error in
+        
+        store.insert(dogs.toLocal(), timestamp: currentDate()) { [weak self] error in
             guard self != nil else { return }
             
             completion(error)
         }
-        
+    }
+}
+
+private extension Array where Element == Dog {
+    func toLocal() -> [LocalDog] {
+        self.map { LocalDog(imageURL: $0.imageURL) }
+    }
+}
+
+public struct LocalDog: Equatable, Decodable {
+    public var imageURL: URL
+    
+    public init(imageURL: URL) {
+        self.imageURL = imageURL
     }
 }

@@ -12,5 +12,5 @@ public protocol DogStore {
     typealias InsertionCompletion = (Error?) -> Void
     
     func deleteCache(completion: @escaping DeletionCompletion)
-    func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion)
+    func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion)
 }
