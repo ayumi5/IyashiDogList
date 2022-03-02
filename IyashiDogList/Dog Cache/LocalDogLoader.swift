@@ -30,8 +30,10 @@ public class LocalDogLoader {
         }
     }
     
-    public func load() {
-        store.retrieve()
+    public func load(completion: @escaping (Error?) -> Void) {
+        store.retrieve { _, error  in
+            completion(error)
+        }
     }
     
     private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {

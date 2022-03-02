@@ -11,9 +11,12 @@ import IyashiDogList
 class DogStoreSpy: DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
+    typealias RetrievalCompletion = ([LocalDog], Error) -> Void
     
     private var deleleCompletions = [DeletionCompletion]()
     private var insertionCompletions = [InsertionCompletion]()
+    private var retrievalCompletions = [RetrievalCompletion]()
+    
     enum ReceivedMessage: Equatable {
         case deleteCache
         case insert([LocalDog], Date)
@@ -47,7 +50,12 @@ class DogStoreSpy: DogStore {
         insertionCompletions[index](nil)
     }
     
-    func retrieve() {
+    func retrieve(completion: @escaping RetrievalCompletion) {
         messages.append(.retrieve)
+        retrievalCompletions.append(completion)
+    }
+    
+    func completeRetrieval(with error: Error, at index: Int = 0) {
+        retrievalCompletions[index]([], error)
     }
 }
