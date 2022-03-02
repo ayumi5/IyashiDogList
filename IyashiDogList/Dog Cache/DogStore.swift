@@ -7,10 +7,16 @@
 
 import Foundation
 
+public enum RetrieveCacheResult {
+    case empty
+    case found([LocalDog], Date)
+    case failure(Error)
+}
+
 public protocol DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
-    typealias RetrievalCompletion = (Error?) -> Void
+    typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
     
     func deleteCache(completion: @escaping DeletionCompletion)
     func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion)

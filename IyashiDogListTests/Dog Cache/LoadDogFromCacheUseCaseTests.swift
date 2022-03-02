@@ -65,6 +65,29 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(receivedDogs, [])
     }
     
+    func test_load_deliversDogOnLessThanSevenDaysOldCache() {
+        let currentDate = Date()
+        let lessThanSevenDaysTimestamp = currentDate.adding(days: -7).adding(seconds: 1)
+        let (sut, store) = makeSUT(currentDate: { currentDate })
+        var receivedDogs: [Dog]?
+        let dogs = uniqueDogs()
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { result in
+            switch result {
+            case let .success(dogs):
+                receivedDogs = dogs
+           default:
+                XCTFail("Expected success, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        store.completeRetrievalOnLessThanSevenDaysOldCache(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedDogs, dogs.models)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
         let store = DogStoreSpy()
@@ -89,6 +112,12 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
     }
     
+    private func uniqueDogs() -> (models: [Dog], locals: [LocalDog]) {
+        let models = [uniqueDog(), uniqueDog()]
+        let locals = models.map { LocalDog(imageURL: $0.imageURL) }
+        return (models: models, locals: locals)
+    }
+    
     private func uniqueDog() -> Dog {
         Dog(imageURL: uniqueURL())
     }
@@ -99,5 +128,16 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         NSError.init(domain: "any error", code: 0)
+    }
+}
+
+private extension Date {
+    func adding(days: Int) -> Date {
+        let calendar = Calendar.init(identifier: .gregorian)
+        return calendar.date(byAdding: .day, value: days, to: self)!
+    }
+    
+    func adding(seconds: TimeInterval) -> Date {
+        return self + seconds
     }
 }

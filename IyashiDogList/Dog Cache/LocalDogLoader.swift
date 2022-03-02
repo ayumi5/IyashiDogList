@@ -32,13 +32,15 @@ public class LocalDogLoader {
     }
     
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
+        store.retrieve { result in
+            switch result {
+            case .empty:
                 completion(.success([]))
+            case let .failure(error):
+                completion(.failure(error))
+            case let .found(dogs, _):
+                completion(.success(dogs.toModels()))
             }
-            
         }
     }
     
@@ -55,5 +57,11 @@ public class LocalDogLoader {
 private extension Array where Element == Dog {
     func toLocal() -> [LocalDog] {
         self.map { LocalDog(imageURL: $0.imageURL) }
+    }
+}
+
+private extension Array where Element == LocalDog {
+    func toModels() -> [Dog] {
+        self.map { Dog(imageURL: $0.imageURL) }
     }
 }
