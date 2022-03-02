@@ -45,11 +45,3 @@ private extension Array where Element == Dog {
         self.map { LocalDog(imageURL: $0.imageURL) }
     }
 }
-
-public struct LocalDog: Equatable, Decodable {
-    public var imageURL: URL
-    
-    public init(imageURL: URL) {
-        self.imageURL = imageURL
-    }
-}
