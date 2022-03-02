@@ -27,65 +27,29 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
     func test_load_failsOnRetrievalError() {
         let (sut, store) = makeSUT()
         let retrievalError = anyNSError()
-        var receivedError: Error?
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { result in
-            switch result {
-            case let .failure(error):
-                receivedError = error
-            default:
-                XCTFail("Expected failure , got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        store.completeRetrieval(with: retrievalError)
-        
-        wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(receivedError as NSError?, retrievalError)
+        expect(sut, toCompleteWith: .failure(retrievalError), when: {
+            store.completeRetrieval(with: retrievalError)
+        })
     }
     
     func test_load_deliversNoDogOnEmptyCache() {
         let (sut, store) = makeSUT()
-        var receivedDogs: [Dog]?
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { result in
-            switch result {
-            case let .success(dogs):
-                receivedDogs = dogs
-           default:
-                XCTFail("Expected success, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        store.completeRetrievalWithEmptyCache()
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedDogs, [])
+        expect(sut, toCompleteWith: .success([]), when: {
+            store.completeRetrievalWithEmptyCache()
+        })
     }
     
     func test_load_deliversDogOnLessThanSevenDaysOldCache() {
         let currentDate = Date()
         let lessThanSevenDaysTimestamp = currentDate.adding(days: -7).adding(seconds: 1)
         let (sut, store) = makeSUT(currentDate: { currentDate })
-        var receivedDogs: [Dog]?
         let dogs = uniqueDogs()
         
-        let exp = expectation(description: "Wait for load completion")
-        sut.load { result in
-            switch result {
-            case let .success(dogs):
-                receivedDogs = dogs
-           default:
-                XCTFail("Expected success, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        store.completeRetrievalOnLessThanSevenDaysOldCache(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedDogs, dogs.models)
+        expect(sut, toCompleteWith: .success(dogs.models), when: {
+            store.completeRetrievalOnLessThanSevenDaysOldCache(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
+        })
     }
     
     // MARK: - Helpers
@@ -110,6 +74,26 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
+    }
+    
+    private func expect(_ sut: LocalDogLoader, toCompleteWith expectedResult: LocalDogLoader.LoadResult, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedDogs), .success(expectedDogs)):
+                XCTAssertEqual(receivedDogs, expectedDogs, file: file, line: line)
+            case let (.failure(receivedError as NSError?), .failure(expectedError as NSError?)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+                
+            }
+            exp.fulfill()
+        }
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private func uniqueDogs() -> (models: [Dog], locals: [LocalDog]) {
