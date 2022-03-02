@@ -61,21 +61,6 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         return (sut: sut, store: store)
     }
     
-    private func expect(_ sut: LocalDogLoader, toCompleteWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        var receivedError: Error?
-        
-        let exp = expectation(description: "Wait for save completion")
-        sut.save([uniqueDog(), uniqueDog()]) { error in
-            receivedError = error
-            exp.fulfill()
-        }
-        action()
-        
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
-    }
-    
     private func expect(_ sut: LocalDogLoader, toCompleteWith expectedResult: LocalDogLoader.LoadResult, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         
         let exp = expectation(description: "Wait for load completion")
