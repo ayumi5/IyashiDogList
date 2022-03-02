@@ -18,11 +18,13 @@ class LocalDogLoader {
     }
     
     func save(_ dogs: [Dog], completion: @escaping (Error?) -> Void) {
-        store.deleteCache { [unowned self] error in
+        store.deleteCache { [weak self] error in
+            guard let self = self else { return }
+            
             if let error = error {
                 completion(error)
             } else {
-                self.store.insert(dogs, timestamp: currentDate()) { error in
+                self.store.insert(dogs, timestamp: self.currentDate()) { error in
                     if let error = error {
                         completion(error)
                     } else {
@@ -107,6 +109,19 @@ class SaveDogCacheUseCaseTests: XCTestCase {
             store.completeDeletionSuccessfully()
             store.completeInsertionSuccessfully()
         })
+    }
+    
+    func test_save_doesNotDeliverDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
+        let store = DogStoreSpy()
+        var sut: LocalDogLoader? = LocalDogLoader(store: store, currentDate: Date.init)
+        
+        var receivedErrors = [Error?]()
+        sut?.save([uniqueDog()]) { receivedErrors.append($0) }
+        sut = nil
+        store.completeDeletion(with: anyNSError())
+        
+        XCTAssertTrue(receivedErrors.isEmpty)
+        
     }
     
     
