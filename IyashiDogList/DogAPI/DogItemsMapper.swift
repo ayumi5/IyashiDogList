@@ -13,18 +13,27 @@ final class DogItemsMapper {
     private struct DogRoot: Decodable {
         var message: [URL]
         
-        var dogs: [Dog] {
-            return message.map { Dog(imageURL: $0) }
+        var dogs: [RemoteDog] {
+            return message.map { RemoteDog(imageURL: $0) }
         }
     }
     
     static private let OK_200 = 200
     
-    static func map(_ data: Data, _ response: HTTPURLResponse) -> RemoteDogLoader.Result {
-        if response.statusCode == OK_200, let json = try? JSONDecoder().decode(DogRoot.self, from: data) {
-            return .success(json.dogs)
-        } else {
-            return .failure(RemoteDogLoader.Error.invalidData)
+    static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [RemoteDog] {
+        guard response.statusCode == OK_200, let root = try? JSONDecoder().decode(DogRoot.self, from: data) else {
+            throw RemoteDogLoader.Error.invalidData
         }
+        
+        return root.dogs
     }
 }
+
+public struct RemoteDog: Equatable, Decodable {
+    public var imageURL: URL
+    
+    public init(imageURL: URL) {
+        self.imageURL = imageURL
+    }
+}
+

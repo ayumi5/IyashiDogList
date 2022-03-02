@@ -28,12 +28,28 @@ public final class RemoteDogLoader: DogLoader {
             guard self != nil else { return }
             switch result {
             case let .success(data, response):
-                completion(DogItemsMapper.map(data, response))
+                completion(RemoteDogLoader.map(data, from: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             default:
                 break
             }
         }
+    }
+    
+    public static func map(_ data: Data, from response: HTTPURLResponse) -> Result {
+        do {
+            let dogs = try DogItemsMapper.map(data, response)
+            return .success(dogs.toModels())
+        } catch {
+            return .failure(error)
+        }
+        
+    }
+}
+
+extension Array where Element == RemoteDog {
+    func toModels() -> [Dog] {
+        self.map { Dog(imageURL: $0.imageURL) }
     }
 }
