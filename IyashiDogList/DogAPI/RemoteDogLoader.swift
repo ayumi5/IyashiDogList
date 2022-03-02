@@ -30,7 +30,7 @@ public final class RemoteDogLoader: DogLoader {
             case let .success(data, response):
                 completion(DogItemsMapper.map(data, response))
             case .failure:
-                completion(.failure(RemoteDogLoader.Error.connectivity))
+                completion(.failure(Error.connectivity))
             default:
                 break
             }
