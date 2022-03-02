@@ -32,16 +32,25 @@ public class LocalDogLoader {
     }
     
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { result in
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case .empty:
-                completion(.success([]))
             case let .failure(error):
                 completion(.failure(error))
-            case let .found(dogs, _):
+            case let .found(dogs, timestamp) where self.validate(timestamp):
                 completion(.success(dogs.toModels()))
+            case .found, .empty:
+                completion(.success([]))
             }
         }
+    }
+    
+    private func validate(_ timestamp: Date) -> Bool {
+        let calendar = Calendar(identifier: .gregorian)
+        guard let maxCacheAge = calendar.date(byAdding: .day, value: 7, to: timestamp) else {
+            return false
+        }
+        return currentDate() < maxCacheAge
     }
     
     private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {

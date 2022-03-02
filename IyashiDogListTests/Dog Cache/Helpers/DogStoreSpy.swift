@@ -63,7 +63,7 @@ class DogStoreSpy: DogStore {
         retrievalCompletions[index](.empty)
     }
     
-    func completeRetrievalOnLessThanSevenDaysOldCache(with dogs: [LocalDog], timestamp: Date, at index: Int = 0) {
+    func completeRetrieval(with dogs: [LocalDog], timestamp: Date, at index: Int = 0) {
         retrievalCompletions[index](.found(dogs, timestamp))
     }
 }

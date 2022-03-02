@@ -48,7 +48,18 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         let dogs = uniqueDogs()
         
         expect(sut, toCompleteWith: .success(dogs.models), when: {
-            store.completeRetrievalOnLessThanSevenDaysOldCache(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
+            store.completeRetrieval(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
+        })
+    }
+    
+    func test_load_doesNotDeliverDogOnSevenDaysOldCache() {
+        let currentDate = Date()
+        let sevenDaysTimestamp = currentDate.adding(days: -7)
+        let (sut, store) = makeSUT(currentDate: { currentDate })
+        let dogs = uniqueDogs()
+
+        expect(sut, toCompleteWith: .success([]), when: {
+            store.completeRetrieval(with: dogs.locals, timestamp: sevenDaysTimestamp)
         })
     }
     
