@@ -28,12 +28,3 @@ final class DogItemsMapper {
         return root.dogs
     }
 }
-
-public struct RemoteDog: Equatable, Decodable {
-    public var imageURL: URL
-    
-    public init(imageURL: URL) {
-        self.imageURL = imageURL
-    }
-}
-
