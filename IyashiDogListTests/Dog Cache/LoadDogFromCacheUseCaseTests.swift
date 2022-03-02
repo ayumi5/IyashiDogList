@@ -16,6 +16,14 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [])
     }
     
+    func test_load_requestsCacheRetrieval() {
+        let (sut, store) = makeSUT()
+        
+        sut.load()
+        
+        XCTAssertEqual(store.messages, [.retrieve])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
         let store = DogStoreSpy()
@@ -61,6 +69,7 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         enum ReceivedMessage: Equatable {
             case deleteCache
             case insert([LocalDog], Date)
+            case retrieve
         }
         var messages = [ReceivedMessage]()
         
@@ -88,6 +97,10 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         
         func completeInsertionSuccessfully(at index: Int = 0) {
             insertionCompletions[index](nil)
+        }
+        
+        func retrieve() {
+            messages.append(.retrieve)
         }
     }
 

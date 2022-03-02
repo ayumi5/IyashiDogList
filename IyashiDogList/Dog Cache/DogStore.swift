@@ -13,4 +13,5 @@ public protocol DogStore {
     
     func deleteCache(completion: @escaping DeletionCompletion)
     func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion)
+    func retrieve()
 }

@@ -30,6 +30,10 @@ public class LocalDogLoader {
         }
     }
     
+    public func load() {
+        store.retrieve()
+    }
+    
     private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {
         
         store.insert(dogs.toLocal(), timestamp: currentDate()) { [weak self] error in
