@@ -10,7 +10,7 @@ import Foundation
 public protocol DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
-    typealias RetrievalCompletion = ([LocalDog], Error) -> Void
+    typealias RetrievalCompletion = (Error?) -> Void
     
     func deleteCache(completion: @escaping DeletionCompletion)
     func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion)

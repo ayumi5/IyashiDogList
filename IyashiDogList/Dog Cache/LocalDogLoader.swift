@@ -12,6 +12,7 @@ public class LocalDogLoader {
     private let currentDate: () -> Date
     
     public typealias SaveResult = Error?
+    public typealias LoadResult = DogLoader.Result
     
     public init(store: DogStore, currentDate: @escaping () -> Date) {
         self.store = store
@@ -30,9 +31,14 @@ public class LocalDogLoader {
         }
     }
     
-    public func load(completion: @escaping (Error?) -> Void) {
-        store.retrieve { _, error  in
-            completion(error)
+    public func load(completion: @escaping (LoadResult) -> Void) {
+        store.retrieve { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success([]))
+            }
+            
         }
     }
     

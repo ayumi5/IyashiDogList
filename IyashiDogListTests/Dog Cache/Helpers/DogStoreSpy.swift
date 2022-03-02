@@ -11,7 +11,7 @@ import IyashiDogList
 class DogStoreSpy: DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
-    typealias RetrievalCompletion = ([LocalDog], Error) -> Void
+    typealias RetrievalCompletion = (Error?) -> Void
     
     private var deleleCompletions = [DeletionCompletion]()
     private var insertionCompletions = [InsertionCompletion]()
@@ -56,6 +56,10 @@ class DogStoreSpy: DogStore {
     }
     
     func completeRetrieval(with error: Error, at index: Int = 0) {
-        retrievalCompletions[index]([], error)
+        retrievalCompletions[index](error)
+    }
+    
+    func completeRetrievalWithEmptyCache(at index: Int = 0) {
+        retrievalCompletions[index](nil)
     }
 }
