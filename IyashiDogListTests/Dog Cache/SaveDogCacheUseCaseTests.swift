@@ -34,43 +34,12 @@ class LocalDogLoader {
     }
 }
 
-class DogStore {
+protocol DogStore {
     typealias DeletionCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
     
-    private var deleleCompletions = [DeletionCompletion]()
-    private var insertionCompletions = [InsertionCompletion]()
-    enum ReceivedMessage: Equatable {
-        case deleteCache
-        case insert([Dog], Date)
-    }
-    var messages = [ReceivedMessage]()
-    
-    func deleteCache(completion: @escaping DeletionCompletion) {
-        deleleCompletions.append(completion)
-        messages.append(.deleteCache)
-    }
-    
-    func completeDeletion(with error: Error, at index: Int = 0) {
-        deleleCompletions[index](error)
-    }
-    
-    func completeDeletionSuccessfully(at index: Int = 0) {
-        deleleCompletions[index](nil)
-    }
-    
-    func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion) {
-        messages.append(.insert(dogs, timestamp))
-        insertionCompletions.append(completion)
-    }
-    
-    func completeInsertion(with error: Error, at index: Int = 0) {
-        insertionCompletions[index](error)
-    }
-    
-    func completeInsertionSuccessfully(at index: Int = 0) {
-        insertionCompletions[index](nil)
-    }
+    func deleteCache(completion: @escaping DeletionCompletion)
+    func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion)
 }
 
 class SaveDogCacheUseCaseTests: XCTestCase {
@@ -142,8 +111,8 @@ class SaveDogCacheUseCaseTests: XCTestCase {
     
     
     // MARK: - Helpers
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStore) {
-        let store = DogStore()
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
+        let store = DogStoreSpy()
         let sut = LocalDogLoader(store: store, currentDate: currentDate)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -177,4 +146,43 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         NSError.init(domain: "any error", code: 0)
     }
     
+    class DogStoreSpy: DogStore {
+        typealias DeletionCompletion = (Error?) -> Void
+        typealias InsertionCompletion = (Error?) -> Void
+        
+        private var deleleCompletions = [DeletionCompletion]()
+        private var insertionCompletions = [InsertionCompletion]()
+        enum ReceivedMessage: Equatable {
+            case deleteCache
+            case insert([Dog], Date)
+        }
+        var messages = [ReceivedMessage]()
+        
+        func deleteCache(completion: @escaping DeletionCompletion) {
+            deleleCompletions.append(completion)
+            messages.append(.deleteCache)
+        }
+        
+        func completeDeletion(with error: Error, at index: Int = 0) {
+            deleleCompletions[index](error)
+        }
+        
+        func completeDeletionSuccessfully(at index: Int = 0) {
+            deleleCompletions[index](nil)
+        }
+        
+        func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion) {
+            messages.append(.insert(dogs, timestamp))
+            insertionCompletions.append(completion)
+        }
+        
+        func completeInsertion(with error: Error, at index: Int = 0) {
+            insertionCompletions[index](error)
+        }
+        
+        func completeInsertionSuccessfully(at index: Int = 0) {
+            insertionCompletions[index](nil)
+        }
+    }
+
 }
