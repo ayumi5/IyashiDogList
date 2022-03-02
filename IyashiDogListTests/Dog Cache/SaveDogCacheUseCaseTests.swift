@@ -8,45 +8,6 @@
 import XCTest
 import IyashiDogList
 
-class LocalDogLoader {
-    private let store: DogStore
-    private let currentDate: () -> Date
-    
-    init(store: DogStore, currentDate: @escaping () -> Date) {
-        self.store = store
-        self.currentDate = currentDate
-    }
-    
-    func save(_ dogs: [Dog], completion: @escaping (Error?) -> Void) {
-        store.deleteCache { [weak self] error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                completion(error)
-            } else {
-                self.cache(dogs, with: completion)
-            }
-        }
-    }
-    
-    private func cache(_ dogs: [Dog], with completion: @escaping (Error?) -> Void) {
-        store.insert(dogs, timestamp: currentDate()) { [weak self] error in
-            guard self != nil else { return }
-            
-            completion(error)
-        }
-        
-    }
-}
-
-protocol DogStore {
-    typealias DeletionCompletion = (Error?) -> Void
-    typealias InsertionCompletion = (Error?) -> Void
-    
-    func deleteCache(completion: @escaping DeletionCompletion)
-    func insert(_ dogs: [Dog], timestamp: Date, completion: @escaping InsertionCompletion)
-}
-
 class SaveDogCacheUseCaseTests: XCTestCase {
     
     func test_init_doesNotDeleteCacheUponCreation() {
