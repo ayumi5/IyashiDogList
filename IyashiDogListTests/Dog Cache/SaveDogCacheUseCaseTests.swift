@@ -24,7 +24,8 @@ class LocalDogLoader {
             if let error = error {
                 completion(error)
             } else {
-                self.store.insert(dogs, timestamp: self.currentDate()) { error in
+                self.store.insert(dogs, timestamp: self.currentDate()) { [weak self] error in
+                    guard self != nil else { return }
                     if let error = error {
                         completion(error)
                     } else {
@@ -119,6 +120,20 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         sut?.save([uniqueDog()]) { receivedErrors.append($0) }
         sut = nil
         store.completeDeletion(with: anyNSError())
+        
+        XCTAssertTrue(receivedErrors.isEmpty)
+        
+    }
+    
+    func test_save_doesNotDeliverInsertionErrorAfterSUTInstanceHasBeenDeallocated() {
+        let store = DogStoreSpy()
+        var sut: LocalDogLoader? = LocalDogLoader(store: store, currentDate: Date.init)
+        
+        var receivedErrors = [Error?]()
+        sut?.save([uniqueDog()]) { receivedErrors.append($0) }
+        store.completeDeletionSuccessfully()
+        sut = nil
+        store.completeInsertion(with: anyNSError())
         
         XCTAssertTrue(receivedErrors.isEmpty)
         
