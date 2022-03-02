@@ -24,16 +24,18 @@ class LocalDogLoader {
             if let error = error {
                 completion(error)
             } else {
-                self.store.insert(dogs, timestamp: self.currentDate()) { [weak self] error in
-                    guard self != nil else { return }
-                    if let error = error {
-                        completion(error)
-                    } else {
-                        completion(nil)
-                    }
-                }
+                self.cache(dogs, with: completion)
             }
         }
+    }
+    
+    private func cache(_ dogs: [Dog], with completion: @escaping (Error?) -> Void) {
+        store.insert(dogs, timestamp: currentDate()) { [weak self] error in
+            guard self != nil else { return }
+            
+            completion(error)
+        }
+        
     }
 }
 
