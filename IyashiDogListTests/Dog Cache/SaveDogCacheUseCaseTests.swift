@@ -79,7 +79,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let store = DogStoreSpy()
         var sut: LocalDogLoader? = LocalDogLoader(store: store, currentDate: Date.init)
         
-        var receivedErrors = [Error?]()
+        var receivedErrors = [LocalDogLoader.SaveResult]()
         sut?.save([uniqueDog()]) { receivedErrors.append($0) }
         sut = nil
         store.completeDeletion(with: anyNSError())
@@ -92,7 +92,7 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         let store = DogStoreSpy()
         var sut: LocalDogLoader? = LocalDogLoader(store: store, currentDate: Date.init)
         
-        var receivedErrors = [Error?]()
+        var receivedErrors = [LocalDogLoader.SaveResult]()
         sut?.save([uniqueDog()]) { receivedErrors.append($0) }
         store.completeDeletionSuccessfully()
         sut = nil
