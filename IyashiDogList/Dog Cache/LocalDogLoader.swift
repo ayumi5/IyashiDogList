@@ -36,6 +36,7 @@ public class LocalDogLoader {
             guard let self = self else { return }
             switch result {
             case let .failure(error):
+                self.store.deleteCache { _ in}
                 completion(.failure(error))
             case let .found(dogs, timestamp) where self.validate(timestamp):
                 completion(.success(dogs.toModels()))
