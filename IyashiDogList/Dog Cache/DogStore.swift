@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 public enum RetrieveCacheResult {
     case empty
@@ -21,4 +22,17 @@ public protocol DogStore {
     func deleteCache(completion: @escaping DeletionCompletion)
     func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion)
     func retrieve(completion: @escaping RetrievalCompletion)
+}
+
+@objc(ManagedDogCache)
+class ManagedDogCache: NSManagedObject {
+    @NSManaged var timestamp: String
+    @NSManaged var dogs: NSOrderedSet
+}
+
+
+@objc(ManagedDogImage)
+class ManagedDogImage: NSManagedObject {
+    @NSManaged var url: URL
+    @NSManaged var cache: ManagedDogCache
 }
