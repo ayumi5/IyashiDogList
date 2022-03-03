@@ -41,7 +41,7 @@ extension LocalDogLoader {
     }
 }
 
-extension LocalDogLoader {
+extension LocalDogLoader: DogLoader {
     public typealias LoadResult = DogLoader.Result
     
     public func load(completion: @escaping (LoadResult) -> Void) {
