@@ -8,17 +8,6 @@
 import XCTest
 import IyashiDogList
 
-final class CoreDataDogStore {
-    
-    typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
-    
-    func retrieve(completion: @escaping RetrievalCompletion) {
-        completion(.empty)
-    }
-    
-    
-}
-
 class CoreDataDogStoreTests: XCTestCase {
 
     func test_retrieve_deliversEmptyOnEmptyCache() {

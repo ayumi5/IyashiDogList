@@ -30,6 +30,7 @@
 		DA6AB28127D090F400AD81C0 /* DogCachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */; };
 		DA6AB28327D094FD00AD81C0 /* CoreDataDogStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28227D094FC00AD81C0 /* CoreDataDogStoreTests.swift */; };
 		DA6AB28927D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */; };
+		DA6AB28B27D0B2BC00AD81C0 /* CoreDataDogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */; };
 		DA7E75B8279253D40072DDCA /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
@@ -91,6 +92,7 @@
 		DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogCachePolicy.swift; sourceTree = "<group>"; };
 		DA6AB28227D094FC00AD81C0 /* CoreDataDogStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDogStoreTests.swift; sourceTree = "<group>"; };
 		DA6AB28827D0AF2F00AD81C0 /* DogStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DogStore.xcdatamodel; sourceTree = "<group>"; };
+		DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDogStore.swift; sourceTree = "<group>"; };
 		DA7E75B7279253D40072DDCA /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				DA60010127CF1775005553E7 /* LocalDog.swift */,
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
 				DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */,
+				DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */,
 				DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */,
 				DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */,
+				DA6AB28B27D0B2BC00AD81C0 /* CoreDataDogStore.swift in Sources */,
 				DA7E75B8279253D40072DDCA /* Dog.swift in Sources */,
 				DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */,
 				DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */,
