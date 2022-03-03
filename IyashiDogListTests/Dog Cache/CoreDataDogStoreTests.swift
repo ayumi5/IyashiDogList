@@ -45,8 +45,12 @@ class CoreDataDogStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT() -> CoreDataDogStore {
-        CoreDataDogStore()
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataDogStore {
+        let storeBundle = Bundle(for: CoreDataDogStore.self)
+        let storeURL = URL(fileURLWithPath: "/dev/null")
+        let sut = try! CoreDataDogStore(storeURL: storeURL, bundle: storeBundle)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
     }
     
 
