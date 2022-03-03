@@ -11,13 +11,14 @@ public class LocalDogLoader {
     private let store: DogStore
     private let currentDate: () -> Date
     
-    public typealias SaveResult = Error?
-    public typealias LoadResult = DogLoader.Result
-    
     public init(store: DogStore, currentDate: @escaping () -> Date) {
         self.store = store
         self.currentDate = currentDate
     }
+}
+
+extension LocalDogLoader {
+    public typealias SaveResult = Error?
     
     public func save(_ dogs: [Dog], completion: @escaping (SaveResult) -> Void) {
         store.deleteCache { [weak self] error in
@@ -30,6 +31,18 @@ public class LocalDogLoader {
             }
         }
     }
+    
+    private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {
+        store.insert(dogs.toLocal(), timestamp: currentDate()) { [weak self] error in
+            guard self != nil else { return }
+            
+            completion(error)
+        }
+    }
+}
+
+extension LocalDogLoader {
+    public typealias LoadResult = DogLoader.Result
     
     public func load(completion: @escaping (LoadResult) -> Void) {
         store.retrieve { [weak self] result in
@@ -46,7 +59,9 @@ public class LocalDogLoader {
             }
         }
     }
+}
     
+extension LocalDogLoader {
     public func validateCache() {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
@@ -69,15 +84,6 @@ public class LocalDogLoader {
             return false
         }
         return currentDate() < maxCacheAge
-    }
-    
-    private func cache(_ dogs: [Dog], with completion: @escaping (SaveResult) -> Void) {
-        
-        store.insert(dogs.toLocal(), timestamp: currentDate()) { [weak self] error in
-            guard self != nil else { return }
-            
-            completion(error)
-        }
     }
 }
 
