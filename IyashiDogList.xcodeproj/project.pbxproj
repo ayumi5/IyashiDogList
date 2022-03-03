@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2BFAF827D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */; };
 		DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9A278E7170002B2A91 /* AppDelegate.swift */; };
 		DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9C278E7170002B2A91 /* SceneDelegate.swift */; };
 		DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9E278E7170002B2A91 /* ViewController.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		DA370B97278E7170002B2A91 /* IyashiDogList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IyashiDogList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA370B9A278E7170002B2A91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA370B9C278E7170002B2A91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				DA60010727CF35CA005553E7 /* Helpers */,
 				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
 				DA60010527CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift */,
+				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				DA370BCD278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift in Sources */,
 				DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */,
 				DA60010927CF35DA005553E7 /* DogStoreSpy.swift in Sources */,
+				DA2BFAF827D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift in Sources */,
 				DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */,
 			);
