@@ -7,22 +7,6 @@
 
 import Foundation
 
-private final class DogCachePolicy {
-    
-    private init() { }
-    
-    private static var maxCacheAgeInDays: Int {
-        return 7
-    }
-    
-    static func validate(_ timestamp: Date, against currentDate: Date) -> Bool {
-        guard let maxCacheAge = Calendar(identifier: .gregorian).date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
-            return false
-        }
-        return currentDate < maxCacheAge
-    }
-}
-
 public class LocalDogLoader {
     private let store: DogStore
     private let currentDate: () -> Date
