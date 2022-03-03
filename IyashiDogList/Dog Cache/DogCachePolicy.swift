@@ -15,10 +15,10 @@ final class DogCachePolicy {
         return 7
     }
     
-    static func validate(_ timestamp: Date, against currentDate: Date) -> Bool {
+    static func validate(_ timestamp: Date, against date: Date) -> Bool {
         guard let maxCacheAge = Calendar(identifier: .gregorian).date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
             return false
         }
-        return currentDate < maxCacheAge
+        return date < maxCacheAge
     }
 }
