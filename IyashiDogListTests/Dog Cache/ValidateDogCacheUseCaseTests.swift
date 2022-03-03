@@ -70,6 +70,17 @@ class ValidateDogCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
     }
     
+    func test_validateCache_doesNotDeleteCacheAfterSUTInstanceHasBeenDeallocated() {
+        let store = DogStoreSpy()
+        var sut: LocalDogLoader? = LocalDogLoader(store: store, currentDate: Date.init)
+        
+        sut?.validateCache()
+        sut = nil
+        store.completeRetrieval(with: anyNSError())
+        
+        XCTAssertEqual(store.messages, [.retrieve])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
         let store = DogStoreSpy()
