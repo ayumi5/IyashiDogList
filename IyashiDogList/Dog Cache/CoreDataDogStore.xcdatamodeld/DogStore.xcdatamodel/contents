@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ManagedDogCache" representedClassName="ManagedDogCache" syncable="YES">
+        <attribute name="timestamp" attributeType="String"/>
+        <relationship name="dogs" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedDogImage" inverseName="cache" inverseEntity="ManagedDogImage"/>
+    </entity>
+    <entity name="ManagedDogImage" representedClassName="ManagedDogImage" syncable="YES">
+        <attribute name="imageURL" attributeType="URI"/>
+        <relationship name="cache" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedDogCache" inverseName="dogs" inverseEntity="ManagedDogCache"/>
+    </entity>
+    <elements>
+        <element name="ManagedDogCache" positionX="-45" positionY="0" width="128" height="59"/>
+        <element name="ManagedDogImage" positionX="-18" positionY="36" width="128" height="59"/>
+    </elements>
+</model>
