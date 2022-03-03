@@ -74,13 +74,13 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         })
     }
     
-    func test_load_deletesCacheOnRetrievalError() {
+    func test_load_hasNoSideEffectsOnRetrievalError() {
         let (sut, store) = makeSUT()
         
         sut.load { _ in }
         store.completeRetrieval(with: anyNSError())
         
-        XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+        XCTAssertEqual(store.messages, [.retrieve])
     }
     
     func test_load_doesNotDeleteCacheOnEmptyCache() {

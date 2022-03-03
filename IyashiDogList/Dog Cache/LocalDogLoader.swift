@@ -36,7 +36,6 @@ public class LocalDogLoader {
             guard let self = self else { return }
             switch result {
             case let .failure(error):
-                self.store.deleteCache { _ in }
                 completion(.failure(error))
             case let .found(dogs, timestamp) where self.validate(timestamp):
                 completion(.success(dogs.toModels()))
@@ -47,6 +46,11 @@ public class LocalDogLoader {
                 completion(.success([]))
             }
         }
+    }
+    
+    public func validateCache() {
+        store.retrieve { _ in }
+        store.deleteCache { _ in }
     }
     
     private var maxCacheAgeInDays: Int {
