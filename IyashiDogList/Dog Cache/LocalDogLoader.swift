@@ -7,6 +7,22 @@
 
 import Foundation
 
+private final class DogCachePolicy {
+    
+    private init() { }
+    
+    private static var maxCacheAgeInDays: Int {
+        return 7
+    }
+    
+    static func validate(_ timestamp: Date, against currentDate: Date) -> Bool {
+        guard let maxCacheAge = Calendar(identifier: .gregorian).date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
+            return false
+        }
+        return currentDate < maxCacheAge
+    }
+}
+
 public class LocalDogLoader {
     private let store: DogStore
     private let currentDate: () -> Date
@@ -50,7 +66,7 @@ extension LocalDogLoader: DogLoader {
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-            case let .found(dogs, timestamp) where self.validate(timestamp):
+            case let .found(dogs, timestamp) where DogCachePolicy.validate(timestamp, against: self.currentDate()):
                 completion(.success(dogs.toModels()))
             case .found:
                 completion(.success([]))
@@ -68,22 +84,11 @@ extension LocalDogLoader {
             switch result {
             case .failure:
                 self.store.deleteCache { _ in }
-            case let .found(_, timestamp) where !self.validate(timestamp):
+            case let .found(_, timestamp) where !DogCachePolicy.validate(timestamp, against: self.currentDate()):
                 self.store.deleteCache { _ in }
             case .empty, .found: break
             }
         }
-    }
-    
-    private var maxCacheAgeInDays: Int {
-        return 7
-    }
-    
-    private func validate(_ timestamp: Date) -> Bool {
-        guard let maxCacheAge = Calendar(identifier: .gregorian).date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
-            return false
-        }
-        return currentDate() < maxCacheAge
     }
 }
 
