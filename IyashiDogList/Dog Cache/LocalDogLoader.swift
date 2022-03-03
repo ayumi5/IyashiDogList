@@ -52,8 +52,7 @@ public class LocalDogLoader {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .empty:
-                break
+            case .empty, .found: break
             default:
                 self.store.deleteCache { _ in }
             }

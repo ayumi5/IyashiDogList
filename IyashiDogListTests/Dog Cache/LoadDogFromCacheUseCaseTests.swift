@@ -92,7 +92,7 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [.retrieve])
     }
     
-    func test_load_doesNotDeleteCacheOnNonExpiredCache() {
+    func test_load_hasNoSideEffectsOnNonExpiredCache() {
         let currentDate = Date()
         let nonExpiredTimestamp = currentDate.minusCacheMaxAge().adding(seconds: 1)
         let (sut, store) = makeSUT(currentDate: { currentDate })
