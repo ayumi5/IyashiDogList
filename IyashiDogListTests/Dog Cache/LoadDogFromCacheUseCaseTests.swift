@@ -78,9 +78,18 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         sut.load { _ in }
-
         store.completeRetrieval(with: anyNSError())
+        
         XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+    }
+    
+    func test_load_doesNotDeleteCacheOnEmptyCache() {
+        let (sut, store) = makeSUT()
+        
+        sut.load { _ in}
+        store.completeRetrievalWithEmptyCache()
+        
+        XCTAssertEqual(store.messages, [.retrieve])
     }
     
     // MARK: - Helpers
