@@ -127,16 +127,4 @@ class SaveDogCacheUseCaseTests: XCTestCase {
         
         XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
     }
-    
-    private func uniqueDog() -> Dog {
-        Dog(imageURL: uniqueURL())
-    }
-    
-    private func uniqueURL() -> URL {
-        URL(string: "http://unique-url-\(UUID()).com")!
-    }
-    
-    private func anyNSError() -> NSError {
-        NSError.init(domain: "any error", code: 0)
-    }
 }

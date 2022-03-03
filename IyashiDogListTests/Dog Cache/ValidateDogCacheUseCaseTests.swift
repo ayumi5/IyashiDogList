@@ -89,41 +89,4 @@ class ValidateDogCacheUseCaseTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut: sut, store: store)
     }
-    
-    private func uniqueDogs() -> (models: [Dog], locals: [LocalDog]) {
-        let models = [uniqueDog(), uniqueDog()]
-        let locals = models.map { LocalDog(imageURL: $0.imageURL) }
-        return (models: models, locals: locals)
-    }
-    
-    private func uniqueDog() -> Dog {
-        Dog(imageURL: uniqueURL())
-    }
-    
-    private func uniqueURL() -> URL {
-        URL(string: "http://unique-url-\(UUID()).com")!
-    }
-    
-    private func anyNSError() -> NSError {
-        NSError.init(domain: "any error", code: 0)
-    }
-}
-
-private extension Date {
-    func minusCacheMaxAge() -> Date {
-        self.adding(days: -cacheMaxAgeInDays)
-    }
-    
-    private var cacheMaxAgeInDays: Int {
-        return 7
-    }
-    
-    func adding(days: Int) -> Date {
-        let calendar = Calendar.init(identifier: .gregorian)
-        return calendar.date(byAdding: .day, value: days, to: self)!
-    }
-    
-    func adding(seconds: TimeInterval) -> Date {
-        return self + seconds
-    }
 }
