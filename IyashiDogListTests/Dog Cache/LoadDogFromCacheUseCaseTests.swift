@@ -41,36 +41,36 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         })
     }
     
-    func test_load_deliversDogOnLessThanSevenDaysOldCache() {
+    func test_load_deliversDogOnNonExpiredCache() {
         let currentDate = Date()
-        let lessThanSevenDaysTimestamp = currentDate.adding(days: -7).adding(seconds: 1)
+        let nonExpiredTimestamp = currentDate.minusCacheMaxAge().adding(seconds: 1)
         let (sut, store) = makeSUT(currentDate: { currentDate })
         let dogs = uniqueDogs()
         
         expect(sut, toCompleteWith: .success(dogs.models), when: {
-            store.completeRetrieval(with: dogs.locals, timestamp: lessThanSevenDaysTimestamp)
+            store.completeRetrieval(with: dogs.locals, timestamp: nonExpiredTimestamp)
         })
     }
     
-    func test_load_doesNotDeliverDogOnSevenDaysOldCache() {
+    func test_load_doesNotDeliverDogOnCacheExpirarion() {
         let currentDate = Date()
-        let sevenDaysTimestamp = currentDate.adding(days: -7)
+        let expiredTimestamp = currentDate.minusCacheMaxAge()
         let (sut, store) = makeSUT(currentDate: { currentDate })
         let dogs = uniqueDogs()
 
         expect(sut, toCompleteWith: .success([]), when: {
-            store.completeRetrieval(with: dogs.locals, timestamp: sevenDaysTimestamp)
+            store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
         })
     }
     
-    func test_load_doesNotDeliverDogOnMoreThanSevenDaysOldCache() {
+    func test_load_doesNotDeliverDogOnExpiredCache() {
         let currentDate = Date()
-        let moreThanSevenDaysTimestamp = currentDate.adding(days: -7).adding(seconds: -1)
+        let expiredTimestamp = currentDate.minusCacheMaxAge().adding(seconds: -1)
         let (sut, store) = makeSUT(currentDate: { currentDate })
         let dogs = uniqueDogs()
 
         expect(sut, toCompleteWith: .success([]), when: {
-            store.completeRetrieval(with: dogs.locals, timestamp: moreThanSevenDaysTimestamp)
+            store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
         })
     }
     
@@ -91,6 +91,7 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         
         XCTAssertEqual(store.messages, [.retrieve])
     }
+    
     
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
@@ -121,6 +122,10 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    private var cacheMaxAgeInDays: Int {
+        return 7
+    }
+    
     private func uniqueDogs() -> (models: [Dog], locals: [LocalDog]) {
         let models = [uniqueDog(), uniqueDog()]
         let locals = models.map { LocalDog(imageURL: $0.imageURL) }
@@ -141,6 +146,14 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
 }
 
 private extension Date {
+    func minusCacheMaxAge() -> Date {
+        self.adding(days: -cacheMaxAgeInDays)
+    }
+    
+    private var cacheMaxAgeInDays: Int {
+        return 7
+    }
+    
     func adding(days: Int) -> Date {
         let calendar = Calendar.init(identifier: .gregorian)
         return calendar.date(byAdding: .day, value: days, to: self)!
