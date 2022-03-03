@@ -46,6 +46,30 @@ class ValidateDogCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [.retrieve])
     }
     
+    func test_validateCache_deletesCacheOnCacheExpiration() {
+        let currentDate = Date()
+        let expiredTimestamp = currentDate.minusCacheMaxAge()
+        let (sut, store) = makeSUT(currentDate: { currentDate })
+        let dogs = uniqueDogs()
+        
+        sut.validateCache()
+        store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
+    
+        XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+    }
+    
+    func test_validateCache_deletesCacheOnExpiredCache() {
+        let currentDate = Date()
+        let expiredTimestamp = currentDate.minusCacheMaxAge().adding(seconds: -1)
+        let (sut, store) = makeSUT(currentDate: { currentDate })
+        let dogs = uniqueDogs()
+
+        sut.validateCache()
+        store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
+
+        XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalDogLoader, store: DogStoreSpy) {
         let store = DogStoreSpy()

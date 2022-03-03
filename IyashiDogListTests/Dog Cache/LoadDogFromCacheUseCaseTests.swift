@@ -104,7 +104,7 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [.retrieve])
     }
     
-    func test_load_deletesCacheOnCacheExpiration() {
+    func test_load_hasNoSideEffectsOnCacheExpiration() {
         let currentDate = Date()
         let expiredTimestamp = currentDate.minusCacheMaxAge()
         let (sut, store) = makeSUT(currentDate: { currentDate })
@@ -113,10 +113,10 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         sut.load { _ in }
         store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
     
-        XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+        XCTAssertEqual(store.messages, [.retrieve])
     }
     
-    func test_load_deletesCacheOnExpiredCache() {
+    func test_load_hasNoSideEffectsOnExpiredCache() {
         let currentDate = Date()
         let expiredTimestamp = currentDate.minusCacheMaxAge().adding(seconds: -1)
         let (sut, store) = makeSUT(currentDate: { currentDate })
@@ -125,7 +125,7 @@ class LoadDogFromCacheUseCaseTests: XCTestCase {
         sut.load { _ in }
         store.completeRetrieval(with: dogs.locals, timestamp: expiredTimestamp)
     
-        XCTAssertEqual(store.messages, [.retrieve, .deleteCache])
+        XCTAssertEqual(store.messages, [.retrieve])
     }
     
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
