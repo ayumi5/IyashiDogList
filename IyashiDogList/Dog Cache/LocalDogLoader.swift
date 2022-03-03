@@ -49,8 +49,15 @@ public class LocalDogLoader {
     }
     
     public func validateCache() {
-        store.retrieve { _ in }
-        store.deleteCache { _ in }
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .empty:
+                break
+            default:
+                self.store.deleteCache { _ in }
+            }
+        }
     }
     
     private var maxCacheAgeInDays: Int {
