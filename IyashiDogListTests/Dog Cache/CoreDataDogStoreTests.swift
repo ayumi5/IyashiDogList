@@ -22,7 +22,7 @@ final class CoreDataDogStore {
 class CoreDataDogStoreTests: XCTestCase {
 
     func test_retrieve_deliversEmptyOnEmptyCache() {
-        let sut = CoreDataDogStore()
+        let sut = makeSUT()
         
         let exp = expectation(description: "Wait for retrieval completion")
         sut.retrieve { result in
@@ -38,7 +38,7 @@ class CoreDataDogStoreTests: XCTestCase {
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
-        let sut = CoreDataDogStore()
+        let sut = makeSUT()
         
         let exp = expectation(description: "Wait for retrieval completion")
         sut.retrieve { firstResult in
@@ -54,5 +54,11 @@ class CoreDataDogStoreTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    // MARK: - Helpers
+    private func makeSUT() -> CoreDataDogStore {
+        CoreDataDogStore()
+    }
+    
 
 }
