@@ -70,6 +70,20 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: .found(secondDogs.locals, secondTimestamp))
     }
     
+    func test_insert_failsOnInsertionError() {
+        let sut = makeSUT()
+        let stub = NSManagedObjectContext.alwaysFailingSaveStub()
+        stub.startIntercepting()
+        
+        let exp = expectation(description: "Wait for insertion error")
+        sut.insert(uniqueDogs().locals, timestamp: Date()) { error in
+            XCTAssertNotNil(error)
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     func test_delete_doesNotDeliverErrorOnEmptyCache() {
         let sut = makeSUT()
 

@@ -52,6 +52,11 @@ extension NSManagedObjectContext {
              #selector(Stub.execute(_:)))
     }
     
+    static func alwaysFailingSaveStub() -> Stub {
+        Stub(#selector(NSManagedObjectContext.save),
+             #selector(Stub.save))
+    }
+    
     class Stub: NSObject {
         private let source: Selector
         private let destination: Selector
