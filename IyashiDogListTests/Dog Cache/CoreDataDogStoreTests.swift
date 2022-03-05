@@ -125,6 +125,19 @@ class CoreDataDogStoreTests: XCTestCase {
         XCTAssertNotNil(deletionError)
     }
     
+    func test_delete_hasNoSideEffectsOnDeletionError() {
+        let sut = makeSUT()
+        let stub = NSManagedObjectContext.alwaysFailingSaveStub()
+        let timestamp = Date()
+        let dogs = uniqueDogs().locals
+
+        insert((dogs, timestamp), to: sut)
+        stub.startIntercepting()
+        delete(from: sut)
+        
+        expect(sut, toRetrieve: .found(dogs, timestamp))
+    }
+    
     func test_storeSideEffects_runSerially() {
         let sut = makeSUT()
         var completedOperationInOrder = [XCTestExpectation]()

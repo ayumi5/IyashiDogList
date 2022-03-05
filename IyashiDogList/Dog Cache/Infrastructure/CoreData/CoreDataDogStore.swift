@@ -23,6 +23,7 @@ public final class CoreDataDogStore: DogStore {
                 try ManagedDogCache.find(in: context).map(context.delete).map(context.save)
                 completion(nil)
             } catch {
+                context.rollback()
                 completion(error)
             }
         }
