@@ -75,13 +75,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let stub = NSManagedObjectContext.alwaysFailingSaveStub()
         stub.startIntercepting()
         
-        let exp = expectation(description: "Wait for insertion error")
-        sut.insert(uniqueDogs().locals, timestamp: Date()) { error in
-            XCTAssertNotNil(error)
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        let insertionError = insert((uniqueDogs().locals, Date()), to: sut)
+        XCTAssertNotNil(insertionError)
     }
     
     func test_insert_hasNoSideEffectsOnInsertionError() {
@@ -89,13 +84,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let stub = NSManagedObjectContext.alwaysFailingSaveStub()
         stub.startIntercepting()
         
-        let exp = expectation(description: "Wait for insertion error")
-        sut.insert(uniqueDogs().locals, timestamp: Date()) { error in
-            XCTAssertNotNil(error)
-            exp.fulfill()
-        }
+        insert((uniqueDogs().locals, Date()), to: sut)
         
-        wait(for: [exp], timeout: 1.0)
         expect(sut, toRetrieve: .empty)
     }
     
@@ -184,14 +174,18 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
     }
     
-    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) {
+    @discardableResult
+    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         let insertionExp = expectation(description: "Wait for insert completion")
+        var receivedError: Error?
         sut.insert(cache.dogs, timestamp: cache.timestamp) { error in
-            XCTAssertNil(error, "Expected to insert cache successfully", file: file, line: line)
+            receivedError = error
             insertionExp.fulfill()
         }
         
         wait(for: [insertionExp], timeout: 1.0)
+        
+        return receivedError
     }
     
     private func delete(from sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) {
