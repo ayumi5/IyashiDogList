@@ -75,6 +75,20 @@ class CoreDataDogStoreTests: XCTestCase {
         
         expect(sut, toRetrieve: .empty)
     }
+    
+    func test_delete_emptiesPreviouslyInsertedCacheValues() {
+        let sut = makeSUT()
+        let timestamp = Date()
+        let dogs = uniqueDogs()
+        
+        let exp = expectation(description: "Wait for delete completion")
+        insert((dogs.locals, timestamp), to: sut)
+        sut.deleteCache { _ in exp.fulfill() }
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        expect(sut, toRetrieve: .empty)
+    }
 
     
     // MARK: - Helpers
