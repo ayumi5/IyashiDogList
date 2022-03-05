@@ -7,6 +7,7 @@
 
 import XCTest
 import IyashiDogList
+import CoreData
 
 class CoreDataDogStoreTests: XCTestCase {
 
@@ -38,6 +39,26 @@ class CoreDataDogStoreTests: XCTestCase {
         
         insert((dogs.locals, timestamp), to: sut)
         expect(sut, toRetrieveTwice: .found(dogs.locals, timestamp))
+    }
+    
+    func test_retrieve_failsOnRetrievalError() {
+        let sut = makeSUT()
+        let stub = NSManagedObjectContext.alwaysFailingFetchStub()
+        stub.startIntercepting()
+        
+        let exp = expectation(description: "Wait for cache retrieval")
+        sut.retrieve { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertNotNil(error, "Expected an error")
+            default:
+                XCTFail("Expected failure, got \(result) instead")
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     func test_insert_overridesPreviouslyInsertedCachedValues() {
