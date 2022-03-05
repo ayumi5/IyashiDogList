@@ -20,7 +20,20 @@ public final class CoreDataDogStore {
     public typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        completion(.empty)
+        context.perform { [context] in
+            do {
+                let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
+                request.returnsObjectsAsFaults = false
+                if let cache = try context.fetch(request).first {
+                    let localDogs = cache.dogs.compactMap { $0 as? ManagedDogImage }.map { LocalDog(imageURL: $0.url) }
+                    completion(.found(localDogs, cache.timestamp))
+                } else {
+                    completion(.empty)
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
 }
 
