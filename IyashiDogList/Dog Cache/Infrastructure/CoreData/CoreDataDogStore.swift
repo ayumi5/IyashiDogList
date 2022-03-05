@@ -52,6 +52,7 @@ public final class CoreDataDogStore: DogStore {
                 try context.save()
                 completion(nil)
             } catch {
+                context.rollback()
                 completion(error)
             }
         }
