@@ -50,17 +50,16 @@ class CoreDataDogStoreTests: XCTestCase {
         let dogs = uniqueDogs()
         
         let exp = expectation(description: "Wait for retrieval completion")
-        sut.insert(dogs.locals, timestamp: timestamp) { _ in
-            sut.retrieve { result in
-                switch result {
-                case let .found(foundDogs, foundTimestamp):
-                    XCTAssertEqual(dogs.locals, foundDogs)
-                    XCTAssertEqual(timestamp, foundTimestamp)
-                default:
-                    XCTFail("Expected to find the previously inserted values, got \(result) instead")
-                }
-                exp.fulfill()
+        insert((dogs.locals, timestamp), to: sut)
+        sut.retrieve { result in
+            switch result {
+            case let .found(foundDogs, foundTimestamp):
+                XCTAssertEqual(dogs.locals, foundDogs)
+                XCTAssertEqual(timestamp, foundTimestamp)
+            default:
+                XCTFail("Expected to find the previously inserted values, got \(result) instead")
             }
+            exp.fulfill()
         }
         
         wait(for: [exp], timeout: 1.0)
@@ -72,20 +71,20 @@ class CoreDataDogStoreTests: XCTestCase {
         let dogs = uniqueDogs()
         
         let exp = expectation(description: "Wait for retrieval completion")
-        sut.insert(dogs.locals, timestamp: timestamp) { _ in
-            sut.retrieve { firstResult in
-                sut.retrieve { secondResult in
-                    switch (firstResult, secondResult) {
-                    case let (.found(firstDogs, firstTimestamp), .found(secondDogs, secondTimestamp)):
-                        XCTAssertEqual(firstDogs, secondDogs)
-                        XCTAssertEqual(firstTimestamp, secondTimestamp)
-                    default:
-                        XCTFail("Expected to find the same inserted values, got \(firstResult) and \(secondResult) instead")
-                    }
-                    exp.fulfill()
+        insert((dogs.locals, timestamp), to: sut)
+        sut.retrieve { firstResult in
+            sut.retrieve { secondResult in
+                switch (firstResult, secondResult) {
+                case let (.found(firstDogs, firstTimestamp), .found(secondDogs, secondTimestamp)):
+                    XCTAssertEqual(firstDogs, secondDogs)
+                    XCTAssertEqual(firstTimestamp, secondTimestamp)
+                default:
+                    XCTFail("Expected to find the same inserted values, got \(firstResult) and \(secondResult) instead")
                 }
+                exp.fulfill()
             }
         }
+        
         
         wait(for: [exp], timeout: 1.0)
     }
@@ -97,13 +96,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let secondDogs = uniqueDogs()
         let secondTimestamp = Date()
         
-        let insertionExp = expectation(description: "Wait for insert completion")
-        sut.insert(firstDogs.locals, timestamp: firstTimestamp) { firstError in
-            sut.insert(secondDogs.locals, timestamp: secondTimestamp) { secondError in
-                insertionExp.fulfill()
-            }
-        }
-        wait(for: [insertionExp], timeout: 1.0)
+        insert((firstDogs.locals, firstTimestamp), to: sut)
+        insert((secondDogs.locals, secondTimestamp), to: sut)
         
         sut.retrieve { result in
             switch result {
@@ -124,6 +118,16 @@ class CoreDataDogStoreTests: XCTestCase {
         let sut = try! CoreDataDogStore(storeURL: storeURL, bundle: storeBundle)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore) {
+        let insertionExp = expectation(description: "Wait for insert completion")
+        sut.insert(cache.dogs, timestamp: cache.timestamp) { error in
+            XCTAssertNil(error, "Expected to insert cache successfully")
+            insertionExp.fulfill()
+        }
+        
+        wait(for: [insertionExp], timeout: 1.0)
     }
     
 
