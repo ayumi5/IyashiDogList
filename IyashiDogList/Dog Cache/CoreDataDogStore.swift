@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-public final class CoreDataDogStore {
+public final class CoreDataDogStore: DogStore {
     private let container: NSPersistentContainer
     private let context: NSManagedObjectContext
     
@@ -16,11 +16,7 @@ public final class CoreDataDogStore {
         container = try NSPersistentContainer.load(modelName: "CoreDataDogStore", url: storeURL, in: bundle)
         context = container.newBackgroundContext()
     }
-    
-    public typealias DeletionCompletion = (Error?) -> Void
-    public typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
-    public typealias InsertionCompletion = (Error?) -> Void
-    
+
     public func deleteCache(completion: @escaping DeletionCompletion) {
         context.perform { [context] in
             do {
