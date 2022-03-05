@@ -64,6 +64,17 @@ class CoreDataDogStoreTests: XCTestCase {
 
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func test_delete_hasNoSideEffectsOnEmptyCache() {
+        let sut = makeSUT()
+
+        let exp = expectation(description: "Wait for delete completion")
+        sut.deleteCache { _ in exp.fulfill() }
+
+        wait(for: [exp], timeout: 1.0)
+        
+        expect(sut, toRetrieve: .empty)
+    }
 
     
     // MARK: - Helpers
