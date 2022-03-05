@@ -18,6 +18,7 @@ public final class CoreDataDogStore {
     }
     
     public typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
+    public typealias InsertionCompletion = (Error?) -> Void
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
         context.perform { [context] in
@@ -25,13 +26,36 @@ public final class CoreDataDogStore {
                 let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
                 request.returnsObjectsAsFaults = false
                 if let cache = try context.fetch(request).first {
-                    let localDogs = cache.dogs.compactMap { $0 as? ManagedDogImage }.map { LocalDog(imageURL: $0.url) }
+                    let localDogs = cache.dogs.compactMap { $0 as? ManagedDogImage }.map { LocalDog(imageURL: $0.imageURL) }
                     completion(.found(localDogs, cache.timestamp))
                 } else {
                     completion(.empty)
                 }
             } catch {
                 completion(.failure(error))
+            }
+        }
+    }
+    
+    public func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion) {
+        context.perform { [context] in
+            do {
+                let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
+                request.returnsObjectsAsFaults = false
+                _ = try context.fetch(request).map(context.delete)
+                let newDog = ManagedDogCache(context: context)
+                let managedDogImages: [ManagedDogImage] = dogs.map { dog in
+                    let dogImage = ManagedDogImage(context: context)
+                    dogImage.imageURL = dog.imageURL
+                    return dogImage
+                }
+                newDog.dogs = NSOrderedSet(array: managedDogImages)
+                newDog.timestamp = timestamp
+
+                try context.save()
+                completion(nil)
+            } catch {
+                completion(error)
             }
         }
     }
