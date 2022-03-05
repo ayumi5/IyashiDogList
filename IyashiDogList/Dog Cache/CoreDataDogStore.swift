@@ -26,8 +26,7 @@ public final class CoreDataDogStore {
                 let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
                 request.returnsObjectsAsFaults = false
                 if let cache = try context.fetch(request).first {
-                    let localDogs = cache.dogs.compactMap { $0 as? ManagedDogImage }.map { LocalDog(imageURL: $0.imageURL) }
-                    completion(.found(localDogs, cache.timestamp))
+                    completion(.found(cache.toLocals(), cache.timestamp))
                 } else {
                     completion(.empty)
                 }
@@ -44,12 +43,7 @@ public final class CoreDataDogStore {
                 request.returnsObjectsAsFaults = false
                 _ = try context.fetch(request).map(context.delete)
                 let newDog = ManagedDogCache(context: context)
-                let managedDogImages: [ManagedDogImage] = dogs.map { dog in
-                    let dogImage = ManagedDogImage(context: context)
-                    dogImage.imageURL = dog.imageURL
-                    return dogImage
-                }
-                newDog.dogs = NSOrderedSet(array: managedDogImages)
+                newDog.dogs = ManagedDogImage.toNSOrderSet(from: dogs, in: context)
                 newDog.timestamp = timestamp
 
                 try context.save()

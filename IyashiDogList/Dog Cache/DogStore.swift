@@ -28,6 +28,10 @@ public protocol DogStore {
 class ManagedDogCache: NSManagedObject {
     @NSManaged var timestamp: Date
     @NSManaged var dogs: NSOrderedSet
+    
+    func toLocals() -> [LocalDog] {
+        self.dogs.compactMap { $0 as? ManagedDogImage }.map { $0.toLocal() }
+    }
 }
 
 
@@ -35,4 +39,17 @@ class ManagedDogCache: NSManagedObject {
 class ManagedDogImage: NSManagedObject {
     @NSManaged var imageURL: URL
     @NSManaged var cache: ManagedDogCache
+    
+    func toLocal() -> LocalDog {
+        LocalDog(imageURL: self.imageURL)
+    }
+    
+    static func toNSOrderSet(from dogs: [LocalDog], in context: NSManagedObjectContext) -> NSOrderedSet {
+        let managedDogImages: [ManagedDogImage] = dogs.map { dog in
+            let dogImage = ManagedDogImage(context: context)
+            dogImage.imageURL = dog.imageURL
+            return dogImage
+        }
+        return NSOrderedSet(array: managedDogImages)
+    }
 }
