@@ -56,22 +56,13 @@ class CoreDataDogStoreTests: XCTestCase {
     func test_delete_doesNotDeliverErrorOnEmptyCache() {
         let sut = makeSUT()
 
-        let exp = expectation(description: "Wait for delete completion")
-        sut.deleteCache { error in
-            XCTAssertNil(error, "Expected to delete cache successfully")
-            exp.fulfill()
-        }
-
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
     }
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
 
-        let exp = expectation(description: "Wait for delete completion")
-        sut.deleteCache { _ in exp.fulfill() }
-
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
         
         expect(sut, toRetrieve: .empty)
     }
@@ -81,11 +72,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let timestamp = Date()
         let dogs = uniqueDogs()
         
-        let exp = expectation(description: "Wait for delete completion")
         insert((dogs.locals, timestamp), to: sut)
-        sut.deleteCache { _ in exp.fulfill() }
-        
-        wait(for: [exp], timeout: 1.0)
+        delete(from: sut)
         
         expect(sut, toRetrieve: .empty)
     }
@@ -133,5 +121,13 @@ class CoreDataDogStoreTests: XCTestCase {
         wait(for: [insertionExp], timeout: 1.0)
     }
     
-
+    private func delete(from sut: CoreDataDogStore) {
+        let exp = expectation(description: "Wait for delete completion")
+        sut.deleteCache { error in
+            XCTAssertNil(error, "Expected to delete cache successfully")
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
 }
