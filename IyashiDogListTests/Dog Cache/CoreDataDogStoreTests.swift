@@ -13,35 +13,13 @@ class CoreDataDogStoreTests: XCTestCase {
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "Wait for retrieval completion")
-        sut.retrieve { result in
-            switch result {
-            case .empty: break
-            default:
-                XCTFail("Expected empty result, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .empty)
     }
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "Wait for retrieval completion")
-        sut.retrieve { firstResult in
-            sut.retrieve { secondResult in
-                switch (firstResult, secondResult) {
-                case (.empty, .empty): break
-                default:
-                    XCTFail("Expected two empty results, got \(firstResult) and \(secondResult) instead")
-                }
-                exp.fulfill()
-            }
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieveTwice: .empty)
     }
     
     func test_retrieveAfterInserting_deliversInsertedValues() {
@@ -49,20 +27,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let timestamp = Date()
         let dogs = uniqueDogs()
         
-        let exp = expectation(description: "Wait for retrieval completion")
         insert((dogs.locals, timestamp), to: sut)
-        sut.retrieve { result in
-            switch result {
-            case let .found(foundDogs, foundTimestamp):
-                XCTAssertEqual(dogs.locals, foundDogs)
-                XCTAssertEqual(timestamp, foundTimestamp)
-            default:
-                XCTFail("Expected to find the previously inserted values, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .found(dogs.locals, timestamp))
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
@@ -70,23 +36,8 @@ class CoreDataDogStoreTests: XCTestCase {
         let timestamp = Date()
         let dogs = uniqueDogs()
         
-        let exp = expectation(description: "Wait for retrieval completion")
         insert((dogs.locals, timestamp), to: sut)
-        sut.retrieve { firstResult in
-            sut.retrieve { secondResult in
-                switch (firstResult, secondResult) {
-                case let (.found(firstDogs, firstTimestamp), .found(secondDogs, secondTimestamp)):
-                    XCTAssertEqual(firstDogs, secondDogs)
-                    XCTAssertEqual(firstTimestamp, secondTimestamp)
-                default:
-                    XCTFail("Expected to find the same inserted values, got \(firstResult) and \(secondResult) instead")
-                }
-                exp.fulfill()
-            }
-        }
-        
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieveTwice: .found(dogs.locals, timestamp))
     }
     
     func test_insert_overridesPreviouslyInsertedCachedValues() {
@@ -99,15 +50,7 @@ class CoreDataDogStoreTests: XCTestCase {
         insert((firstDogs.locals, firstTimestamp), to: sut)
         insert((secondDogs.locals, secondTimestamp), to: sut)
         
-        sut.retrieve { result in
-            switch result {
-            case let .found(foundDogs, foundTimestamp):
-                XCTAssertEqual(foundDogs, secondDogs.locals)
-                XCTAssertEqual(foundTimestamp, secondTimestamp)
-            default:
-                XCTFail("Expected to find overrided cached values, got \(result) instead")
-            }
-        }
+        expect(sut, toRetrieve: .found(secondDogs.locals, secondTimestamp))
     }
 
     
@@ -118,6 +61,29 @@ class CoreDataDogStoreTests: XCTestCase {
         let sut = try! CoreDataDogStore(storeURL: storeURL, bundle: storeBundle)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func expect(_ sut: CoreDataDogStore, toRetrieve expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for cache retrieval")
+        sut.retrieve { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case (.empty, .empty):
+                break
+            case let (.found(receivedDogs, receivedTimestamp), .found(expectedDogs, expectedTimestamp)):
+                XCTAssertEqual(receivedDogs, expectedDogs, file: file, line: line)
+                XCTAssertEqual(receivedTimestamp, expectedTimestamp, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func expect(_ sut: CoreDataDogStore, toRetrieveTwice expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
+        expect(sut, toRetrieve: expectedResult, file: file, line: line)
+        expect(sut, toRetrieve: expectedResult, file: file, line: line)
     }
     
     private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore) {
