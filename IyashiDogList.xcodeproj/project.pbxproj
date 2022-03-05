@@ -41,6 +41,7 @@
 		DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */; };
 		DAFC90DD27D340BE00D450C6 /* ManagedDogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */; };
 		DAFC90DF27D340FE00D450C6 /* ManagedDogImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */; };
+		DAFC90E127D341DC00D450C6 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC90E027D341DC00D450C6 /* CoreDataHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSessionTests.swift; sourceTree = "<group>"; };
 		DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedDogCache.swift; sourceTree = "<group>"; };
 		DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedDogImage.swift; sourceTree = "<group>"; };
+		DAFC90E027D341DC00D450C6 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */,
 				DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */,
 				DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */,
+				DAFC90E027D341DC00D450C6 /* CoreDataHelpers.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				DA6AB28B27D0B2BC00AD81C0 /* CoreDataDogStore.swift in Sources */,
 				DA7E75B8279253D40072DDCA /* Dog.swift in Sources */,
 				DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */,
+				DAFC90E127D341DC00D450C6 /* CoreDataHelpers.swift in Sources */,
 				DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */,
 				DAFC90DF27D340FE00D450C6 /* ManagedDogImage.swift in Sources */,
 				DA6AB28927D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld in Sources */,
