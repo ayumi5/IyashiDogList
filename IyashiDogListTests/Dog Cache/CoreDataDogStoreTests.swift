@@ -46,19 +46,7 @@ class CoreDataDogStoreTests: XCTestCase {
         let stub = NSManagedObjectContext.alwaysFailingFetchStub()
         stub.startIntercepting()
         
-        let exp = expectation(description: "Wait for cache retrieval")
-        sut.retrieve { result in
-            switch result {
-            case let .failure(error):
-                XCTAssertNotNil(error, "Expected an error")
-            default:
-                XCTFail("Expected failure, got \(result) instead")
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .failure(anyNSError()))
     }
     
     func test_insert_overridesPreviouslyInsertedCachedValues() {
@@ -140,7 +128,7 @@ class CoreDataDogStoreTests: XCTestCase {
         let exp = expectation(description: "Wait for cache retrieval")
         sut.retrieve { receivedResult in
             switch (receivedResult, expectedResult) {
-            case (.empty, .empty):
+            case (.empty, .empty), (.failure, .failure):
                 break
             case let (.found(receivedDogs, receivedTimestamp), .found(expectedDogs, expectedTimestamp)):
                 XCTAssertEqual(receivedDogs, expectedDogs, file: file, line: line)
