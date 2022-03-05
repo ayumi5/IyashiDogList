@@ -44,7 +44,7 @@ class CoreDataDogStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func test_retrieve_insertedValues() {
+    func test_retrieve_deliversInsertedValues() {
         let sut = makeSUT()
         let timestamp = Date()
         let dogs = uniqueDogs()
@@ -60,6 +60,30 @@ class CoreDataDogStoreTests: XCTestCase {
                     XCTFail("Expected to find the previously inserted values, got \(result) instead")
                 }
                 exp.fulfill()
+            }
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
+        let sut = makeSUT()
+        let timestamp = Date()
+        let dogs = uniqueDogs()
+        
+        let exp = expectation(description: "Wait for retrieval completion")
+        sut.insert(dogs.locals, timestamp: timestamp) { _ in
+            sut.retrieve { firstResult in
+                sut.retrieve { secondResult in
+                    switch (firstResult, secondResult) {
+                    case let (.found(firstDogs, firstTimestamp), .found(secondDogs, secondTimestamp)):
+                        XCTAssertEqual(firstDogs, secondDogs)
+                        XCTAssertEqual(firstTimestamp, secondTimestamp)
+                    default:
+                        XCTFail("Expected to find the same inserted values, got \(firstResult) and \(secondResult) instead")
+                    }
+                    exp.fulfill()
+                }
             }
         }
         
