@@ -37,8 +37,7 @@ public final class CoreDataDogStore {
     public func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion) {
         context.perform { [context] in
             do {
-                try ManagedDogCache.find(in: context).map(context.delete)
-                let newDog = ManagedDogCache(context: context)
+                let newDog = try ManagedDogCache.newUniqueInstance(in: context)
                 newDog.dogs = ManagedDogImage.toNSOrderSet(from: dogs, in: context)
                 newDog.timestamp = timestamp
 

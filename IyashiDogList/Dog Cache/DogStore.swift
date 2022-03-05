@@ -38,6 +38,11 @@ class ManagedDogCache: NSManagedObject {
         request.returnsObjectsAsFaults = false
         return try context.fetch(request).first
     }
+    
+    static func newUniqueInstance(in context: NSManagedObjectContext) throws -> ManagedDogCache {
+        try ManagedDogCache.find(in: context).map(context.delete)
+        return ManagedDogCache(context: context)
+    }
 }
 
 
