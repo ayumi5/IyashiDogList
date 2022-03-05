@@ -44,7 +44,7 @@ class CoreDataDogStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func test_retrieve_deliversInsertedValues() {
+    func test_retrieveAfterInserting_deliversInsertedValues() {
         let sut = makeSUT()
         let timestamp = Date()
         let dogs = uniqueDogs()
@@ -88,6 +88,32 @@ class CoreDataDogStoreTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_insert_overridesPreviouslyInsertedCachedValues() {
+        let sut = makeSUT()
+        let firstDogs = uniqueDogs()
+        let firstTimestamp = Date()
+        let secondDogs = uniqueDogs()
+        let secondTimestamp = Date()
+        
+        let insertionExp = expectation(description: "Wait for insert completion")
+        sut.insert(firstDogs.locals, timestamp: firstTimestamp) { firstError in
+            sut.insert(secondDogs.locals, timestamp: secondTimestamp) { secondError in
+                insertionExp.fulfill()
+            }
+        }
+        wait(for: [insertionExp], timeout: 1.0)
+        
+        sut.retrieve { result in
+            switch result {
+            case let .found(foundDogs, foundTimestamp):
+                XCTAssertEqual(foundDogs, secondDogs.locals)
+                XCTAssertEqual(foundTimestamp, secondTimestamp)
+            default:
+                XCTFail("Expected to find overrided cached values, got \(result) instead")
+            }
+        }
     }
 
     
