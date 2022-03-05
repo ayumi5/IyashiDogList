@@ -111,20 +111,20 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
     }
     
-    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore) {
+    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) {
         let insertionExp = expectation(description: "Wait for insert completion")
         sut.insert(cache.dogs, timestamp: cache.timestamp) { error in
-            XCTAssertNil(error, "Expected to insert cache successfully")
+            XCTAssertNil(error, "Expected to insert cache successfully", file: file, line: line)
             insertionExp.fulfill()
         }
         
         wait(for: [insertionExp], timeout: 1.0)
     }
     
-    private func delete(from sut: CoreDataDogStore) {
+    private func delete(from sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for delete completion")
         sut.deleteCache { error in
-            XCTAssertNil(error, "Expected to delete cache successfully")
+            XCTAssertNil(error, "Expected to delete cache successfully", file: file, line: line)
             exp.fulfill()
         }
         
