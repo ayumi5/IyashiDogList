@@ -26,7 +26,7 @@ public protocol DogStore {
 
 @objc(ManagedDogCache)
 class ManagedDogCache: NSManagedObject {
-    @NSManaged var timestamp: String
+    @NSManaged var timestamp: Date
     @NSManaged var dogs: NSOrderedSet
 }
 

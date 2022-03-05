@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ManagedDogCache" representedClassName="ManagedDogCache" syncable="YES">
-        <attribute name="timestamp" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="dogs" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ManagedDogImage" inverseName="cache" inverseEntity="ManagedDogImage"/>
     </entity>
     <entity name="ManagedDogImage" representedClassName="ManagedDogImage" syncable="YES">
