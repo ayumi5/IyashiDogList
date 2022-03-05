@@ -114,6 +114,17 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: .empty)
     }
     
+    func test_delete_failsOnDeletionError() {
+        let sut = makeSUT()
+        let stub = NSManagedObjectContext.alwaysFailingSaveStub()
+
+        insert((uniqueDogs().locals, Date()), to: sut)
+        stub.startIntercepting()
+        
+        let deletionError = delete(from: sut)
+        XCTAssertNotNil(deletionError)
+    }
+    
     func test_storeSideEffects_runSerially() {
         let sut = makeSUT()
         var completedOperationInOrder = [XCTestExpectation]()
@@ -188,13 +199,17 @@ class CoreDataDogStoreTests: XCTestCase {
         return receivedError
     }
     
-    private func delete(from sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Wait for delete completion")
+    @discardableResult
+    private func delete(from sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+        let deletionExp = expectation(description: "Wait for delete completion")
+        var receivedError: Error?
         sut.deleteCache { error in
-            XCTAssertNil(error, "Expected to delete cache successfully", file: file, line: line)
-            exp.fulfill()
+            receivedError = error
+            deletionExp.fulfill()
         }
         
-        wait(for: [exp], timeout: 1.0)
+        wait(for: [deletionExp], timeout: 1.0)
+        
+        return receivedError
     }
 }
