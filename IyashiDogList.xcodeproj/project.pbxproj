@@ -39,6 +39,8 @@
 		DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */; };
 		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
 		DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */; };
+		DAFC90DD27D340BE00D450C6 /* ManagedDogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */; };
+		DAFC90DF27D340FE00D450C6 /* ManagedDogImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,8 @@
 		DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSession.swift; sourceTree = "<group>"; };
 		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
 		DAF57E382795618B00DB7F93 /* HTTPClientURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSessionTests.swift; sourceTree = "<group>"; };
+		DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedDogCache.swift; sourceTree = "<group>"; };
+		DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedDogImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +240,8 @@
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
 				DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */,
 				DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */,
+				DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */,
+				DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -438,6 +444,7 @@
 				DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */,
 				DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */,
 				DA60010427CF2DBB005553E7 /* RemoteDog.swift in Sources */,
+				DAFC90DD27D340BE00D450C6 /* ManagedDogCache.swift in Sources */,
 				DA6AB28127D090F400AD81C0 /* DogCachePolicy.swift in Sources */,
 				DA60010227CF1775005553E7 /* LocalDog.swift in Sources */,
 				DA7E75BE279295870072DDCA /* DogLoader.swift in Sources */,
@@ -450,6 +457,7 @@
 				DA7E75B8279253D40072DDCA /* Dog.swift in Sources */,
 				DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */,
 				DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */,
+				DAFC90DF27D340FE00D450C6 /* ManagedDogImage.swift in Sources */,
 				DA6AB28927D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
