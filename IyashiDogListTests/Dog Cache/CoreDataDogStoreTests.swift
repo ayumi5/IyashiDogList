@@ -49,6 +49,14 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: .failure(anyNSError()))
     }
     
+    func test_retrieve_hasNoSideEffectsOnRetrievalError() {
+        let sut = makeSUT()
+        let stub = NSManagedObjectContext.alwaysFailingFetchStub()
+        stub.startIntercepting()
+        
+        expect(sut, toRetrieveTwice: .failure(anyNSError()))
+    }
+    
     func test_insert_overridesPreviouslyInsertedCachedValues() {
         let sut = makeSUT()
         let firstDogs = uniqueDogs()
