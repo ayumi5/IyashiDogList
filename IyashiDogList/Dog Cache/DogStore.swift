@@ -33,6 +33,6 @@ class ManagedDogCache: NSManagedObject {
 
 @objc(ManagedDogImage)
 class ManagedDogImage: NSManagedObject {
-    @NSManaged var url: URL
+    @NSManaged var imageURL: URL
     @NSManaged var cache: ManagedDogCache
 }
