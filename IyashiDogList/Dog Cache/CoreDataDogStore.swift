@@ -21,7 +21,7 @@ public final class CoreDataDogStore {
     public typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
     public typealias InsertionCompletion = (Error?) -> Void
     
-    public func deleteCache(completion: @escaping DeletionCompletion) {   
+    public func deleteCache(completion: @escaping DeletionCompletion) {
         context.perform { [context] in
             do {
                 try ManagedDogCache.find(in: context).map(context.delete).map(context.save)

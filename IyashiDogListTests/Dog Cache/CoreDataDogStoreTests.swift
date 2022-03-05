@@ -77,6 +77,33 @@ class CoreDataDogStoreTests: XCTestCase {
         
         expect(sut, toRetrieve: .empty)
     }
+    
+    func test_storeSideEffects_runSerially() {
+        let sut = makeSUT()
+        var completedOperationInOrder = [XCTestExpectation]()
+        
+        let opt1 = expectation(description: "Operation 1")
+        sut.insert(uniqueDogs().locals, timestamp: Date()) { _ in
+            completedOperationInOrder.append(opt1)
+            opt1.fulfill()
+        }
+        
+        let opt2 = expectation(description: "Operation 2")
+        sut.deleteCache { _ in
+            completedOperationInOrder.append(opt2)
+            opt2.fulfill()
+        }
+        
+        let opt3 = expectation(description: "Operation 3")
+        sut.insert(uniqueDogs().locals, timestamp: Date()) { _ in
+            completedOperationInOrder.append(opt3)
+            opt3.fulfill()
+        }
+        
+        wait(for: [opt1, opt2, opt3], timeout: 5.0)
+        
+        XCTAssertEqual(completedOperationInOrder, [opt1, opt2, opt3])
+    }
 
     
     // MARK: - Helpers
