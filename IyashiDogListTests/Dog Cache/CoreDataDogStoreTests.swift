@@ -52,6 +52,18 @@ class CoreDataDogStoreTests: XCTestCase {
         
         expect(sut, toRetrieve: .found(secondDogs.locals, secondTimestamp))
     }
+    
+    func test_delete_doesNotDeliverErrorOnEmptyCache() {
+        let sut = makeSUT()
+
+        let exp = expectation(description: "Wait for delete completion")
+        sut.deleteCache { error in
+            XCTAssertNil(error, "Expected to delete cache successfully")
+            exp.fulfill()
+        }
+
+        wait(for: [exp], timeout: 1.0)
+    }
 
     
     // MARK: - Helpers

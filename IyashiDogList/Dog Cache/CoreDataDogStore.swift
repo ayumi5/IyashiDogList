@@ -17,8 +17,13 @@ public final class CoreDataDogStore {
         context = container.newBackgroundContext()
     }
     
+    public typealias DeletionCompletion = (Error?) -> Void
     public typealias RetrievalCompletion = (RetrieveCacheResult) -> Void
     public typealias InsertionCompletion = (Error?) -> Void
+    
+    public func deleteCache(completion: @escaping DeletionCompletion) {
+            completion(nil)
+    }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
         context.perform { [context] in
