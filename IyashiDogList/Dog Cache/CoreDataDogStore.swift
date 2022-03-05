@@ -23,9 +23,7 @@ public final class CoreDataDogStore {
     public func retrieve(completion: @escaping RetrievalCompletion) {
         context.perform { [context] in
             do {
-                let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
-                request.returnsObjectsAsFaults = false
-                if let cache = try context.fetch(request).first {
+                if let cache = try ManagedDogCache.find(in: context) {
                     completion(.found(cache.toLocals(), cache.timestamp))
                 } else {
                     completion(.empty)
@@ -39,9 +37,7 @@ public final class CoreDataDogStore {
     public func insert(_ dogs: [LocalDog], timestamp: Date, completion: @escaping InsertionCompletion) {
         context.perform { [context] in
             do {
-                let request = NSFetchRequest<ManagedDogCache>(entityName: "ManagedDogCache")
-                request.returnsObjectsAsFaults = false
-                _ = try context.fetch(request).map(context.delete)
+                try ManagedDogCache.find(in: context).map(context.delete)
                 let newDog = ManagedDogCache(context: context)
                 newDog.dogs = ManagedDogImage.toNSOrderSet(from: dogs, in: context)
                 newDog.timestamp = timestamp

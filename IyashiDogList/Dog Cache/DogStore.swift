@@ -32,6 +32,12 @@ class ManagedDogCache: NSManagedObject {
     func toLocals() -> [LocalDog] {
         self.dogs.compactMap { $0 as? ManagedDogImage }.map { $0.toLocal() }
     }
+    
+    static func find(in context: NSManagedObjectContext) throws -> ManagedDogCache? {
+        let request = NSFetchRequest<ManagedDogCache>(entityName: ManagedDogCache.entity().name!)
+        request.returnsObjectsAsFaults = false
+        return try context.fetch(request).first
+    }
 }
 
 
