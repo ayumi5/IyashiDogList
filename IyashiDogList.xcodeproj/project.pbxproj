@@ -236,15 +236,11 @@
 		DA6000FC27CEFC07005553E7 /* Dog Cache */ = {
 			isa = PBXGroup;
 			children = (
+				DAFC90E227D342A300D450C6 /* Infrastructure */,
 				DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */,
 				DA6000FF27CEFCD2005553E7 /* DogStore.swift */,
 				DA60010127CF1775005553E7 /* LocalDog.swift */,
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
-				DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */,
-				DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */,
-				DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */,
-				DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */,
-				DAFC90E027D341DC00D450C6 /* CoreDataHelpers.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -281,6 +277,26 @@
 				DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DAFC90E227D342A300D450C6 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				DAFC90E327D342CC00D450C6 /* CoreData */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		DAFC90E327D342CC00D450C6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */,
+				DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */,
+				DAFC90DC27D340BE00D450C6 /* ManagedDogCache.swift */,
+				DAFC90DE27D340FE00D450C6 /* ManagedDogImage.swift */,
+				DAFC90E027D341DC00D450C6 /* CoreDataHelpers.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
