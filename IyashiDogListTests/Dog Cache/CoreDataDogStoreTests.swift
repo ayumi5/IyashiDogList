@@ -57,6 +57,13 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieveTwice: .failure(anyNSError()))
     }
     
+    func test_insert_doesNotDeliverErrorOnEmptyCache() {
+        let sut = makeSUT()
+        
+        let insertionError = insert((uniqueDogs().locals, Date()), to: sut)
+        XCTAssertNil(insertionError)
+    }
+    
     func test_insert_overridesPreviouslyInsertedCachedValues() {
         let sut = makeSUT()
         let firstDogs = uniqueDogs()
