@@ -202,7 +202,7 @@ class CoreDataDogStoreTests: XCTestCase, FailabeDogStoreSpecs {
         return sut
     }
     
-    private func expect(_ sut: CoreDataDogStore, toRetrieve expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: DogStore, toRetrieve expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for cache retrieval")
         sut.retrieve { receivedResult in
             switch (receivedResult, expectedResult) {
@@ -220,13 +220,13 @@ class CoreDataDogStoreTests: XCTestCase, FailabeDogStoreSpecs {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func expect(_ sut: CoreDataDogStore, toRetrieveTwice expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: DogStore, toRetrieveTwice expectedResult: RetrieveCacheResult, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
     }
     
     @discardableResult
-    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+    private func insert(_ cache: (dogs: [LocalDog], timestamp: Date), to sut: DogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         let insertionExp = expectation(description: "Wait for insert completion")
         var receivedError: Error?
         sut.insert(cache.dogs, timestamp: cache.timestamp) { error in
@@ -240,7 +240,7 @@ class CoreDataDogStoreTests: XCTestCase, FailabeDogStoreSpecs {
     }
     
     @discardableResult
-    private func delete(from sut: CoreDataDogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+    private func delete(from sut: DogStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         let deletionExp = expectation(description: "Wait for delete completion")
         var receivedError: Error?
         sut.deleteCache { error in
