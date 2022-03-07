@@ -119,6 +119,15 @@ class CoreDataDogStoreTests: XCTestCase {
         expect(sut, toRetrieve: .empty)
     }
     
+    func test_delete_doesNotDeliverErrorOnNonEmptyCache() {
+        let sut = makeSUT()
+
+        insert((uniqueDogs().locals, Date()), to: sut)
+        let deletionError = delete(from: sut)
+        
+        XCTAssertNil(deletionError)
+    }
+    
     func test_delete_emptiesPreviouslyInsertedCacheValues() {
         let sut = makeSUT()
         let timestamp = Date()
