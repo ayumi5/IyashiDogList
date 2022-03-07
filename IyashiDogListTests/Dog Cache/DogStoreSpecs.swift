@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CoreDataDogStoreSpecs {
+protocol DogStoreSpecs {
 
    func test_retrieve_deliversEmptyOnEmptyCache()
    func test_retrieve_hasNoSideEffectsOnEmptyCache()
@@ -26,19 +26,19 @@ public protocol CoreDataDogStoreSpecs {
    func test_storeSideEffects_runSerially()
 }
 
-public protocol FailableRetrieveDogStoreSpces {
+protocol FailableRetrieveDogStoreSpces {
    func test_retrieve_failsOnRetrievalError()
    func test_retrieve_hasNoSideEffectsOnRetrievalError()
 }
 
-public protocol FailableInsertDogStoreSpces {
+protocol FailableInsertDogStoreSpces {
    func test_insert_failsOnInsertionError()
    func test_insert_hasNoSideEffectsOnInsertionError()
 }
 
-public protocol FailableDeleteDogStoreSpces {
+protocol FailableDeleteDogStoreSpces {
    func test_delete_failsOnDeletionError()
    func test_delete_hasNoSideEffectsOnDeletionError()
 }
 
-public typealias FailabeDogStoreSpecs = FailableRetrieveDogStoreSpces & FailableInsertDogStoreSpces & FailableDeleteDogStoreSpces
+typealias FailabeDogStoreSpecs = FailableRetrieveDogStoreSpces & FailableInsertDogStoreSpces & FailableDeleteDogStoreSpces

@@ -20,7 +20,7 @@
 		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
 		DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */; };
 		DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
-		DA5FBEEA27D5A7D6003B1373 /* DogStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */; };
+		DA5FBEEB27D5AB6A003B1373 /* DogStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */; };
 		DA6000FE27CEFC17005553E7 /* LocalDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */; };
 		DA60010027CEFCD2005553E7 /* DogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6000FF27CEFCD2005553E7 /* DogStore.swift */; };
 		DA60010227CF1775005553E7 /* LocalDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60010127CF1775005553E7 /* LocalDog.swift */; };
@@ -226,6 +226,7 @@
 		DA43BD1827C9EE4C006F97B0 /* Dog Cache */ = {
 			isa = PBXGroup;
 			children = (
+				DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */,
 				DA60010727CF35CA005553E7 /* Helpers */,
 				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
 				DA60010527CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift */,
@@ -243,7 +244,6 @@
 				DA6000FF27CEFCD2005553E7 /* DogStore.swift */,
 				DA60010127CF1775005553E7 /* LocalDog.swift */,
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
-				DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -466,7 +466,6 @@
 				DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */,
 				DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */,
 				DA60010427CF2DBB005553E7 /* RemoteDog.swift in Sources */,
-				DA5FBEEA27D5A7D6003B1373 /* DogStoreSpecs.swift in Sources */,
 				DAFC90DD27D340BE00D450C6 /* ManagedDogCache.swift in Sources */,
 				DA6AB28127D090F400AD81C0 /* DogCachePolicy.swift in Sources */,
 				DA60010227CF1775005553E7 /* LocalDog.swift in Sources */,
@@ -493,6 +492,7 @@
 				DA6AB27F27D0693300AD81C0 /* FeedCacheTestHelpers.swift in Sources */,
 				DA60010627CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift in Sources */,
 				DA370BCD278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift in Sources */,
+				DA5FBEEB27D5AB6A003B1373 /* DogStoreSpecs.swift in Sources */,
 				DA6AB28327D094FD00AD81C0 /* CoreDataDogStoreTests.swift in Sources */,
 				DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */,
 				DA60010927CF35DA005553E7 /* DogStoreSpy.swift in Sources */,
