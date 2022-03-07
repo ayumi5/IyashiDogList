@@ -26,17 +26,17 @@ protocol DogStoreSpecs {
    func test_storeSideEffects_runSerially()
 }
 
-protocol FailableRetrieveDogStoreSpces {
+protocol FailableRetrieveDogStoreSpces: DogStoreSpecs {
    func test_retrieve_failsOnRetrievalError()
    func test_retrieve_hasNoSideEffectsOnRetrievalError()
 }
 
-protocol FailableInsertDogStoreSpces {
+protocol FailableInsertDogStoreSpces: DogStoreSpecs {
    func test_insert_failsOnInsertionError()
    func test_insert_hasNoSideEffectsOnInsertionError()
 }
 
-protocol FailableDeleteDogStoreSpces {
+protocol FailableDeleteDogStoreSpces: DogStoreSpecs {
    func test_delete_failsOnDeletionError()
    func test_delete_hasNoSideEffectsOnDeletionError()
 }
