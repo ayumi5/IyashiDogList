@@ -9,7 +9,7 @@ import XCTest
 import IyashiDogList
 import CoreData
 
-class CoreDataDogStoreTests: XCTestCase {
+class CoreDataDogStoreTests: XCTestCase, FailabeDogStoreSpecs {
 
     func test_retrieve_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()

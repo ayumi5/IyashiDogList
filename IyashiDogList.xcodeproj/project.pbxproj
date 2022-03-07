@@ -20,6 +20,7 @@
 		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
 		DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */; };
 		DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
+		DA5FBEEA27D5A7D6003B1373 /* DogStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */; };
 		DA6000FE27CEFC17005553E7 /* LocalDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */; };
 		DA60010027CEFCD2005553E7 /* DogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6000FF27CEFCD2005553E7 /* DogStore.swift */; };
 		DA60010227CF1775005553E7 /* LocalDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60010127CF1775005553E7 /* LocalDog.swift */; };
@@ -85,6 +86,7 @@
 		DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDogFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDogLoader.swift; sourceTree = "<group>"; };
 		DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
+		DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogStoreSpecs.swift; sourceTree = "<group>"; };
 		DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDogLoader.swift; sourceTree = "<group>"; };
 		DA6000FF27CEFCD2005553E7 /* DogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogStore.swift; sourceTree = "<group>"; };
 		DA60010127CF1775005553E7 /* LocalDog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDog.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				DA6000FF27CEFCD2005553E7 /* DogStore.swift */,
 				DA60010127CF1775005553E7 /* LocalDog.swift */,
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
+				DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */,
 				DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */,
 				DA60010427CF2DBB005553E7 /* RemoteDog.swift in Sources */,
+				DA5FBEEA27D5A7D6003B1373 /* DogStoreSpecs.swift in Sources */,
 				DAFC90DD27D340BE00D450C6 /* ManagedDogCache.swift in Sources */,
 				DA6AB28127D090F400AD81C0 /* DogCachePolicy.swift in Sources */,
 				DA60010227CF1775005553E7 /* LocalDog.swift in Sources */,
