@@ -64,6 +64,15 @@ class CoreDataDogStoreTests: XCTestCase {
         XCTAssertNil(insertionError)
     }
     
+    func test_insert_doesNotDeliverErrorOnNonEmptyCache() {
+        let sut = makeSUT()
+        
+        insert((uniqueDogs().locals, Date()), to: sut)
+        let insertionError = insert((uniqueDogs().locals, Date()), to: sut)
+        XCTAssertNil(insertionError)
+    }
+
+    
     func test_insert_overridesPreviouslyInsertedCachedValues() {
         let sut = makeSUT()
         let firstDogs = uniqueDogs()
