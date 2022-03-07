@@ -108,7 +108,9 @@ class CoreDataDogStoreTests: XCTestCase, FailabeDogStoreSpecs {
     func test_delete_doesNotDeliverErrorOnEmptyCache() {
         let sut = makeSUT()
 
-        delete(from: sut)
+        let deletionError = delete(from: sut)
+        
+        XCTAssertNil(deletionError)
     }
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
