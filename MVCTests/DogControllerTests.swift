@@ -7,11 +7,12 @@
 
 import XCTest
 import UIKit
+import IyashiDogFeature
 
 final class DogViewController: UIViewController {
-    private var loader: DogControllerTests.LoaderSpy?
+    private var loader: DogLoader?
     
-    convenience init(loader: DogControllerTests.LoaderSpy) {
+    convenience init(loader: DogLoader) {
         self.init()
         self.loader = loader
     }
@@ -19,7 +20,7 @@ final class DogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loader?.load()
+        loader?.load { _ in }
     }
 }
 
@@ -43,10 +44,10 @@ final class DogControllerTests: XCTestCase {
     
     
     // MARK: - Helpers
-    class LoaderSpy {
+    class LoaderSpy: DogLoader {
         private(set) var loadCallCount: Int = 0
         
-        func load() {
+        func load(completion: @escaping (DogLoader.Result) -> Void) {
             loadCallCount += 1
         }
     }
