@@ -7,6 +7,7 @@
 
 import XCTest
 import IyashiDogList
+import IyashiDogFeature
 
 class IyashiDogListAPIEndToEndTests: XCTestCase {
     

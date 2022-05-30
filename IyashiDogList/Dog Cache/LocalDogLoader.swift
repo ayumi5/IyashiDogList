@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IyashiDogFeature
 
 public class LocalDogLoader {
     private let store: DogStore

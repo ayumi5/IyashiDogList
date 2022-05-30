@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IyashiDogFeature
 
 public final class RemoteDogLoader: DogLoader {
     private let client: HTTPClient

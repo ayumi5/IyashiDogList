@@ -7,6 +7,7 @@
 
 import Foundation
 import IyashiDogList
+import IyashiDogFeature
 import CoreData
 
 func uniqueDogs() -> (models: [Dog], locals: [LocalDog]) {
