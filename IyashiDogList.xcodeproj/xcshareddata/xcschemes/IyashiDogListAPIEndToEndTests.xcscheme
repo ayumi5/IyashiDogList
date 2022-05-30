@@ -34,6 +34,16 @@
                ReferencedContainer = "container:IyashiDogList.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DADD769A284497EF002FD5EC"
+               BuildableName = "IyashiDogFeatureTests.xctest"
+               BlueprintName = "IyashiDogFeatureTests"
+               ReferencedContainer = "container:IyashiDogList.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
