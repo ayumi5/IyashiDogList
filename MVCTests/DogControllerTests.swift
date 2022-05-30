@@ -27,24 +27,30 @@ final class DogViewController: UIViewController {
 final class DogControllerTests: XCTestCase {
     
     func test_init_doesNotLoadDog() {
-        let loader = LoaderSpy()
-       _ = DogViewController(loader: loader)
+        let (_, loader) = makeSUT()
         
         XCTAssertEqual(loader.loadCallCount, 0)
     }
     
     func test_viewDidLoad_loadsDog() {
-        let loader = LoaderSpy()
-        let sut = DogViewController(loader: loader)
+        let (sut, loader) = makeSUT()
+        
         sut.loadViewIfNeeded()
         
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
-    
-    
     // MARK: - Helpers
-    class LoaderSpy: DogLoader {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
+        let loader = LoaderSpy()
+        let sut = DogViewController(loader: loader)
+        trackForMemoryLeaks(loader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return (sut, loader)
+    }
+    
+    private class LoaderSpy: DogLoader {
         private(set) var loadCallCount: Int = 0
         
         func load(completion: @escaping (DogLoader.Result) -> Void) {
