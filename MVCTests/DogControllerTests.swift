@@ -9,7 +9,7 @@ import XCTest
 import UIKit
 import IyashiDogFeature
 
-final class DogViewController: UIViewController {
+final class DogViewController: UITableViewController {
     private var loader: DogLoader?
     
     convenience init(loader: DogLoader) {
@@ -20,6 +20,13 @@ final class DogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+
+        load()
+    }
+    
+    @objc private func load() {
         loader?.load { _ in }
     }
 }
@@ -38,6 +45,17 @@ final class DogControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         XCTAssertEqual(loader.loadCallCount, 1)
+    }
+    
+    func test_pullToRefresh_loadsDog() {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        sut.refreshControl?.simulatePullToRefresh()
+        XCTAssertEqual(loader.loadCallCount, 2)
+        
+        sut.refreshControl?.simulatePullToRefresh()
+        XCTAssertEqual(loader.loadCallCount, 3)
     }
     
     // MARK: - Helpers
@@ -60,5 +78,13 @@ final class DogControllerTests: XCTestCase {
 }
 
 
-
-
+private extension UIRefreshControl {
+    
+    func simulatePullToRefresh() {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
