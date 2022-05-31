@@ -39,31 +39,31 @@ final class DogControllerTests: XCTestCase {
     func test_loadDogActions_requestDogFromLoader() {
         let (sut, loader) = makeSUT()
         
-        XCTAssertEqual(loader.loadCallCount, 0)
+        XCTAssertEqual(loader.loadCallCount, 0, "Expected no loading requests before view is loaded")
         
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadCallCount, 1)
+        XCTAssertEqual(loader.loadCallCount, 1, "Expected a loading requests once view is loaded")
         
         sut.simulateUserInitiatedDogReload()
-        XCTAssertEqual(loader.loadCallCount, 2)
+        XCTAssertEqual(loader.loadCallCount, 2, "Expected another loading requests once user initiates a reload")
         
         sut.simulateUserInitiatedDogReload()
-        XCTAssertEqual(loader.loadCallCount, 3)
+        XCTAssertEqual(loader.loadCallCount, 3, "Expected another loading requests once user initiates another reload")
     }
     
     func test_loadingIndicator_isVisibleWhileLoadingDog() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
-        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once view is loaded")
         
         loader.completeDogLoading(at: 0)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed")
         
         sut.simulateUserInitiatedDogReload()
-        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once user initiated a reload")
         
         loader.completeDogLoading(at: 1)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed")
     }
     
     // MARK: - Helpers
