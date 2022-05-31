@@ -42,6 +42,21 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed")
     }
     
+    func test_viewDidLoad_rendersDogItemOnSuccessfulLoadCompletion() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [Dog(imageURL: anyURL())], at: 0)
+
+        XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
+        
+        sut.simulateUserInitiatedDogReload()
+        loader.completeDogLoading(with: [Dog(imageURL: anyURL()), Dog(imageURL: anyURL())], at: 1)
+        
+        XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 2)
+    }
+
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
@@ -64,6 +79,14 @@ final class DogControllerTests: XCTestCase {
         func completeDogLoading(at index: Int = 0) {
             completions[index](.success([]))
         }
+        
+        func completeDogLoading(with dogs: [Dog], at index: Int = 0) {
+            completions[index](.success(dogs))
+        }
+    }
+    
+    private func anyURL() -> URL {
+        return URL(string: "http://a-url.com")!
     }
 }
 
@@ -74,6 +97,14 @@ private extension DogViewController {
     
     var isShowingLoadingIndicator: Bool? {
         refreshControl?.isRefreshing
+    }
+    
+    func numberOfRenderedDogImageViews() -> Int {
+        tableView.numberOfRows(inSection: dogImageSection)
+    }
+    
+    private var dogImageSection: Int {
+        return 0
     }
 }
 

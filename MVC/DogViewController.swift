@@ -10,6 +10,7 @@ import IyashiDogFeature
 
 public final class DogViewController: UITableViewController {
     private var loader: DogLoader?
+    private var tableModel = [Dog]()
     
     public convenience init(loader: DogLoader) {
         self.init()
@@ -18,7 +19,7 @@ public final class DogViewController: UITableViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
         
@@ -27,8 +28,21 @@ public final class DogViewController: UITableViewController {
     
     @objc private func load() {
         refreshControl?.beginRefreshing()
-        loader?.load { [weak self] _ in
+        loader?.load { [weak self] result in
+            self?.tableModel = (try? result.get()) ?? []
+            self?.tableView.reloadData()
+
             self?.refreshControl?.endRefreshing()
         }
     }
+    
+    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableModel.count
+    }
+    
+    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return DogCell()
+    }
 }
+
+public class DogCell: UITableViewCell {}
