@@ -10,6 +10,7 @@ import IyashiDogFeature
 
 public protocol DogImageDataLoader {
     func loadImageData(from url: URL)
+    func cancelImageLoad(from url: URL)
 }
 
 public final class DogViewController: UITableViewController {
@@ -58,6 +59,11 @@ public final class DogViewController: UITableViewController {
         let dog = tableModel[indexPath.row]
         dogImageDataLoader?.loadImageData(from: dog.imageURL)
         return DogCell()
+    }
+    
+    public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let dog = tableModel[indexPath.row]
+        dogImageDataLoader?.cancelImageLoad(from: dog.imageURL)
     }
 }
 

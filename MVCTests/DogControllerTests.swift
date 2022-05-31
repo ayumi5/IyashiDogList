@@ -86,7 +86,23 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL, dog02.imageURL])
         
     }
+    
+    func test_dogImageView_cancelDogImageURLWhenViewisNotVisibleAnymore() {
+        let (sut, loader) = makeSUT()
+        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
+        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
+        
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [dog01, dog02])
+        XCTAssertEqual(loader.canceledImageURLs, [])
 
+        sut.simulateDogImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL])
+        
+        sut.simulateDogImageViewNotVisible(at: 1)
+        XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL])
+        
+    }
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
@@ -125,9 +141,14 @@ final class DogControllerTests: XCTestCase {
         // MARK: - DogImageDataLoader
         
         private(set) var loadedImageURLs = [URL]()
+        private(set) var canceledImageURLs = [URL]()
         
         func loadImageData(from url: URL) {
             loadedImageURLs.append(url)
+        }
+        
+        func cancelImageLoad(from url: URL) {
+            canceledImageURLs.append(url)
         }
     }
     
@@ -141,8 +162,17 @@ final class DogControllerTests: XCTestCase {
 }
 
 private extension DogViewController {
-    func simulateDogImageViewVisible(at row: Int = 0) {
-        _ = dogImageView(at: row)
+    @discardableResult
+    func simulateDogImageViewVisible(at row: Int = 0) -> UITableViewCell? {
+        return dogImageView(at: row)
+    }
+    
+    func simulateDogImageViewNotVisible(at row: Int = 0) {
+        let view = simulateDogImageViewVisible(at: row)
+        
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: dogImageSection)
+        delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
     }
     
     func simulateUserInitiatedDogReload() {
