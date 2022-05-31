@@ -50,14 +50,14 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
-    func test_pullToRefresh_loadsDog() {
+    func test_userInitiatedDogReload_reloadsDog() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedDogReload()
         XCTAssertEqual(loader.loadCallCount, 2)
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedDogReload()
         XCTAssertEqual(loader.loadCallCount, 3)
     }
     
@@ -65,32 +65,32 @@ final class DogControllerTests: XCTestCase {
         let (sut, _) = makeSUT()
         sut.loadViewIfNeeded()
         
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
     }
     
     func test_viewDidLoad_hidesLoadingIndicatorOnLoadCompletion() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
         
         loader.completeDogLoading()
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
     }
     
-    func test_pullToRefresh_showsLoadingIndicator() {
+    func test_userInitiatedDogReload_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         
-        sut.refreshControl?.simulatePullToRefresh()
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        sut.simulateUserInitiatedDogReload()
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
     }
     
-    func test_pullToRefresh_hidesLoadingIndicatorOnLoadCompletion() {
+    func test_userInitiatedDogReload_hidesLoadingIndicatorOnLoadCompletion() {
         let (sut, loader) = makeSUT()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedDogReload()
         
         loader.completeDogLoading()
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
     }
     
     // MARK: - Helpers
@@ -118,9 +118,17 @@ final class DogControllerTests: XCTestCase {
     }
 }
 
+private extension DogViewController {
+    func simulateUserInitiatedDogReload() {
+        refreshControl?.simulatePullToRefresh()
+    }
+    
+    var isShowingLoadingIndicator: Bool? {
+        refreshControl?.isRefreshing
+    }
+}
 
 private extension UIRefreshControl {
-    
     func simulatePullToRefresh() {
         allTargets.forEach { target in
             actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
