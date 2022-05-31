@@ -73,7 +73,7 @@ final class DogControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
         
-        loader.completeFeedLoading()
+        loader.completeDogLoading()
         XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
     }
     
@@ -89,7 +89,7 @@ final class DogControllerTests: XCTestCase {
         
         sut.refreshControl?.simulatePullToRefresh()
         
-        loader.completeFeedLoading()
+        loader.completeDogLoading()
         XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
     }
     
@@ -112,7 +112,7 @@ final class DogControllerTests: XCTestCase {
             completions.append(completion)
         }
         
-        func completeFeedLoading(at index: Int = 0) {
+        func completeDogLoading(at index: Int = 0) {
             completions[index](.success([]))
         }
     }
