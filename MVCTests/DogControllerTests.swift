@@ -119,23 +119,23 @@ final class DogControllerTests: XCTestCase {
         // MARK: - DogLoader
         
         private(set) var dogLoadCallCount: Int = 0
-        private(set) var DogLoadcompletions = [(DogLoader.Result) -> Void]()
+        private(set) var dogLoadcompletions = [(DogLoader.Result) -> Void]()
         
         func load(completion: @escaping (DogLoader.Result) -> Void) {
             dogLoadCallCount += 1
-            DogLoadcompletions.append(completion)
+            dogLoadcompletions.append(completion)
         }
         
         func completeDogLoading(at index: Int = 0) {
-            DogLoadcompletions[index](.success([]))
+            dogLoadcompletions[index](.success([]))
         }
         
         func completeDogLoading(with dogs: [Dog], at index: Int = 0) {
-            DogLoadcompletions[index](.success(dogs))
+            dogLoadcompletions[index](.success(dogs))
         }
         
         func completeDogLoading(with error: Error, at index: Int = 0) {
-            DogLoadcompletions[index](.failure(error))
+            dogLoadcompletions[index](.failure(error))
         }
 
         // MARK: - DogImageDataLoader
