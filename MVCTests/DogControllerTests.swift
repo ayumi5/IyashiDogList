@@ -143,12 +143,19 @@ final class DogControllerTests: XCTestCase {
         private(set) var loadedImageURLs = [URL]()
         private(set) var canceledImageURLs = [URL]()
         
-        func loadImageData(from url: URL) {
-            loadedImageURLs.append(url)
+        private struct TaskSpy: DogImageDataLoaderTask {
+            let cancelCallback: () -> Void
+            
+            func cancel() {
+                cancelCallback()
+            }
         }
         
-        func cancelImageLoad(from url: URL) {
-            canceledImageURLs.append(url)
+        func loadImageData(from url: URL) -> DogImageDataLoaderTask {
+            loadedImageURLs.append(url)
+            return TaskSpy { [weak self] in
+                self?.canceledImageURLs.append(url)
+            }
         }
     }
     

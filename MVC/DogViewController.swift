@@ -8,15 +8,19 @@
 import UIKit
 import IyashiDogFeature
 
+public protocol DogImageDataLoaderTask {
+    func cancel()
+}
+
 public protocol DogImageDataLoader {
-    func loadImageData(from url: URL)
-    func cancelImageLoad(from url: URL)
+    func loadImageData(from url: URL) -> DogImageDataLoaderTask
 }
 
 public final class DogViewController: UITableViewController {
     private var dogLoader: DogLoader?
     private var dogImageDataLoader: DogImageDataLoader?
     private var tableModel = [Dog]()
+    private var tasks = [IndexPath:DogImageDataLoaderTask]()
     
     public convenience init(dogLoader: DogLoader, dogImageDataLoader: DogImageDataLoader) {
         self.init()
@@ -57,13 +61,13 @@ public final class DogViewController: UITableViewController {
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dog = tableModel[indexPath.row]
-        dogImageDataLoader?.loadImageData(from: dog.imageURL)
+        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL)
         return DogCell()
     }
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let dog = tableModel[indexPath.row]
-        dogImageDataLoader?.cancelImageLoad(from: dog.imageURL)
+        tasks[indexPath]?.cancel()
+        tasks[indexPath] = nil
     }
 }
 
