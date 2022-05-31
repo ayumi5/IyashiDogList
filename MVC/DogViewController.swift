@@ -35,8 +35,8 @@ public final class DogViewController: UITableViewController {
                 self?.tableModel = dogs
                 self?.tableView.reloadData()
             }
-                    
             self?.refreshControl?.endRefreshing()
+                    
         }
     }
     

@@ -33,13 +33,13 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once view is loaded")
         
         loader.completeDogLoading(at: 0)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed")
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed successfully")
         
         sut.simulateUserInitiatedDogReload()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once user initiated a reload")
         
-        loader.completeDogLoading(at: 1)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed")
+        loader.completeDogLoading(with: anyNSError(), at: 1)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected loading indicator once loading is completed with error")
     }
     
     func test_viewDidLoad_rendersDogItemOnSuccessfulLoadCompletion() {
