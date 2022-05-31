@@ -15,16 +15,16 @@ final class DogControllerTests: XCTestCase {
     func test_loadDogActions_requestDogFromLoader() {
         let (sut, loader) = makeSUT()
         
-        XCTAssertEqual(loader.loadCallCount, 0, "Expected no loading requests before view is loaded")
+        XCTAssertEqual(loader.dogLoadCallCount, 0, "Expected no loading requests before view is loaded")
         
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadCallCount, 1, "Expected a loading requests once view is loaded")
+        XCTAssertEqual(loader.dogLoadCallCount, 1, "Expected a loading requests once view is loaded")
         
         sut.simulateUserInitiatedDogReload()
-        XCTAssertEqual(loader.loadCallCount, 2, "Expected another loading requests once user initiates a reload")
+        XCTAssertEqual(loader.dogLoadCallCount, 2, "Expected another loading requests once user initiates a reload")
         
         sut.simulateUserInitiatedDogReload()
-        XCTAssertEqual(loader.loadCallCount, 3, "Expected another loading requests once user initiates another reload")
+        XCTAssertEqual(loader.dogLoadCallCount, 3, "Expected another loading requests once user initiates another reload")
     }
     
     func test_loadingIndicator_isVisibleWhileLoadingDog() {
@@ -69,37 +69,65 @@ final class DogControllerTests: XCTestCase {
         
         XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
     }
+    
+    func test_dogImageView_loadsDogImageURLWhenViewisVisible() {
+        let (sut, loader) = makeSUT()
+        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
+        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
+        
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [dog01, dog02])
+        XCTAssertEqual(loader.loadedImageURLs, [])
+
+        sut.simulateDogImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL])
+        
+        sut.simulateDogImageViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL, dog02.imageURL])
+        
+    }
 
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = DogViewController(loader: loader)
+        let sut = DogViewController(dogLoader: loader, dogImageDataLoader: loader)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut, loader)
     }
     
-    private class LoaderSpy: DogLoader {
-        private(set) var loadCallCount: Int = 0
-        private(set) var completions = [(DogLoader.Result) -> Void]()
+    private class LoaderSpy: DogLoader, DogImageDataLoader {
+        
+        // MARK: - DogLoader
+        
+        private(set) var dogLoadCallCount: Int = 0
+        private(set) var DogLoadcompletions = [(DogLoader.Result) -> Void]()
         
         func load(completion: @escaping (DogLoader.Result) -> Void) {
-            loadCallCount += 1
-            completions.append(completion)
+            dogLoadCallCount += 1
+            DogLoadcompletions.append(completion)
         }
         
         func completeDogLoading(at index: Int = 0) {
-            completions[index](.success([]))
+            DogLoadcompletions[index](.success([]))
         }
         
         func completeDogLoading(with dogs: [Dog], at index: Int = 0) {
-            completions[index](.success(dogs))
+            DogLoadcompletions[index](.success(dogs))
         }
         
         func completeDogLoading(with error: Error, at index: Int = 0) {
-            completions[index](.failure(error))
+            DogLoadcompletions[index](.failure(error))
+        }
+
+        // MARK: - DogImageDataLoader
+        
+        private(set) var loadedImageURLs = [URL]()
+        
+        func loadImageData(from url: URL) {
+            loadedImageURLs.append(url)
         }
     }
     
@@ -113,12 +141,22 @@ final class DogControllerTests: XCTestCase {
 }
 
 private extension DogViewController {
+    func simulateDogImageViewVisible(at row: Int = 0) {
+        _ = dogImageView(at: row)
+    }
+    
     func simulateUserInitiatedDogReload() {
         refreshControl?.simulatePullToRefresh()
     }
     
     var isShowingLoadingIndicator: Bool? {
         refreshControl?.isRefreshing
+    }
+    
+    func dogImageView(at row: Int) -> UITableViewCell? {
+        let ds = tableView.dataSource
+        let indexPath = IndexPath(row: row, section: dogImageSection)
+        return ds?.tableView(tableView, cellForRowAt: indexPath)
     }
     
     func numberOfRenderedDogImageViews() -> Int {
@@ -128,6 +166,7 @@ private extension DogViewController {
     private var dogImageSection: Int {
         return 0
     }
+    
 }
 
 private extension UIRefreshControl {

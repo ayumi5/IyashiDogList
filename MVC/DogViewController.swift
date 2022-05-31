@@ -8,14 +8,19 @@
 import UIKit
 import IyashiDogFeature
 
+public protocol DogImageDataLoader {
+    func loadImageData(from url: URL)
+}
+
 public final class DogViewController: UITableViewController {
-    private var loader: DogLoader?
+    private var dogLoader: DogLoader?
+    private var dogImageDataLoader: DogImageDataLoader?
     private var tableModel = [Dog]()
-    private var dogItems = [Dog]()
     
-    public convenience init(loader: DogLoader) {
+    public convenience init(dogLoader: DogLoader, dogImageDataLoader: DogImageDataLoader) {
         self.init()
-        self.loader = loader
+        self.dogLoader = dogLoader
+        self.dogImageDataLoader = dogImageDataLoader
     }
     
     public override func viewDidLoad() {
@@ -29,7 +34,7 @@ public final class DogViewController: UITableViewController {
     
     @objc private func load() {
         refreshControl?.beginRefreshing()
-        loader?.load { [weak self] result in
+        dogLoader?.load { [weak self] result in
             
             if let dogs = try? result.get() {
                 self?.tableModel = dogs
@@ -40,11 +45,18 @@ public final class DogViewController: UITableViewController {
         }
     }
     
+    public override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableModel.count
     }
     
+    
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dog = tableModel[indexPath.row]
+        dogImageDataLoader?.loadImageData(from: dog.imageURL)
         return DogCell()
     }
 }
