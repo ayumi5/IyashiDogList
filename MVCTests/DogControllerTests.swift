@@ -55,6 +55,20 @@ final class DogControllerTests: XCTestCase {
         
         XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 2)
     }
+    
+    func test_loadCompletion_doesNotAlterCurrentRenderingStateOnError() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [Dog(imageURL: anyURL())], at: 0)
+
+        XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
+        
+        sut.simulateUserInitiatedDogReload()
+        loader.completeDogLoading(with: anyNSError())
+        
+        XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
+    }
 
     
     // MARK: - Helpers
@@ -83,10 +97,18 @@ final class DogControllerTests: XCTestCase {
         func completeDogLoading(with dogs: [Dog], at index: Int = 0) {
             completions[index](.success(dogs))
         }
+        
+        func completeDogLoading(with error: Error, at index: Int = 0) {
+            completions[index](.failure(error))
+        }
     }
     
     private func anyURL() -> URL {
         return URL(string: "http://a-url.com")!
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "test", code: 0)
     }
 }
 

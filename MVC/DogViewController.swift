@@ -11,6 +11,7 @@ import IyashiDogFeature
 public final class DogViewController: UITableViewController {
     private var loader: DogLoader?
     private var tableModel = [Dog]()
+    private var dogItems = [Dog]()
     
     public convenience init(loader: DogLoader) {
         self.init()
@@ -29,9 +30,12 @@ public final class DogViewController: UITableViewController {
     @objc private func load() {
         refreshControl?.beginRefreshing()
         loader?.load { [weak self] result in
-            self?.tableModel = (try? result.get()) ?? []
-            self?.tableView.reloadData()
-
+            
+            if let dogs = try? result.get() {
+                self?.tableModel = dogs
+                self?.tableView.reloadData()
+            }
+                    
             self?.refreshControl?.endRefreshing()
         }
     }
