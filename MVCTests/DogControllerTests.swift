@@ -36,23 +36,13 @@ final class DogViewController: UITableViewController {
 
 final class DogControllerTests: XCTestCase {
     
-    func test_init_doesNotLoadDog() {
-        let (_, loader) = makeSUT()
+    func test_loadDogActions_requestDogFromLoader() {
+        let (sut, loader) = makeSUT()
         
         XCTAssertEqual(loader.loadCallCount, 0)
-    }
-    
-    func test_viewDidLoad_loadsDog() {
-        let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
-        
         XCTAssertEqual(loader.loadCallCount, 1)
-    }
-    
-    func test_userInitiatedDogReload_reloadsDog() {
-        let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
         
         sut.simulateUserInitiatedDogReload()
         XCTAssertEqual(loader.loadCallCount, 2)
@@ -61,35 +51,18 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 3)
     }
     
-    func test_viewDidLoad_showsLoadingIndicator() {
-        let (sut, _) = makeSUT()
-        sut.loadViewIfNeeded()
-        
-        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
-    }
-    
-    func test_viewDidLoad_hidesLoadingIndicatorOnLoadCompletion() {
+    func test_loadingIndicator_isVisibleWhileLoadingDog() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true)
         
-        loader.completeDogLoading()
+        loader.completeDogLoading(at: 0)
         XCTAssertEqual(sut.isShowingLoadingIndicator, false)
-    }
-    
-    func test_userInitiatedDogReload_showsLoadingIndicator() {
-        let (sut, _) = makeSUT()
         
         sut.simulateUserInitiatedDogReload()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true)
-    }
-    
-    func test_userInitiatedDogReload_hidesLoadingIndicatorOnLoadCompletion() {
-        let (sut, loader) = makeSUT()
         
-        sut.simulateUserInitiatedDogReload()
-        
-        loader.completeDogLoading()
+        loader.completeDogLoading(at: 1)
         XCTAssertEqual(sut.isShowingLoadingIndicator, false)
     }
     
