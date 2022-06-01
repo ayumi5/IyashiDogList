@@ -60,8 +60,11 @@ public final class DogViewController: UITableViewController {
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dog = tableModel[indexPath.row]
         let cell = DogImageCell()
+        cell.dogImageView.image = nil
         cell.dogImageContainer.startShimmering()
-        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] _ in
+        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] result in
+            let imageData = try? result.get()
+            cell?.dogImageView.image = imageData.map(UIImage.init) ?? nil
             cell?.dogImageContainer.stopShimmering()
         }
         return cell
@@ -75,7 +78,7 @@ public final class DogViewController: UITableViewController {
 
 public class DogImageCell: UITableViewCell {
     public var dogImageContainer = UIView()
-    
+    public var dogImageView = UIImageView()
 }
 
 

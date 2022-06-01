@@ -46,12 +46,12 @@ final class DogControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        loader.completeDogLoading(with: [Dog(imageURL: anyURL())], at: 0)
+        loader.completeDogLoading(with: [makeDog()], at: 0)
 
         XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
         
         sut.simulateUserInitiatedDogReload()
-        loader.completeDogLoading(with: [Dog(imageURL: anyURL()), Dog(imageURL: anyURL())], at: 1)
+        loader.completeDogLoading(with: [makeDog(), makeDog()], at: 1)
         
         XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 2)
     }
@@ -60,7 +60,7 @@ final class DogControllerTests: XCTestCase {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
-        loader.completeDogLoading(with: [Dog(imageURL: anyURL())], at: 0)
+        loader.completeDogLoading(with: [makeDog()], at: 0)
 
         XCTAssertEqual(sut.numberOfRenderedDogImageViews(), 1)
         
@@ -124,6 +124,30 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(cell02?.isShowingImageViewLoadingIndicator, false, "Expected no loading indicator once second image loading completes with error")
     }
     
+    func test_dogImageView_rendersImageLoadedFromURL() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [makeDog(), makeDog()])
+
+        let cell01 = sut.simulateDogImageViewVisible(at: 0)
+        let cell02 = sut.simulateDogImageViewVisible(at: 0)
+
+        XCTAssertEqual(cell01?.renderedImage, .none)
+        XCTAssertEqual(cell02?.renderedImage, .none)
+
+        let imageData01 = UIImage.make(withColor: .red).pngData()!
+        loader.completeDogImageLoading(with: imageData01, at: 0)
+        XCTAssertEqual(cell01?.renderedImage, imageData01)
+        XCTAssertEqual(cell02?.renderedImage, .none)
+        
+        let imageData02 = UIImage.make(withColor: .blue).pngData()!
+        loader.completeDogImageLoading(with: imageData02, at: 1)
+        XCTAssertEqual(cell01?.renderedImage, imageData01)
+        XCTAssertEqual(cell02?.renderedImage, imageData02)
+        
+    }
+    
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
@@ -181,11 +205,11 @@ final class DogControllerTests: XCTestCase {
             }
         }
         
-        func completeDogImageLoading(with data: Data, at index: Int) {
+        func completeDogImageLoading(with data: Data, at index: Int = 0) {
             dogImageLoadcompletions[index](.success(data))
         }
         
-        func completeDogImageLoading(with error: Error, at index: Int) {
+        func completeDogImageLoading(with error: Error, at index: Int = 0) {
             dogImageLoadcompletions[index](.failure(error))
         }
     }
@@ -249,6 +273,10 @@ private extension DogImageCell {
     var isShowingImageViewLoadingIndicator: Bool {
         dogImageContainer.isShimmering
     }
+    
+    var renderedImage: Data? {
+        return dogImageView.image?.pngData()
+    }
 }
 
 private extension UIRefreshControl {
@@ -258,5 +286,18 @@ private extension UIRefreshControl {
                 (target as NSObject).perform(Selector($0))
             }
         }
+    }
+}
+
+private extension UIImage {
+    static func make(withColor color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()!
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img!
     }
 }
