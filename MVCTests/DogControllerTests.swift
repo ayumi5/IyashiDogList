@@ -160,16 +160,29 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(cell01?.isShowingRetryAction, false)
         XCTAssertEqual(cell02?.isShowingRetryAction, false)
 
-        loader.completeDogImageLoading(with: anyData(), at: 0)
+        let imageData01 = UIImage.make(withColor: .red).pngData()!
+        loader.completeDogImageLoading(with: imageData01, at: 0)
         XCTAssertEqual(cell01?.isShowingRetryAction, false)
         XCTAssertEqual(cell02?.isShowingRetryAction, false)
         
         loader.completeDogImageLoading(with: anyNSError(), at: 1)
         XCTAssertEqual(cell01?.isShowingRetryAction, false)
         XCTAssertEqual(cell02?.isShowingRetryAction, true)
-        
     }
     
+    func test_retryButton_isVisibleOnInvalidLoadedImage() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [makeDog()])
+
+        let cell = sut.simulateDogImageViewVisible()
+        XCTAssertEqual(cell?.isShowingRetryAction, false)
+        
+        let invalidData = anyData()
+        loader.completeDogImageLoading(with: invalidData)
+        XCTAssertEqual(cell?.isShowingRetryAction, true)
+    }
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {

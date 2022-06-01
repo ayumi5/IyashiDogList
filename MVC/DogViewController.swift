@@ -64,13 +64,10 @@ public final class DogViewController: UITableViewController {
         cell.dogImageContainer.startShimmering()
         cell.retryButton.isHidden = true
         tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] result in
-            switch result {
-            case let .success(data):
-                cell?.dogImageView.image = UIImage(data: data)
-            case .failure:
-                cell?.retryButton.isHidden = false
-            }
-            
+            let imageData = try? result.get()
+            let image = imageData.map(UIImage.init) ?? nil
+            cell?.dogImageView.image = image
+            cell?.retryButton.isHidden = (image != nil)
             cell?.dogImageContainer.stopShimmering()
         }
         return cell
