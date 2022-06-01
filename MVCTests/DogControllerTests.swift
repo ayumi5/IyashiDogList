@@ -131,7 +131,7 @@ final class DogControllerTests: XCTestCase {
         loader.completeDogLoading(with: [makeDog(), makeDog()])
 
         let cell01 = sut.simulateDogImageViewVisible(at: 0)
-        let cell02 = sut.simulateDogImageViewVisible(at: 0)
+        let cell02 = sut.simulateDogImageViewVisible(at: 1)
 
         XCTAssertEqual(cell01?.renderedImage, .none)
         XCTAssertEqual(cell02?.renderedImage, .none)
@@ -145,6 +145,28 @@ final class DogControllerTests: XCTestCase {
         loader.completeDogImageLoading(with: imageData02, at: 1)
         XCTAssertEqual(cell01?.renderedImage, imageData01)
         XCTAssertEqual(cell02?.renderedImage, imageData02)
+        
+    }
+    
+    func test_retryButton_isVisibleOnImageLoadError() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [makeDog(), makeDog()])
+
+        let cell01 = sut.simulateDogImageViewVisible(at: 0)
+        let cell02 = sut.simulateDogImageViewVisible(at: 1)
+
+        XCTAssertEqual(cell01?.isShowingRetryAction, false)
+        XCTAssertEqual(cell02?.isShowingRetryAction, false)
+
+        loader.completeDogImageLoading(with: anyData(), at: 0)
+        XCTAssertEqual(cell01?.isShowingRetryAction, false)
+        XCTAssertEqual(cell02?.isShowingRetryAction, false)
+        
+        loader.completeDogImageLoading(with: anyNSError(), at: 1)
+        XCTAssertEqual(cell01?.isShowingRetryAction, false)
+        XCTAssertEqual(cell02?.isShowingRetryAction, true)
         
     }
     
@@ -276,6 +298,10 @@ private extension DogImageCell {
     
     var renderedImage: Data? {
         return dogImageView.image?.pngData()
+    }
+    
+    var isShowingRetryAction: Bool {
+        return !retryButton.isHidden
     }
 }
 
