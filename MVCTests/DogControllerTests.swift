@@ -27,7 +27,7 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(loader.dogLoadCallCount, 3, "Expected another loading requests once user initiates another reload")
     }
     
-    func test_loadingIndicator_isVisibleWhileLoadingDog() {
+    func test_feedViewloadingIndicator_isVisibleWhileLoadingDog() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once view is loaded")
@@ -104,6 +104,29 @@ final class DogControllerTests: XCTestCase {
         
     }
     
+    func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingDog() {
+        let (sut, loader) = makeSUT()
+        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
+        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
+        
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [dog01, dog02])
+        
+        let cell01 = sut.simulateDogImageViewVisible(at: 0)
+        let cell02 = sut.simulateDogImageViewVisible(at: 1)
+        XCTAssertEqual(cell01?.isShowingImageViewLoadingIndicator, true, "Expected loading indicator once first image is loaded")
+        XCTAssertEqual(cell02?.isShowingImageViewLoadingIndicator, true, "Expected loading indicator once second image is loaded")
+
+        loader.completeDogImageLoading(with: anyData(), at: 0)
+        XCTAssertEqual(cell01?.isShowingImageViewLoadingIndicator, false, "Expected no loading indicator once first image loading completes successfully")
+        XCTAssertEqual(cell02?.isShowingImageViewLoadingIndicator, true, "Expected loading indicator while second image is loading")
+        
+        loader.completeDogImageLoading(with: anyNSError(), at: 1)
+        XCTAssertEqual(cell01?.isShowingImageViewLoadingIndicator, false, "Expected no loading indicator state change for first image once second image loading completes with error")
+        XCTAssertEqual(cell02?.isShowingImageViewLoadingIndicator, false, "Expected no loading indicator once second image loading completes with error")
+    }
+    
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
@@ -142,6 +165,7 @@ final class DogControllerTests: XCTestCase {
         
         private(set) var loadedImageURLs = [URL]()
         private(set) var canceledImageURLs = [URL]()
+        private(set) var dogImageLoadcompletions = [(DogImageDataLoader.Result) -> Void]()
         
         private struct TaskSpy: DogImageDataLoaderTask {
             let cancelCallback: () -> Void
@@ -151,11 +175,20 @@ final class DogControllerTests: XCTestCase {
             }
         }
         
-        func loadImageData(from url: URL) -> DogImageDataLoaderTask {
+        func loadImageData(from url: URL, completion: @escaping (DogImageDataLoader.Result) -> Void) -> DogImageDataLoaderTask {
             loadedImageURLs.append(url)
+            dogImageLoadcompletions.append(completion)
             return TaskSpy { [weak self] in
                 self?.canceledImageURLs.append(url)
             }
+        }
+        
+        func completeDogImageLoading(with data: Data, at index: Int) {
+            dogImageLoadcompletions[index](.success(data))
+        }
+        
+        func completeDogImageLoading(with error: Error, at index: Int) {
+            dogImageLoadcompletions[index](.failure(error))
         }
     }
     
@@ -166,11 +199,15 @@ final class DogControllerTests: XCTestCase {
     private func anyNSError() -> NSError {
         return NSError(domain: "test", code: 0)
     }
+    
+    private func anyData() -> Data {
+        return Data("any data".utf8)
+    }
 }
 
 private extension DogViewController {
     @discardableResult
-    func simulateDogImageViewVisible(at row: Int = 0) -> UITableViewCell? {
+    func simulateDogImageViewVisible(at row: Int = 0) -> DogImageCell? {
         return dogImageView(at: row)
     }
     
@@ -190,10 +227,10 @@ private extension DogViewController {
         refreshControl?.isRefreshing
     }
     
-    func dogImageView(at row: Int) -> UITableViewCell? {
+    func dogImageView(at row: Int) -> DogImageCell? {
         let ds = tableView.dataSource
         let indexPath = IndexPath(row: row, section: dogImageSection)
-        return ds?.tableView(tableView, cellForRowAt: indexPath)
+        return ds?.tableView(tableView, cellForRowAt: indexPath) as? DogImageCell
     }
     
     func numberOfRenderedDogImageViews() -> Int {
@@ -204,6 +241,12 @@ private extension DogViewController {
         return 0
     }
     
+}
+
+private extension DogImageCell {
+    var isShowingImageViewLoadingIndicator: Bool {
+        dogImageContainer.isShimmering
+    }
 }
 
 private extension UIRefreshControl {

@@ -13,7 +13,9 @@ public protocol DogImageDataLoaderTask {
 }
 
 public protocol DogImageDataLoader {
-    func loadImageData(from url: URL) -> DogImageDataLoaderTask
+    typealias Result = Swift.Result<Data, Error>
+    
+    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask
 }
 
 public final class DogViewController: UITableViewController {
@@ -50,10 +52,6 @@ public final class DogViewController: UITableViewController {
         }
     }
     
-    public override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableModel.count
     }
@@ -61,8 +59,12 @@ public final class DogViewController: UITableViewController {
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dog = tableModel[indexPath.row]
-        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL)
-        return DogCell()
+        let cell = DogImageCell()
+        cell.dogImageContainer.startShimmering()
+        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] _ in
+            cell?.dogImageContainer.stopShimmering()
+        }
+        return cell
     }
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -71,4 +73,9 @@ public final class DogViewController: UITableViewController {
     }
 }
 
-public class DogCell: UITableViewCell {}
+public class DogImageCell: UITableViewCell {
+    public var dogImageContainer = UIView()
+    
+}
+
+
