@@ -72,8 +72,8 @@ final class DogControllerTests: XCTestCase {
     
     func test_dogImageView_loadsDogImageURLWhenViewisVisible() {
         let (sut, loader) = makeSUT()
-        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
-        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
+        let dog01 = makeDog()
+        let dog02 = makeDog()
         
         sut.loadViewIfNeeded()
         loader.completeDogLoading(with: [dog01, dog02])
@@ -89,8 +89,8 @@ final class DogControllerTests: XCTestCase {
     
     func test_dogImageView_cancelDogImageURLWhenViewisNotVisibleAnymore() {
         let (sut, loader) = makeSUT()
-        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
-        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
+        let dog01 = makeDog()
+        let dog02 = makeDog()
         
         sut.loadViewIfNeeded()
         loader.completeDogLoading(with: [dog01, dog02])
@@ -106,11 +106,9 @@ final class DogControllerTests: XCTestCase {
     
     func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingDog() {
         let (sut, loader) = makeSUT()
-        let dog01 = Dog(imageURL: URL(string: "https://dog1.com")!)
-        let dog02 = Dog(imageURL: URL(string: "https://dog2.com")!)
-        
+       
         sut.loadViewIfNeeded()
-        loader.completeDogLoading(with: [dog01, dog02])
+        loader.completeDogLoading(with: [makeDog(), makeDog()])
         
         let cell01 = sut.simulateDogImageViewVisible(at: 0)
         let cell02 = sut.simulateDogImageViewVisible(at: 1)
@@ -202,6 +200,10 @@ final class DogControllerTests: XCTestCase {
     
     private func anyData() -> Data {
         return Data("any data".utf8)
+    }
+    
+    private func makeDog() -> Dog {
+        return Dog(imageURL: URL(string: "http://any-url-\(UUID()).com")!)
     }
 }
 
