@@ -184,6 +184,24 @@ final class DogControllerTests: XCTestCase {
         XCTAssertEqual(cell?.isShowingRetryAction, true)
     }
     
+    func test_retryAction_loadDogImageDataOnError() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [makeDog()])
+        
+        let cell = sut.simulateDogImageViewVisible()
+        loader.completeDogImageLoading(with: anyNSError(), at: 0)
+        XCTAssertEqual(cell?.renderedImage, .none)
+        
+        cell?.simulateRetryAction()
+        let imageData = UIImage.make(withColor: .red).pngData()!
+        loader.completeDogImageLoading(with: imageData, at: 1)
+        
+        XCTAssertEqual(cell?.renderedImage, imageData)
+        
+    }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
@@ -316,12 +334,26 @@ private extension DogImageCell {
     var isShowingRetryAction: Bool {
         return !retryButton.isHidden
     }
+    
+    func simulateRetryAction() {
+        retryButton.simulateTap()
+    }
 }
 
 private extension UIRefreshControl {
     func simulatePullToRefresh() {
         allTargets.forEach { target in
             actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
+
+private extension UIButton {
+    func simulateTap() {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
                 (target as NSObject).perform(Selector($0))
             }
         }

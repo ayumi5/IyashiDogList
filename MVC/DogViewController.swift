@@ -63,13 +63,21 @@ public final class DogViewController: UITableViewController {
         cell.dogImageView.image = nil
         cell.dogImageContainer.startShimmering()
         cell.retryButton.isHidden = true
-        tasks[indexPath] = dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] result in
-            let imageData = try? result.get()
-            let image = imageData.map(UIImage.init) ?? nil
-            cell?.dogImageView.image = image
-            cell?.retryButton.isHidden = (image != nil)
-            cell?.dogImageContainer.stopShimmering()
+        
+        let loadImage = { [weak self, weak cell] in
+            guard let self = self else { return }
+            
+                self.tasks[indexPath] = self.dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] result in
+                let imageData = try? result.get()
+                let image = imageData.map(UIImage.init) ?? nil
+                cell?.dogImageView.image = image
+                cell?.retryButton.isHidden = (image != nil)
+                cell?.dogImageContainer.stopShimmering()
+            }
         }
+        cell.onRetry = loadImage
+        loadImage()
+        
         return cell
     }
     
@@ -82,7 +90,17 @@ public final class DogViewController: UITableViewController {
 public class DogImageCell: UITableViewCell {
     public var dogImageContainer = UIView()
     public var dogImageView = UIImageView()
-    public var retryButton = UIButton()
+    private(set) public lazy var retryButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(retryButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    var onRetry: (() -> Void)?
+    
+    @objc private func retryButtonTapped() {
+       onRetry?()
+    }
 }
 
 
