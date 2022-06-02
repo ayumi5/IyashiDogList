@@ -133,18 +133,18 @@ final class DogControllerTests: XCTestCase {
         let cell01 = sut.simulateDogImageViewVisible(at: 0)
         let cell02 = sut.simulateDogImageViewVisible(at: 1)
 
-        XCTAssertEqual(cell01?.renderedImage, .none)
-        XCTAssertEqual(cell02?.renderedImage, .none)
+        XCTAssertEqual(cell01?.renderedImage, .none, "Expected no rendered image before first image loading completes")
+        XCTAssertEqual(cell02?.renderedImage, .none, "Expected no rendered image before second image loading completes")
 
         let imageData01 = UIImage.make(withColor: .red).pngData()!
         loader.completeDogImageLoading(with: imageData01, at: 0)
-        XCTAssertEqual(cell01?.renderedImage, imageData01)
-        XCTAssertEqual(cell02?.renderedImage, .none)
+        XCTAssertEqual(cell01?.renderedImage, imageData01, "Expected rendered image once first image loading completes successfully")
+        XCTAssertEqual(cell02?.renderedImage, .none, "Expected no image state change for second image once first image loading completes successfully")
         
         let imageData02 = UIImage.make(withColor: .blue).pngData()!
         loader.completeDogImageLoading(with: imageData02, at: 1)
-        XCTAssertEqual(cell01?.renderedImage, imageData01)
-        XCTAssertEqual(cell02?.renderedImage, imageData02)
+        XCTAssertEqual(cell01?.renderedImage, imageData01,"Expected no image state change for first image once second image loading completes successfully")
+        XCTAssertEqual(cell02?.renderedImage, imageData02, "Expected rendered image once second image loading completes successfully")
         
     }
     
@@ -157,17 +157,17 @@ final class DogControllerTests: XCTestCase {
         let cell01 = sut.simulateDogImageViewVisible(at: 0)
         let cell02 = sut.simulateDogImageViewVisible(at: 1)
 
-        XCTAssertEqual(cell01?.isShowingRetryAction, false)
-        XCTAssertEqual(cell02?.isShowingRetryAction, false)
+        XCTAssertEqual(cell01?.isShowingRetryAction, false, "Expected no retry action before first image loading completes")
+        XCTAssertEqual(cell02?.isShowingRetryAction, false, "Expected no retry action before second image loading completes")
 
         let imageData01 = UIImage.make(withColor: .red).pngData()!
         loader.completeDogImageLoading(with: imageData01, at: 0)
-        XCTAssertEqual(cell01?.isShowingRetryAction, false)
-        XCTAssertEqual(cell02?.isShowingRetryAction, false)
+        XCTAssertEqual(cell01?.isShowingRetryAction, false, "Expected no retry action once first image loading completes successfully")
+        XCTAssertEqual(cell02?.isShowingRetryAction, false, "Expected no retry action change once first image loading completes successfully")
         
         loader.completeDogImageLoading(with: anyNSError(), at: 1)
-        XCTAssertEqual(cell01?.isShowingRetryAction, false)
-        XCTAssertEqual(cell02?.isShowingRetryAction, true)
+        XCTAssertEqual(cell01?.isShowingRetryAction, false, "Expected no retry action change once second image loading completes with error")
+        XCTAssertEqual(cell02?.isShowingRetryAction, true, "Expected retry action once second image loading completes with error")
     }
     
     func test_retryButton_isVisibleOnInvalidLoadedImage() {
@@ -177,14 +177,14 @@ final class DogControllerTests: XCTestCase {
         loader.completeDogLoading(with: [makeDog()])
 
         let cell = sut.simulateDogImageViewVisible()
-        XCTAssertEqual(cell?.isShowingRetryAction, false)
+        XCTAssertEqual(cell?.isShowingRetryAction, false, "Expected no retry action before image loading completes")
         
         let invalidData = anyData()
         loader.completeDogImageLoading(with: invalidData)
-        XCTAssertEqual(cell?.isShowingRetryAction, true)
+        XCTAssertEqual(cell?.isShowingRetryAction, true, "Expected retry action once image loading completes with invalid image")
     }
     
-    func test_retryAction_loadDogImageDataOnError() {
+    func test_retryAction_loadDogImageData() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -192,13 +192,14 @@ final class DogControllerTests: XCTestCase {
         
         let cell = sut.simulateDogImageViewVisible()
         loader.completeDogImageLoading(with: anyNSError(), at: 0)
-        XCTAssertEqual(cell?.renderedImage, .none)
+        XCTAssertEqual(cell?.renderedImage, .none, "Expected no rendered image when image loading completes with error")
+        
         
         cell?.simulateRetryAction()
         let imageData = UIImage.make(withColor: .red).pngData()!
         loader.completeDogImageLoading(with: imageData, at: 1)
         
-        XCTAssertEqual(cell?.renderedImage, imageData)
+        XCTAssertEqual(cell?.renderedImage, imageData, "Expected rendered image once loading completes successfully by retry action")
     }
     
     func test_dogImageView_preloadsImageURLWhenNearVisible() {
@@ -208,13 +209,13 @@ final class DogControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         loader.completeDogLoading(with: [dog01, dog02])
-        XCTAssertEqual(loader.loadedImageURLs, [])
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visible")
         
         sut.simulateDogImageViewNearVisible(at: 0)
-        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL])
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL], "Expected first image URL requests once first image is near visible")
         
         sut.simulateDogImageViewNearVisible(at: 1)
-        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL, dog02.imageURL])
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL, dog02.imageURL], "Expected second image URL requests once second image is near visible")
 
     }
     
@@ -225,13 +226,13 @@ final class DogControllerTests: XCTestCase {
            
            sut.loadViewIfNeeded()
            loader.completeDogLoading(with: [dog01, dog02])
-        XCTAssertEqual(loader.canceledImageURLs, [])
+        XCTAssertEqual(loader.canceledImageURLs, [], "Expected no cancelled image URL requests until image is not near visible")
            
            sut.simulateDogImageViewNotNearVisible(at: 0)
-           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL])
+           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL], "Expected first cancelled image URL requests once first image is not near visible")
            
            sut.simulateDogImageViewNotNearVisible(at: 1)
-           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL])
+           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL], "Expected second cancelled image URL requests once second image is not near visible")
 
        }
     
