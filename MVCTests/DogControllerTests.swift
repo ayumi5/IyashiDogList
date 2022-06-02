@@ -367,23 +367,4 @@ private extension DogViewController {
     private var dogImageSection: Int {
         return 0
     }
-    
-}
-
-private extension DogImageCell {
-    var isShowingImageViewLoadingIndicator: Bool {
-        dogImageContainer.isShimmering
-    }
-    
-    var renderedImage: Data? {
-        return dogImageView.image?.pngData()
-    }
-    
-    var isShowingRetryAction: Bool {
-        return !retryButton.isHidden
-    }
-    
-    func simulateRetryAction() {
-        retryButton.simulateTap()
-    }
 }
