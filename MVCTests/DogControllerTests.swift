@@ -218,6 +218,23 @@ final class DogControllerTests: XCTestCase {
 
     }
     
+    func test_dogImageView_cancelsPreloadImageURLWhenNotNearVisible() {
+           let (sut, loader) = makeSUT()
+           let dog01 = makeDog()
+           let dog02 = makeDog()
+           
+           sut.loadViewIfNeeded()
+           loader.completeDogLoading(with: [dog01, dog02])
+        XCTAssertEqual(loader.canceledImageURLs, [])
+           
+           sut.simulateDogImageViewNotNearVisible(at: 0)
+           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL])
+           
+           sut.simulateDogImageViewNotNearVisible(at: 1)
+           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL])
+
+       }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
@@ -318,6 +335,14 @@ private extension DogViewController {
         let ds = tableView.prefetchDataSource
         let index = IndexPath(row: row, section: dogImageSection)
         ds?.tableView(tableView, prefetchRowsAt: [index])
+    }
+    
+    func simulateDogImageViewNotNearVisible(at row: Int = 0) {
+        simulateDogImageViewVisible(at: row)
+        
+        let ds = tableView.prefetchDataSource
+        let index = IndexPath(row: row, section: dogImageSection)
+        ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
     }
     
     func simulateUserInitiatedDogReload() {
