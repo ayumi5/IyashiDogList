@@ -33,6 +33,7 @@
 		DA8B279B284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B279A284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift */; };
 		DA8B279D2848690300DAB4D3 /* DogImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B279C2848690300DAB4D3 /* DogImageCell+TestHelpers.swift */; };
 		DA8B279F2848697700DAB4D3 /* DogViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B279E2848697700DAB4D3 /* DogViewController+TestHelpers.swift */; };
+		DA8B27A1284869D900DAB4D3 /* LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B27A0284869D900DAB4D3 /* LoaderSpy.swift */; };
 		DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */; };
 		DAB3871B2844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387262844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
@@ -199,6 +200,7 @@
 		DA8B279A284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefrechControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		DA8B279C2848690300DAB4D3 /* DogImageCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DogImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		DA8B279E2848697700DAB4D3 /* DogViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DogViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		DA8B27A0284869D900DAB4D3 /* LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderSpy.swift; sourceTree = "<group>"; };
 		DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -418,6 +420,7 @@
 				DA8B279A284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift */,
 				DA8B279C2848690300DAB4D3 /* DogImageCell+TestHelpers.swift */,
 				DA8B279E2848697700DAB4D3 /* DogViewController+TestHelpers.swift */,
+				DA8B27A0284869D900DAB4D3 /* LoaderSpy.swift */,
 			);
 			path = MVCTests;
 			sourceTree = "<group>";
@@ -844,6 +847,7 @@
 				DA8B279B284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift in Sources */,
 				DA8B27992848685C00DAB4D3 /* UIButton+TestHelpers.swift in Sources */,
 				DA8B279F2848697700DAB4D3 /* DogViewController+TestHelpers.swift in Sources */,
+				DA8B27A1284869D900DAB4D3 /* LoaderSpy.swift in Sources */,
 				DADED8892844C32D00597972 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				DA8B2796284867D700DAB4D3 /* UIImage+TestHelpers.swift in Sources */,
 			);
