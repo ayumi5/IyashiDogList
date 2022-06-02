@@ -15,6 +15,7 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
         didSet { tableView.reloadData() }
     }
     private var tasks = [IndexPath:DogImageDataLoaderTask]()
+    private var cellViewControllers = [IndexPath: DogImageCellViewController]()
     
     public convenience init(dogLoader: DogLoader, dogImageDataLoader: DogImageDataLoader) {
         self.init()
@@ -40,48 +41,30 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
     
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dog = tableModel[indexPath.row]
-        let cell = DogImageCell()
-        cell.dogImageView.image = nil
-        cell.dogImageContainer.startShimmering()
-        cell.retryButton.isHidden = true
-        
-        let loadImage = { [weak self, weak cell] in
-            guard let self = self else { return }
-            
-                self.tasks[indexPath] = self.dogImageDataLoader?.loadImageData(from: dog.imageURL) { [weak cell] result in
-                let imageData = try? result.get()
-                let image = imageData.map(UIImage.init) ?? nil
-                cell?.dogImageView.image = image
-                cell?.retryButton.isHidden = (image != nil)
-                cell?.dogImageContainer.stopShimmering()
-            }
-        }
-        cell.onRetry = loadImage
-        loadImage()
-        
-        return cell
+        return cellController(forRowAt: indexPath).view()
     }
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cancelTask(forRowAt: indexPath)
+        removeCellController(forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            let cellModel = tableModel[indexPath.row]
-            tasks[indexPath] = dogImageDataLoader?.loadImageData(from: cellModel.imageURL) { _ in }
+            cellController(forRowAt: indexPath).preload()
         }
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { indexPath in
-            cancelTask(forRowAt: indexPath)
-        }
+        indexPaths.forEach(removeCellController)
+    }
+
+    private func cellController(forRowAt indexPath: IndexPath) -> DogImageCellViewController  {
+        let cellViewController = DogImageCellViewController(model: tableModel[indexPath.row], imageLoader: dogImageDataLoader!)
+        cellViewControllers[indexPath] = cellViewController
+        return cellViewController
     }
     
-    private func cancelTask(forRowAt indexPath: IndexPath) {
-        tasks[indexPath]?.cancel()
-        tasks[indexPath] = nil
+    private func removeCellController(forRowAt indexPath: IndexPath) {
+        cellViewControllers[indexPath] = nil
     }
 }
