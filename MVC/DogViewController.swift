@@ -8,16 +8,6 @@
 import UIKit
 import IyashiDogFeature
 
-public protocol DogImageDataLoaderTask {
-    func cancel()
-}
-
-public protocol DogImageDataLoader {
-    typealias Result = Swift.Result<Data, Error>
-    
-    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask
-}
-
 public final class DogViewController: UITableViewController, UITableViewDataSourcePrefetching {
    
     private var dogLoader: DogLoader?

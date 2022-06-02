@@ -27,6 +27,7 @@
 		DA7E75BC27925F1C0072DDCA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */; };
 		DA8B278F2846E5DA00DAB4D3 /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B278E2846E5DA00DAB4D3 /* UIView+Shimmering.swift */; };
 		DA8B2792284866CA00DAB4D3 /* DogImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */; };
+		DA8B27942848673100DAB4D3 /* DogImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B27932848673100DAB4D3 /* DogImageDataLoader.swift */; };
 		DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */; };
 		DAB3871B2844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387262844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
@@ -187,6 +188,7 @@
 		DA7E75BD279295870072DDCA /* DogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogLoader.swift; sourceTree = "<group>"; };
 		DA8B278E2846E5DA00DAB4D3 /* UIView+Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
 		DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageCell.swift; sourceTree = "<group>"; };
+		DA8B27932848673100DAB4D3 /* DogImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageDataLoader.swift; sourceTree = "<group>"; };
 		DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,6 +419,7 @@
 			children = (
 				DA7E75B7279253D40072DDCA /* Dog.swift */,
 				DA7E75BD279295870072DDCA /* DogLoader.swift */,
+				DA8B27932848673100DAB4D3 /* DogImageDataLoader.swift */,
 			);
 			path = IyashiDogFeature;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 			files = (
 				DADD76B028449833002FD5EC /* Dog.swift in Sources */,
 				DADD76B128449837002FD5EC /* DogLoader.swift in Sources */,
+				DA8B27942848673100DAB4D3 /* DogImageDataLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
