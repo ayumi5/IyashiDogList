@@ -9,39 +9,29 @@ import UIKit
 import IyashiDogFeature
 
 public final class DogViewController: UITableViewController, UITableViewDataSourcePrefetching {
-   
-    private var dogLoader: DogLoader?
+    private var dogRefreshViewController: DogRefreshViewController?
     private var dogImageDataLoader: DogImageDataLoader?
-    private var tableModel = [Dog]()
+    private var tableModel = [Dog]() {
+        didSet { tableView.reloadData() }
+    }
     private var tasks = [IndexPath:DogImageDataLoaderTask]()
     
     public convenience init(dogLoader: DogLoader, dogImageDataLoader: DogImageDataLoader) {
         self.init()
-        self.dogLoader = dogLoader
+        self.dogRefreshViewController = DogRefreshViewController(dogLoader: dogLoader)
         self.dogImageDataLoader = dogImageDataLoader
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
-        tableView.prefetchDataSource = self
-        
-        load()
-    }
-    
-    @objc private func load() {
-        refreshControl?.beginRefreshing()
-        dogLoader?.load { [weak self] result in
+        refreshControl = dogRefreshViewController?.view
+        dogRefreshViewController?.onRefresh = { [weak self] dogs in
+            self?.tableModel = dogs
             
-            if let dogs = try? result.get() {
-                self?.tableModel = dogs
-                self?.tableView.reloadData()
-            }
-            self?.refreshControl?.endRefreshing()
-                    
         }
+        tableView.prefetchDataSource = self
+        dogRefreshViewController?.refresh()
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
