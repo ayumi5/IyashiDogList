@@ -393,6 +393,19 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DA8B27A228486A2A00DAB4D3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DA8B27A0284869D900DAB4D3 /* LoaderSpy.swift */,
+				DA8B2795284867D700DAB4D3 /* UIImage+TestHelpers.swift */,
+				DA8B27982848685C00DAB4D3 /* UIButton+TestHelpers.swift */,
+				DA8B279A284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift */,
+				DA8B279C2848690300DAB4D3 /* DogImageCell+TestHelpers.swift */,
+				DA8B279E2848697700DAB4D3 /* DogViewController+TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		DAABEF9427C32FC20042D23F /* IyashiDogListAPIEndToEndTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,13 +427,8 @@
 		DAB387202844B2600094C13A /* MVCTests */ = {
 			isa = PBXGroup;
 			children = (
+				DA8B27A228486A2A00DAB4D3 /* Helpers */,
 				DADED8862844B60A00597972 /* DogControllerTests.swift */,
-				DA8B2795284867D700DAB4D3 /* UIImage+TestHelpers.swift */,
-				DA8B27982848685C00DAB4D3 /* UIButton+TestHelpers.swift */,
-				DA8B279A284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift */,
-				DA8B279C2848690300DAB4D3 /* DogImageCell+TestHelpers.swift */,
-				DA8B279E2848697700DAB4D3 /* DogViewController+TestHelpers.swift */,
-				DA8B27A0284869D900DAB4D3 /* LoaderSpy.swift */,
 			);
 			path = MVCTests;
 			sourceTree = "<group>";
