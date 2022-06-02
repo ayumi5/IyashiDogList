@@ -29,6 +29,7 @@
 		DA8B2792284866CA00DAB4D3 /* DogImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */; };
 		DA8B27942848673100DAB4D3 /* DogImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B27932848673100DAB4D3 /* DogImageDataLoader.swift */; };
 		DA8B2796284867D700DAB4D3 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B2795284867D700DAB4D3 /* UIImage+TestHelpers.swift */; };
+		DA8B27992848685C00DAB4D3 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B27982848685C00DAB4D3 /* UIButton+TestHelpers.swift */; };
 		DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */; };
 		DAB3871B2844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387262844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
@@ -191,6 +192,7 @@
 		DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageCell.swift; sourceTree = "<group>"; };
 		DA8B27932848673100DAB4D3 /* DogImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageDataLoader.swift; sourceTree = "<group>"; };
 		DA8B2795284867D700DAB4D3 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		DA8B27982848685C00DAB4D3 /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -406,6 +408,7 @@
 			children = (
 				DADED8862844B60A00597972 /* DogControllerTests.swift */,
 				DA8B2795284867D700DAB4D3 /* UIImage+TestHelpers.swift */,
+				DA8B27982848685C00DAB4D3 /* UIButton+TestHelpers.swift */,
 			);
 			path = MVCTests;
 			sourceTree = "<group>";
@@ -828,6 +831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DADED8872844B60A00597972 /* DogControllerTests.swift in Sources */,
+				DA8B27992848685C00DAB4D3 /* UIButton+TestHelpers.swift in Sources */,
 				DADED8892844C32D00597972 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				DA8B2796284867D700DAB4D3 /* UIImage+TestHelpers.swift in Sources */,
 			);
