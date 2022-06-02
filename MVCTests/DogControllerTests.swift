@@ -199,7 +199,23 @@ final class DogControllerTests: XCTestCase {
         loader.completeDogImageLoading(with: imageData, at: 1)
         
         XCTAssertEqual(cell?.renderedImage, imageData)
+    }
+    
+    func test_dogImageView_preloadsImageURLWhenNearVisible() {
+        let (sut, loader) = makeSUT()
+        let dog01 = makeDog()
+        let dog02 = makeDog()
         
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [dog01, dog02])
+        XCTAssertEqual(loader.loadedImageURLs, [])
+        
+        sut.simulateDogImageViewNearVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL])
+        
+        sut.simulateDogImageViewNearVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [dog01.imageURL, dog02.imageURL])
+
     }
     
     // MARK: - Helpers
@@ -296,6 +312,12 @@ private extension DogViewController {
         let delegate = tableView.delegate
         let index = IndexPath(row: row, section: dogImageSection)
         delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
+    }
+    
+    func simulateDogImageViewNearVisible(at row: Int = 0) {
+        let ds = tableView.prefetchDataSource
+        let index = IndexPath(row: row, section: dogImageSection)
+        ds?.tableView(tableView, prefetchRowsAt: [index])
     }
     
     func simulateUserInitiatedDogReload() {

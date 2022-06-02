@@ -18,7 +18,8 @@ public protocol DogImageDataLoader {
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask
 }
 
-public final class DogViewController: UITableViewController {
+public final class DogViewController: UITableViewController, UITableViewDataSourcePrefetching {
+   
     private var dogLoader: DogLoader?
     private var dogImageDataLoader: DogImageDataLoader?
     private var tableModel = [Dog]()
@@ -35,6 +36,7 @@ public final class DogViewController: UITableViewController {
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+        tableView.prefetchDataSource = self
         
         load()
     }
@@ -84,6 +86,13 @@ public final class DogViewController: UITableViewController {
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         tasks[indexPath]?.cancel()
         tasks[indexPath] = nil
+    }
+    
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            let cellModel = tableModel[indexPath.row]
+            _ = dogImageDataLoader?.loadImageData(from: cellModel.imageURL) { _ in }
+        }
     }
 }
 
