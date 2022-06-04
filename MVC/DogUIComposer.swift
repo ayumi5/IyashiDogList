@@ -14,12 +14,19 @@ public final class DogUIComposer {
     static public func dogComposed(with loader: DogLoader, imageLoader: DogImageDataLoader) -> DogViewController {
         let dogRefreshVC = DogRefreshViewController(dogLoader: loader)
         let dogVC = DogViewController.init(dogRefreshViewController: dogRefreshVC)
-        dogRefreshVC.onRefresh = { [weak dogVC] dogs in
-            dogVC?.tableModel = dogs.map { dog in
-                    DogImageCellViewController(model: dog, imageLoader: imageLoader)
-            }
-        }
+        dogRefreshVC.onRefresh = adaptDogsToCellControllers(
+            forwardingTo: dogVC,
+            imageLoader: imageLoader)
         
         return dogVC
     }
+    
+    private static func adaptDogsToCellControllers(forwardingTo controller: DogViewController, imageLoader: DogImageDataLoader) -> ([Dog]) -> Void {
+        return { [weak controller] dogs in
+            controller?.tableModel = dogs.map { dog in
+                DogImageCellViewController(model: dog, imageLoader: imageLoader)
+            }
+        }
+    }
 }
+
