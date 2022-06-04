@@ -17,6 +17,7 @@
 		DA370BCD278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */; };
 		DA370BD0278EB7EF002B2A91 /* RemoteDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */; };
 		DA43BD1A27C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */; };
+		DA48998C284B2DF200E920EB /* DogUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA48998B284B2DF200E920EB /* DogUIComposer.swift */; };
 		DA54332F27C35BF400A0D57B /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DA5FBEEB27D5AB6A003B1373 /* DogStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */; };
 		DA60010427CF2DBB005553E7 /* RemoteDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA60010327CF2DBB005553E7 /* RemoteDog.swift */; };
@@ -179,6 +180,7 @@
 		DA370BCC278E7620002B2A91 /* LoadDogFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDogFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDogLoader.swift; sourceTree = "<group>"; };
 		DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
+		DA48998B284B2DF200E920EB /* DogUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogUIComposer.swift; sourceTree = "<group>"; };
 		DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogStoreSpecs.swift; sourceTree = "<group>"; };
 		DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDogLoader.swift; sourceTree = "<group>"; };
 		DA6000FF27CEFCD2005553E7 /* DogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogStore.swift; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 				DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */,
 				DA8B27A32848829300DAB4D3 /* DogRefreshViewController.swift */,
 				DA8B27A52848ABB300DAB4D3 /* DogImageCellViewController.swift */,
+				DA48998B284B2DF200E920EB /* DogUIComposer.swift */,
 			);
 			path = MVC;
 			sourceTree = "<group>";
@@ -850,6 +853,7 @@
 				DA8B27A42848829300DAB4D3 /* DogRefreshViewController.swift in Sources */,
 				DADED88B2845DC3400597972 /* DogViewController.swift in Sources */,
 				DA8B27A62848ABB300DAB4D3 /* DogImageCellViewController.swift in Sources */,
+				DA48998C284B2DF200E920EB /* DogUIComposer.swift in Sources */,
 				DA8B278F2846E5DA00DAB4D3 /* UIView+Shimmering.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

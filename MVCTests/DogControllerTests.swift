@@ -239,7 +239,7 @@ final class DogControllerTests: XCTestCase {
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = DogViewController(dogLoader: loader, dogImageDataLoader: loader)
+        let sut = DogUIComposer.dogComposed(with: loader, imageLoader: loader)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         

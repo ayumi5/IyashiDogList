@@ -10,27 +10,19 @@ import IyashiDogFeature
 
 public final class DogViewController: UITableViewController, UITableViewDataSourcePrefetching {
     private var dogRefreshViewController: DogRefreshViewController?
-    private var dogImageDataLoader: DogImageDataLoader?
-    private var tableModel = [Dog]() {
+    var tableModel = [DogImageCellViewController]() {
         didSet { tableView.reloadData() }
     }
-    private var tasks = [IndexPath:DogImageDataLoaderTask]()
-    private var cellViewControllers = [IndexPath: DogImageCellViewController]()
     
-    public convenience init(dogLoader: DogLoader, dogImageDataLoader: DogImageDataLoader) {
+    convenience init(dogRefreshViewController: DogRefreshViewController) {
         self.init()
-        self.dogRefreshViewController = DogRefreshViewController(dogLoader: dogLoader)
-        self.dogImageDataLoader = dogImageDataLoader
+        self.dogRefreshViewController = dogRefreshViewController
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         refreshControl = dogRefreshViewController?.view
-        dogRefreshViewController?.onRefresh = { [weak self] dogs in
-            self?.tableModel = dogs
-            
-        }
         tableView.prefetchDataSource = self
         dogRefreshViewController?.refresh()
     }
@@ -45,7 +37,7 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
     }
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        removeCellController(forRowAt: indexPath)
+        cancelCellControllerLoad(forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
@@ -55,16 +47,14 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach(removeCellController)
+        indexPaths.forEach(cancelCellControllerLoad)
     }
 
     private func cellController(forRowAt indexPath: IndexPath) -> DogImageCellViewController  {
-        let cellViewController = DogImageCellViewController(model: tableModel[indexPath.row], imageLoader: dogImageDataLoader!)
-        cellViewControllers[indexPath] = cellViewController
-        return cellViewController
+        return tableModel[indexPath.row]
     }
     
-    private func removeCellController(forRowAt indexPath: IndexPath) {
-        cellViewControllers[indexPath] = nil
+    private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
+        tableModel[indexPath.row].cancelLoad()
     }
 }
