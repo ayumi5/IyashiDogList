@@ -378,6 +378,32 @@
 			path = "Dog Cache";
 			sourceTree = "<group>";
 		};
+		DA48998F284B3E0000E920EB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DA8B278E2846E5DA00DAB4D3 /* UIView+Shimmering.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DA489990284B3E1400E920EB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DA8B27A32848829300DAB4D3 /* DogRefreshViewController.swift */,
+				DA8B27A52848ABB300DAB4D3 /* DogImageCellViewController.swift */,
+				DADED88A2845DC3400597972 /* DogViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DA489991284B3E2400E920EB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DA6000FC27CEFC07005553E7 /* Dog Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,11 +449,9 @@
 		DAB387142844B2600094C13A /* MVC */ = {
 			isa = PBXGroup;
 			children = (
-				DADED88A2845DC3400597972 /* DogViewController.swift */,
-				DA8B278E2846E5DA00DAB4D3 /* UIView+Shimmering.swift */,
-				DA8B2791284866CA00DAB4D3 /* DogImageCell.swift */,
-				DA8B27A32848829300DAB4D3 /* DogRefreshViewController.swift */,
-				DA8B27A52848ABB300DAB4D3 /* DogImageCellViewController.swift */,
+				DA489991284B3E2400E920EB /* Views */,
+				DA489990284B3E1400E920EB /* Controllers */,
+				DA48998F284B3E0000E920EB /* Helpers */,
 				DA48998B284B2DF200E920EB /* DogUIComposer.swift */,
 			);
 			path = MVC;
