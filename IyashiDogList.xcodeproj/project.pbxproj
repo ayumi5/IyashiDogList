@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2259C3284B408B00DDCD9F /* Dog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA2259C2284B408B00DDCD9F /* Dog.storyboard */; };
 		DA2BFAF827D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */; };
 		DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9A278E7170002B2A91 /* AppDelegate.swift */; };
 		DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9C278E7170002B2A91 /* SceneDelegate.swift */; };
@@ -166,6 +167,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA2259C2284B408B00DDCD9F /* Dog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dog.storyboard; sourceTree = "<group>"; };
 		DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		DA370B97278E7170002B2A91 /* IyashiDogList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IyashiDogList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA370B9A278E7170002B2A91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				DA489990284B3E1400E920EB /* Controllers */,
 				DA48998F284B3E0000E920EB /* Helpers */,
 				DA48998B284B2DF200E920EB /* DogUIComposer.swift */,
+				DA2259C2284B408B00DDCD9F /* Dog.storyboard */,
 			);
 			path = MVC;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2259C3284B408B00DDCD9F /* Dog.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

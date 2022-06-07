@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Dog View Controller-->
+        <scene sceneID="4Nu-6H-wef">
+            <objects>
+                <tableViewController id="e38-H0-IcR" customClass="DogViewController" customModule="MVC" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="PNJ-GG-4a9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="309" id="Ydc-mT-1k1" customClass="DogImageCell" customModule="MVC" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="309"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ydc-mT-1k1" id="gNp-fm-yr3">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC3-po-Cdv" userLabel="Image Container">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N3W-6J-5tp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMW-61-feb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="↻">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <font key="NSFont" size="60" name="Menlo-Regular"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </buttonConfiguration>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="HMW-61-feb" firstAttribute="top" secondItem="UC3-po-Cdv" secondAttribute="top" id="8eO-89-djj"/>
+                                                <constraint firstAttribute="bottom" secondItem="N3W-6J-5tp" secondAttribute="bottom" id="BCD-zl-cSK"/>
+                                                <constraint firstAttribute="bottom" secondItem="HMW-61-feb" secondAttribute="bottom" id="HjQ-uk-hDJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="N3W-6J-5tp" secondAttribute="trailing" id="hMr-ja-4ei"/>
+                                                <constraint firstItem="N3W-6J-5tp" firstAttribute="top" secondItem="UC3-po-Cdv" secondAttribute="top" id="mhg-ST-fdi"/>
+                                                <constraint firstAttribute="trailing" secondItem="HMW-61-feb" secondAttribute="trailing" id="pOj-sR-f0v"/>
+                                                <constraint firstItem="N3W-6J-5tp" firstAttribute="leading" secondItem="UC3-po-Cdv" secondAttribute="leading" id="rUw-hT-lao"/>
+                                                <constraint firstItem="HMW-61-feb" firstAttribute="leading" secondItem="UC3-po-Cdv" secondAttribute="leading" id="tD7-tl-DSy"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="UC3-po-Cdv" secondAttribute="bottom" id="2oH-O5-vE2"/>
+                                        <constraint firstItem="UC3-po-Cdv" firstAttribute="leading" secondItem="gNp-fm-yr3" secondAttribute="leading" id="A6v-oh-aAu"/>
+                                        <constraint firstItem="UC3-po-Cdv" firstAttribute="top" secondItem="gNp-fm-yr3" secondAttribute="top" id="dg0-Q0-BBn"/>
+                                        <constraint firstAttribute="trailing" secondItem="UC3-po-Cdv" secondAttribute="trailing" id="lhR-Ms-cCS"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="e38-H0-IcR" id="Thk-I7-wg1"/>
+                            <outlet property="delegate" destination="e38-H0-IcR" id="ovC-UJ-F8O"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q9Q-m6-SgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-262.31884057971018" y="-59.598214285714285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
