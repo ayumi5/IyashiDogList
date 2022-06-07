@@ -13,14 +13,14 @@ public final class DogUIComposer {
     private init() {}
     
     static public func dogComposed(with loader: DogLoader, imageLoader: DogImageDataLoader) -> DogViewController {
-        let dogRefreshVC = DogRefreshViewController(dogLoader: loader)
         
         let bundle = Bundle(for: DogViewController.self)
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
-        dogVC.dogRefreshViewController = dogRefreshVC
+        let dogRefreshVC = dogVC.dogRefreshViewController
+        dogRefreshVC?.dogLoader = loader
         
-        dogRefreshVC.onRefresh = adaptDogsToCellControllers(
+        dogRefreshVC?.onRefresh = adaptDogsToCellControllers(
             forwardingTo: dogVC,
             imageLoader: imageLoader)
         

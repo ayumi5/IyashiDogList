@@ -71,8 +71,22 @@
                             <outlet property="delegate" destination="e38-H0-IcR" id="ovC-UJ-F8O"/>
                         </connections>
                     </tableView>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="8j6-jF-DMq">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh" destination="fSf-EW-xgy" eventType="valueChanged" id="gyH-M6-fSr"/>
+                        </connections>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="dogRefreshViewController" destination="fSf-EW-xgy" id="rli-QL-ova"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9Q-m6-SgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <customObject id="fSf-EW-xgy" customClass="DogRefreshViewController" customModule="MVC" customModuleProvider="target">
+                    <connections>
+                        <outlet property="view" destination="8j6-jF-DMq" id="Kni-SL-5rh"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-262.31884057971018" y="-59.598214285714285"/>
         </scene>

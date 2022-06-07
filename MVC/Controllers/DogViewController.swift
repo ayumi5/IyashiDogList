@@ -9,7 +9,7 @@ import UIKit
 import IyashiDogFeature
 
 public final class DogViewController: UITableViewController, UITableViewDataSourcePrefetching {
-    var dogRefreshViewController: DogRefreshViewController?
+    @IBOutlet var dogRefreshViewController: DogRefreshViewController?
     var tableModel = [DogImageCellViewController]() {
         didSet { tableView.reloadData() }
     }
@@ -17,7 +17,6 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshControl = dogRefreshViewController?.view
         tableView.prefetchDataSource = self
         dogRefreshViewController?.refresh()
     }
