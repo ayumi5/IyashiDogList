@@ -18,8 +18,9 @@ final class DogImageCellViewController: NSObject {
         self.imageLoader = imageLoader
     }
     
-    func view() -> UITableViewCell {
-        let cell = DogImageCell()
+    func view(in tableView: UITableView) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DogImageCell") as! DogImageCell
+
         cell.dogImageView.image = nil
         cell.dogImageContainer.startShimmering()
         cell.retryButton.isHidden = true
@@ -36,6 +37,7 @@ final class DogImageCellViewController: NSObject {
             }
         }
         cell.onRetry = loadImage
+        
         loadImage()
         
         return cell

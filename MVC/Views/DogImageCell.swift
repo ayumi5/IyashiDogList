@@ -8,17 +8,13 @@
 import UIKit
 
 public class DogImageCell: UITableViewCell {
-    public var dogImageContainer = UIView()
-    public var dogImageView = UIImageView()
-    private(set) public lazy var retryButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(retryButtonTapped), for: .touchUpInside)
-        return button
-    }()
+    @IBOutlet private(set) public var dogImageContainer: UIView!
+    @IBOutlet private(set) public var dogImageView: UIImageView!
+    @IBOutlet private(set) public var retryButton: UIButton!
     
     var onRetry: (() -> Void)?
     
-    @objc private func retryButtonTapped() {
+    @IBAction private func retryButtonTapped() {
        onRetry?()
     }
 }

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="309" id="Ydc-mT-1k1" customClass="DogImageCell" customModule="MVC" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DogImageCell" rowHeight="309" id="Ydc-mT-1k1" customClass="DogImageCell" customModule="MVC" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="309"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ydc-mT-1k1" id="gNp-fm-yr3">
@@ -42,6 +42,9 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="retryButtonTapped" destination="Ydc-mT-1k1" eventType="touchUpInside" id="Pru-f4-yAe"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -64,6 +67,11 @@
                                         <constraint firstAttribute="trailing" secondItem="UC3-po-Cdv" secondAttribute="trailing" id="lhR-Ms-cCS"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dogImageContainer" destination="UC3-po-Cdv" id="Dy4-yo-Bi7"/>
+                                    <outlet property="dogImageView" destination="N3W-6J-5tp" id="B4j-6m-TYh"/>
+                                    <outlet property="retryButton" destination="HMW-61-feb" id="Ryp-zh-15z"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -220,21 +220,21 @@ final class DogControllerTests: XCTestCase {
     }
     
     func test_dogImageView_cancelsPreloadImageURLWhenNotNearVisible() {
-           let (sut, loader) = makeSUT()
-           let dog01 = makeDog()
-           let dog02 = makeDog()
-           
-           sut.loadViewIfNeeded()
-           loader.completeDogLoading(with: [dog01, dog02])
+        let (sut, loader) = makeSUT()
+        let dog01 = makeDog()
+        let dog02 = makeDog()
+        
+        sut.loadViewIfNeeded()
+        loader.completeDogLoading(with: [dog01, dog02])
         XCTAssertEqual(loader.canceledImageURLs, [], "Expected no cancelled image URL requests until image is not near visible")
-           
-           sut.simulateDogImageViewNotNearVisible(at: 0)
-           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL], "Expected first cancelled image URL requests once first image is not near visible")
-           
-           sut.simulateDogImageViewNotNearVisible(at: 1)
-           XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL], "Expected second cancelled image URL requests once second image is not near visible")
-
-       }
+        
+        sut.simulateDogImageViewNotNearVisible(at: 0)
+        XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL], "Expected first cancelled image URL requests once first image is not near visible")
+        
+        sut.simulateDogImageViewNotNearVisible(at: 1)
+        XCTAssertEqual(loader.canceledImageURLs, [dog01.imageURL, dog02.imageURL], "Expected second cancelled image URL requests once second image is not near visible")
+        
+    }
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: DogViewController, loader: LoaderSpy) {
