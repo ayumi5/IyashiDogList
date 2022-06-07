@@ -17,7 +17,6 @@ public final class DogViewController: UITableViewController, UITableViewDataSour
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.prefetchDataSource = self
         dogRefreshViewController?.refresh()
     }
     
