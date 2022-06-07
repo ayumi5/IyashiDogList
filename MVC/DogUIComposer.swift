@@ -7,13 +7,19 @@
 
 import Foundation
 import IyashiDogFeature
+import UIKit
 
 public final class DogUIComposer {
     private init() {}
     
     static public func dogComposed(with loader: DogLoader, imageLoader: DogImageDataLoader) -> DogViewController {
         let dogRefreshVC = DogRefreshViewController(dogLoader: loader)
-        let dogVC = DogViewController.init(dogRefreshViewController: dogRefreshVC)
+        
+        let bundle = Bundle(for: DogViewController.self)
+        let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
+        let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
+        dogVC.dogRefreshViewController = dogRefreshVC
+        
         dogRefreshVC.onRefresh = adaptDogsToCellControllers(
             forwardingTo: dogVC,
             imageLoader: imageLoader)
