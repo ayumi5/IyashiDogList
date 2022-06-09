@@ -16,4 +16,4 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode.app
     - name: Build and test
-      run: xcodebuild clean build -project IyashiDogList.xcodeproj -scheme "CI" CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+      run: xcodebuild test -project IyashiDogList.xcodeproj -scheme "CI" CODE_SIGNING_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 13,OS=15.2" ONLY_ACTIVE_ARCH=YES SWIFT_TREAT_WARNINGS_AS_ERRORS=YES
