@@ -427,6 +427,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DA641DCE28518C830094C9AF /* Composers */ = {
+			isa = PBXGroup;
+			children = (
+				DA48998B284B2DF200E920EB /* DogUIComposer.swift */,
+			);
+			path = Composers;
+			sourceTree = "<group>";
+		};
 		DA8B27A228486A2A00DAB4D3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,10 +459,10 @@
 		DAB387142844B2600094C13A /* MVC */ = {
 			isa = PBXGroup;
 			children = (
+				DA641DCE28518C830094C9AF /* Composers */,
 				DA489991284B3E2400E920EB /* Views */,
 				DA489990284B3E1400E920EB /* Controllers */,
 				DA48998F284B3E0000E920EB /* Helpers */,
-				DA48998B284B2DF200E920EB /* DogUIComposer.swift */,
 				DA2259C2284B408B00DDCD9F /* Dog.storyboard */,
 			);
 			path = MVC;
