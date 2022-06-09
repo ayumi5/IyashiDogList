@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DA370B96278E7170002B2A91"
-               BuildableName = "IyashiDogList.app"
-               BlueprintName = "IyashiDogList"
+               BlueprintIdentifier = "DAD0BD6C2851A1FC00745D9F"
+               BuildableName = "MVVM.framework"
+               BlueprintName = "MVVM"
                ReferencedContainer = "container:IyashiDogList.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,30 +26,22 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DAD0BD6C2851A1FC00745D9F"
+            BuildableName = "MVVM.framework"
+            BlueprintName = "MVVM"
+            ReferencedContainer = "container:IyashiDogList.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DA370BAC278E7172002B2A91"
-               BuildableName = "IyashiDogListTests.xctest"
-               BlueprintName = "IyashiDogListTests"
-               ReferencedContainer = "container:IyashiDogList.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DADD769A284497EF002FD5EC"
-               BuildableName = "IyashiDogFeatureTests.xctest"
-               BlueprintName = "IyashiDogFeatureTests"
-               ReferencedContainer = "container:IyashiDogList.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DAD0BD732851A1FC00745D9F"
@@ -70,16 +62,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DA370B96278E7170002B2A91"
-            BuildableName = "IyashiDogList.app"
-            BlueprintName = "IyashiDogList"
-            ReferencedContainer = "container:IyashiDogList.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -87,16 +69,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DA370B96278E7170002B2A91"
-            BuildableName = "IyashiDogList.app"
-            BlueprintName = "IyashiDogList"
+            BlueprintIdentifier = "DAD0BD6C2851A1FC00745D9F"
+            BuildableName = "MVVM.framework"
+            BlueprintName = "MVVM"
             ReferencedContainer = "container:IyashiDogList.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

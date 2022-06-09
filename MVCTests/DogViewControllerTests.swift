@@ -1,5 +1,5 @@
 //
-//  DogControllerTests.swift
+//  DogViewControllerTests.swift
 //  MVCTests
 //
 //  Created by 宇高あゆみ on 2022/05/30.
@@ -10,7 +10,7 @@ import UIKit
 import IyashiDogFeature
 import MVC
 
-final class DogControllerTests: XCTestCase {
+final class DogViewControllerTests: XCTestCase {
     
     func test_loadDogActions_requestDogFromLoader() {
         let (sut, loader) = makeSUT()
