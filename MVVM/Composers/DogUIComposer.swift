@@ -17,12 +17,12 @@ public final class DogUIComposer {
         let bundle = Bundle(for: DogViewController.self)
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
-        let dogRefreshVC = dogVC.dogRefreshViewController
-        dogRefreshVC?.dogLoader = loader
-        
-        dogRefreshVC?.onRefresh = adaptDogsToCellControllers(
+        let dogViewModel = DogViewModel(dogLoader: loader)
+        dogViewModel.onLoadDog = adaptDogsToCellControllers(
             forwardingTo: dogVC,
             imageLoader: imageLoader)
+        let dogRefreshVC = dogVC.dogRefreshViewController
+        dogRefreshVC?.dogViewModel = dogViewModel
         
         return dogVC
     }

@@ -7,21 +7,24 @@
 
 import Foundation
 import UIKit
-import IyashiDogFeature
 
 final class DogRefreshViewController: NSObject {
     @IBOutlet private var view: UIRefreshControl?
-    var dogLoader: DogLoader?
-    
-    var onRefresh: (([Dog]) -> Void)?
+    var dogViewModel: DogViewModel? {
+        didSet { bind() }
+    }
     
     @IBAction func refresh() {
-        view?.beginRefreshing()
-        dogLoader?.load { [weak self] result in
-            if let dogs = try? result.get() {
-                self?.onRefresh?(dogs)
+        dogViewModel?.loadDog()
+    }
+    
+    private func bind() {
+        dogViewModel?.onLoadDogStateChange = { [weak self] isLoading in
+            if isLoading {
+                self?.view?.beginRefreshing()
+            } else {
+                self?.view?.endRefreshing()
             }
-            self?.view?.endRefreshing()
         }
     }
 }

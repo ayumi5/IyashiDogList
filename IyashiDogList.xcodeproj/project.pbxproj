@@ -73,6 +73,7 @@
 		DAD0BDAC2851A31900745D9F /* DogViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDA52851A31900745D9F /* DogViewController+TestHelpers.swift */; };
 		DAD0BDAD2851A31900745D9F /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDA62851A31900745D9F /* UIImage+TestHelpers.swift */; };
 		DAD0BDAE2851A3A400745D9F /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
+		DAD0BDB12851C40700745D9F /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDB02851C40700745D9F /* DogViewModel.swift */; };
 		DADD769C284497EF002FD5EC /* IyashiDogFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; };
 		DADD76A7284497EF002FD5EC /* IyashiDogFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; };
 		DADD76A8284497EF002FD5EC /* IyashiDogFeature.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -289,6 +290,7 @@
 		DAD0BDA42851A31900745D9F /* UIRefrechControl+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefrechControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAD0BDA52851A31900745D9F /* DogViewController+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DogViewController+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAD0BDA62851A31900745D9F /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		DAD0BDB02851C40700745D9F /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
 		DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IyashiDogFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DADD769B284497EF002FD5EC /* IyashiDogFeatureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogFeatureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DADED8862844B60A00597972 /* DogViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 		DAD0BD6E2851A1FC00745D9F /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
+				DAD0BDAF2851C3FA00745D9F /* Presentation */,
 				DAD0BD962851A30E00745D9F /* Composers */,
 				DAD0BD922851A30E00745D9F /* Controllers */,
 				DAD0BD912851A30E00745D9F /* Dog.storyboard */,
@@ -647,6 +650,14 @@
 				DAD0BDA62851A31900745D9F /* UIImage+TestHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DAD0BDAF2851C3FA00745D9F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DAD0BDB02851C40700745D9F /* DogViewModel.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		DADD7695284497EF002FD5EC /* IyashiDogFeature */ = {
@@ -1149,6 +1160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD0BDB12851C40700745D9F /* DogViewModel.swift in Sources */,
 				DAD0BD992851A30E00745D9F /* DogImageCell.swift in Sources */,
 				DAD0BD9C2851A30E00745D9F /* DogRefreshViewController.swift in Sources */,
 				DAD0BD9B2851A30E00745D9F /* DogImageCellViewController.swift in Sources */,
