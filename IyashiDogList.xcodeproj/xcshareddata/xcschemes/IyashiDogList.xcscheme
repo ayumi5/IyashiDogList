@@ -38,26 +38,6 @@
                ReferencedContainer = "container:IyashiDogList.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DADD769A284497EF002FD5EC"
-               BuildableName = "IyashiDogFeatureTests.xctest"
-               BlueprintName = "IyashiDogFeatureTests"
-               ReferencedContainer = "container:IyashiDogList.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DAD0BD732851A1FC00745D9F"
-               BuildableName = "MVVMTests.xctest"
-               BlueprintName = "MVVMTests"
-               ReferencedContainer = "container:IyashiDogList.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
