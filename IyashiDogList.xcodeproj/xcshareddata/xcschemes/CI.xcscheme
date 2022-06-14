@@ -79,6 +79,16 @@
                ReferencedContainer = "container:IyashiDogList.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DAE23E81285832C4003B1EFB"
+               BuildableName = "MVPTests.xctest"
+               BlueprintName = "MVPTests"
+               ReferencedContainer = "container:IyashiDogList.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

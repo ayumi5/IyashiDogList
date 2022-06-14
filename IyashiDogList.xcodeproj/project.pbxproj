@@ -83,6 +83,28 @@
 		DADED8892844C32D00597972 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DADED88B2845DC3400597972 /* DogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED88A2845DC3400597972 /* DogViewController.swift */; };
 		DAE23E752858227A003B1EFB /* DogImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E742858227A003B1EFB /* DogImageViewModel.swift */; };
+		DAE23E83285832C4003B1EFB /* MVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE23E7B285832C4003B1EFB /* MVP.framework */; };
+		DAE23E8E285832C4003B1EFB /* MVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAE23E7B285832C4003B1EFB /* MVP.framework */; };
+		DAE23E8F285832C4003B1EFB /* MVP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAE23E7B285832C4003B1EFB /* MVP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DAE23E9628583304003B1EFB /* IyashiDogFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; };
+		DAE23E9728583304003B1EFB /* IyashiDogFeature.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DAE23EA9285838B5003B1EFB /* DogImageCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E9C285838B4003B1EFB /* DogImageCellViewController.swift */; };
+		DAE23EAA285838B5003B1EFB /* DogRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E9D285838B4003B1EFB /* DogRefreshViewController.swift */; };
+		DAE23EAB285838B5003B1EFB /* DogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E9E285838B4003B1EFB /* DogViewController.swift */; };
+		DAE23EAC285838B5003B1EFB /* Dog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAE23E9F285838B5003B1EFB /* Dog.storyboard */; };
+		DAE23EAD285838B5003B1EFB /* DogUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA1285838B5003B1EFB /* DogUIComposer.swift */; };
+		DAE23EAE285838B5003B1EFB /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */; };
+		DAE23EAF285838B5003B1EFB /* DogImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA5285838B5003B1EFB /* DogImageViewModel.swift */; };
+		DAE23EB0285838B5003B1EFB /* DogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA6285838B5003B1EFB /* DogViewModel.swift */; };
+		DAE23EB1285838B5003B1EFB /* DogImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA8285838B5003B1EFB /* DogImageCell.swift */; };
+		DAE23EBA285838C3003B1EFB /* DogViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */; };
+		DAE23EBB285838C3003B1EFB /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB4285838C3003B1EFB /* UIButton+TestHelpers.swift */; };
+		DAE23EBC285838C3003B1EFB /* DogImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB5285838C3003B1EFB /* DogImageCell+TestHelpers.swift */; };
+		DAE23EBD285838C3003B1EFB /* LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB6285838C3003B1EFB /* LoaderSpy.swift */; };
+		DAE23EBE285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB7285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift */; };
+		DAE23EBF285838C3003B1EFB /* DogViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB8285838C3003B1EFB /* DogViewController+TestHelpers.swift */; };
+		DAE23EC0285838C3003B1EFB /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB9285838C3003B1EFB /* UIImage+TestHelpers.swift */; };
+		DAE23EC128583979003B1EFB /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */; };
 		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
@@ -188,6 +210,34 @@
 			remoteGlobalIDString = DADD7693284497EE002FD5EC;
 			remoteInfo = IyashiDogFeature;
 		};
+		DAE23E84285832C4003B1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAE23E7A285832C4003B1EFB;
+			remoteInfo = MVP;
+		};
+		DAE23E86285832C4003B1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA370B96278E7170002B2A91;
+			remoteInfo = IyashiDogList;
+		};
+		DAE23E8C285832C4003B1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAE23E7A285832C4003B1EFB;
+			remoteInfo = MVP;
+		};
+		DAE23E9828583304003B1EFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA370B8F278E7170002B2A91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DADD7693284497EE002FD5EC;
+			remoteInfo = IyashiDogFeature;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -219,9 +269,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DAE23E8F285832C4003B1EFB /* MVP.framework in Embed Frameworks */,
 				DADD76A8284497EF002FD5EC /* IyashiDogFeature.framework in Embed Frameworks */,
 				DAB387272844B2600094C13A /* MVC.framework in Embed Frameworks */,
 				DAD0BD812851A1FC00745D9F /* MVVM.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAE23E9A28583304003B1EFB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAE23E9728583304003B1EFB /* IyashiDogFeature.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +359,24 @@
 		DADED8862844B60A00597972 /* DogViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
 		DADED88A2845DC3400597972 /* DogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewController.swift; sourceTree = "<group>"; };
 		DAE23E742858227A003B1EFB /* DogImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageViewModel.swift; sourceTree = "<group>"; };
+		DAE23E7B285832C4003B1EFB /* MVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAE23E82285832C4003B1EFB /* MVPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAE23E9C285838B4003B1EFB /* DogImageCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogImageCellViewController.swift; sourceTree = "<group>"; };
+		DAE23E9D285838B4003B1EFB /* DogRefreshViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogRefreshViewController.swift; sourceTree = "<group>"; };
+		DAE23E9E285838B4003B1EFB /* DogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewController.swift; sourceTree = "<group>"; };
+		DAE23E9F285838B5003B1EFB /* Dog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Dog.storyboard; sourceTree = "<group>"; };
+		DAE23EA1285838B5003B1EFB /* DogUIComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogUIComposer.swift; sourceTree = "<group>"; };
+		DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
+		DAE23EA5285838B5003B1EFB /* DogImageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogImageViewModel.swift; sourceTree = "<group>"; };
+		DAE23EA6285838B5003B1EFB /* DogViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
+		DAE23EA8285838B5003B1EFB /* DogImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogImageCell.swift; sourceTree = "<group>"; };
+		DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
+		DAE23EB4285838C3003B1EFB /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
+		DAE23EB5285838C3003B1EFB /* DogImageCell+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DogImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
+		DAE23EB6285838C3003B1EFB /* LoaderSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderSpy.swift; sourceTree = "<group>"; };
+		DAE23EB7285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefrechControl+TestHelpers.swift"; sourceTree = "<group>"; };
+		DAE23EB8285838C3003B1EFB /* DogViewController+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DogViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		DAE23EB9285838C3003B1EFB /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSession.swift; sourceTree = "<group>"; };
 		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
@@ -311,6 +391,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE23E8E285832C4003B1EFB /* MVP.framework in Frameworks */,
 				DADD76A7284497EF002FD5EC /* IyashiDogFeature.framework in Frameworks */,
 				DAB387262844B2600094C13A /* MVC.framework in Frameworks */,
 				DAD0BD802851A1FC00745D9F /* MVVM.framework in Frameworks */,
@@ -385,6 +466,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAE23E78285832C4003B1EFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE23E9628583304003B1EFB /* IyashiDogFeature.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAE23E7F285832C4003B1EFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE23E83285832C4003B1EFB /* MVP.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -399,6 +496,8 @@
 				DAB387202844B2600094C13A /* MVCTests */,
 				DAD0BD6E2851A1FC00745D9F /* MVVM */,
 				DAD0BD7A2851A1FC00745D9F /* MVVMTests */,
+				DAE23E7C285832C4003B1EFB /* MVP */,
+				DAE23E88285832C4003B1EFB /* MVPTests */,
 				DA370B98278E7170002B2A91 /* Products */,
 				DAB3872E2844B2CD0094C13A /* Frameworks */,
 			);
@@ -417,6 +516,8 @@
 				DAB3871A2844B2600094C13A /* MVCTests.xctest */,
 				DAD0BD6D2851A1FC00745D9F /* MVVM.framework */,
 				DAD0BD742851A1FC00745D9F /* MVVMTests.xctest */,
+				DAE23E7B285832C4003B1EFB /* MVP.framework */,
+				DAE23E82285832C4003B1EFB /* MVPTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -673,6 +774,84 @@
 			path = IyashiDogFeature;
 			sourceTree = "<group>";
 		};
+		DAE23E7C285832C4003B1EFB /* MVP */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EA0285838B5003B1EFB /* Composers */,
+				DAE23E9B285838B4003B1EFB /* Controllers */,
+				DAE23E9F285838B5003B1EFB /* Dog.storyboard */,
+				DAE23EA2285838B5003B1EFB /* Helpers */,
+				DAE23EA4285838B5003B1EFB /* Presentation */,
+				DAE23EA7285838B5003B1EFB /* Views */,
+			);
+			path = MVP;
+			sourceTree = "<group>";
+		};
+		DAE23E88285832C4003B1EFB /* MVPTests */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */,
+				DAE23EB3285838C3003B1EFB /* Helpers */,
+			);
+			path = MVPTests;
+			sourceTree = "<group>";
+		};
+		DAE23E9B285838B4003B1EFB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23E9C285838B4003B1EFB /* DogImageCellViewController.swift */,
+				DAE23E9D285838B4003B1EFB /* DogRefreshViewController.swift */,
+				DAE23E9E285838B4003B1EFB /* DogViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DAE23EA0285838B5003B1EFB /* Composers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EA1285838B5003B1EFB /* DogUIComposer.swift */,
+			);
+			path = Composers;
+			sourceTree = "<group>";
+		};
+		DAE23EA2285838B5003B1EFB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DAE23EA4285838B5003B1EFB /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EA5285838B5003B1EFB /* DogImageViewModel.swift */,
+				DAE23EA6285838B5003B1EFB /* DogViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		DAE23EA7285838B5003B1EFB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EA8285838B5003B1EFB /* DogImageCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DAE23EB3285838C3003B1EFB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE23EB4285838C3003B1EFB /* UIButton+TestHelpers.swift */,
+				DAE23EB5285838C3003B1EFB /* DogImageCell+TestHelpers.swift */,
+				DAE23EB6285838C3003B1EFB /* LoaderSpy.swift */,
+				DAE23EB7285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift */,
+				DAE23EB8285838C3003B1EFB /* DogViewController+TestHelpers.swift */,
+				DAE23EB9285838C3003B1EFB /* UIImage+TestHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		DAECA27D279E85CF00BE577C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +904,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAE23E76285832C4003B1EFB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -743,6 +929,7 @@
 				DADD76A6284497EF002FD5EC /* PBXTargetDependency */,
 				DAB387252844B2600094C13A /* PBXTargetDependency */,
 				DAD0BD7F2851A1FC00745D9F /* PBXTargetDependency */,
+				DAE23E8D285832C4003B1EFB /* PBXTargetDependency */,
 			);
 			name = IyashiDogList;
 			productName = IyashiDogList;
@@ -918,6 +1105,45 @@
 			productReference = DADD769B284497EF002FD5EC /* IyashiDogFeatureTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DAE23E7A285832C4003B1EFB /* MVP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAE23E94285832C4003B1EFB /* Build configuration list for PBXNativeTarget "MVP" */;
+			buildPhases = (
+				DAE23E76285832C4003B1EFB /* Headers */,
+				DAE23E77285832C4003B1EFB /* Sources */,
+				DAE23E78285832C4003B1EFB /* Frameworks */,
+				DAE23E79285832C4003B1EFB /* Resources */,
+				DAE23E9A28583304003B1EFB /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAE23E9928583304003B1EFB /* PBXTargetDependency */,
+			);
+			name = MVP;
+			productName = MVP;
+			productReference = DAE23E7B285832C4003B1EFB /* MVP.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DAE23E81285832C4003B1EFB /* MVPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAE23E95285832C4003B1EFB /* Build configuration list for PBXNativeTarget "MVPTests" */;
+			buildPhases = (
+				DAE23E7E285832C4003B1EFB /* Sources */,
+				DAE23E7F285832C4003B1EFB /* Frameworks */,
+				DAE23E80285832C4003B1EFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DAE23E85285832C4003B1EFB /* PBXTargetDependency */,
+				DAE23E87285832C4003B1EFB /* PBXTargetDependency */,
+			);
+			name = MVPTests;
+			productName = MVPTests;
+			productReference = DAE23E82285832C4003B1EFB /* MVPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -966,6 +1192,13 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = DA370B96278E7170002B2A91;
 					};
+					DAE23E7A285832C4003B1EFB = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					DAE23E81285832C4003B1EFB = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = DA370B96278E7170002B2A91;
+					};
 				};
 			};
 			buildConfigurationList = DA370B92278E7170002B2A91 /* Build configuration list for PBXProject "IyashiDogList" */;
@@ -991,6 +1224,8 @@
 				DAB387192844B2600094C13A /* MVCTests */,
 				DAD0BD6C2851A1FC00745D9F /* MVVM */,
 				DAD0BD732851A1FC00745D9F /* MVVMTests */,
+				DAE23E7A285832C4003B1EFB /* MVP */,
+				DAE23E81285832C4003B1EFB /* MVPTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1065,6 +1300,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DADD7699284497EF002FD5EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAE23E79285832C4003B1EFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE23EAC285838B5003B1EFB /* Dog.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAE23E80285832C4003B1EFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1206,6 +1456,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAE23E77285832C4003B1EFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE23EB0285838B5003B1EFB /* DogViewModel.swift in Sources */,
+				DAE23EA9285838B5003B1EFB /* DogImageCellViewController.swift in Sources */,
+				DAE23EB1285838B5003B1EFB /* DogImageCell.swift in Sources */,
+				DAE23EAE285838B5003B1EFB /* UIView+Shimmering.swift in Sources */,
+				DAE23EAA285838B5003B1EFB /* DogRefreshViewController.swift in Sources */,
+				DAE23EAD285838B5003B1EFB /* DogUIComposer.swift in Sources */,
+				DAE23EAB285838B5003B1EFB /* DogViewController.swift in Sources */,
+				DAE23EAF285838B5003B1EFB /* DogImageViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAE23E7E285832C4003B1EFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAE23EBC285838C3003B1EFB /* DogImageCell+TestHelpers.swift in Sources */,
+				DAE23EC128583979003B1EFB /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				DAE23EBD285838C3003B1EFB /* LoaderSpy.swift in Sources */,
+				DAE23EC0285838C3003B1EFB /* UIImage+TestHelpers.swift in Sources */,
+				DAE23EBE285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift in Sources */,
+				DAE23EBF285838C3003B1EFB /* DogViewController+TestHelpers.swift in Sources */,
+				DAE23EBA285838C3003B1EFB /* DogViewControllerTests.swift in Sources */,
+				DAE23EBB285838C3003B1EFB /* UIButton+TestHelpers.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1278,6 +1558,26 @@
 			isa = PBXTargetDependency;
 			target = DADD7693284497EE002FD5EC /* IyashiDogFeature */;
 			targetProxy = DADD76A5284497EF002FD5EC /* PBXContainerItemProxy */;
+		};
+		DAE23E85285832C4003B1EFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAE23E7A285832C4003B1EFB /* MVP */;
+			targetProxy = DAE23E84285832C4003B1EFB /* PBXContainerItemProxy */;
+		};
+		DAE23E87285832C4003B1EFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA370B96278E7170002B2A91 /* IyashiDogList */;
+			targetProxy = DAE23E86285832C4003B1EFB /* PBXContainerItemProxy */;
+		};
+		DAE23E8D285832C4003B1EFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAE23E7A285832C4003B1EFB /* MVP */;
+			targetProxy = DAE23E8C285832C4003B1EFB /* PBXContainerItemProxy */;
+		};
+		DAE23E9928583304003B1EFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DADD7693284497EE002FD5EC /* IyashiDogFeature */;
+			targetProxy = DAE23E9828583304003B1EFB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1899,6 +2199,102 @@
 			};
 			name = Release;
 		};
+		DAE23E90285832C4003B1EFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumiIyashiDogList.MVP;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DAE23E91285832C4003B1EFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumiIyashiDogList.MVP;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DAE23E92285832C4003B1EFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumiIyashiDogList.MVPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IyashiDogList.app/IyashiDogList";
+			};
+			name = Debug;
+		};
+		DAE23E93285832C4003B1EFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5DT8G4M9K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ayumiIyashiDogList.MVPTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IyashiDogList.app/IyashiDogList";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1997,6 +2393,24 @@
 			buildConfigurations = (
 				DADD76AC284497EF002FD5EC /* Debug */,
 				DADD76AD284497EF002FD5EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAE23E94285832C4003B1EFB /* Build configuration list for PBXNativeTarget "MVP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAE23E90285832C4003B1EFB /* Debug */,
+				DAE23E91285832C4003B1EFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAE23E95285832C4003B1EFB /* Build configuration list for PBXNativeTarget "MVPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAE23E92285832C4003B1EFB /* Debug */,
+				DAE23E93285832C4003B1EFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
