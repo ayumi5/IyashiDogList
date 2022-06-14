@@ -82,6 +82,7 @@
 		DADED8872844B60A00597972 /* DogViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED8862844B60A00597972 /* DogViewControllerTests.swift */; };
 		DADED8892844C32D00597972 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DADED88B2845DC3400597972 /* DogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED88A2845DC3400597972 /* DogViewController.swift */; };
+		DAE23E752858227A003B1EFB /* DogImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E742858227A003B1EFB /* DogImageViewModel.swift */; };
 		DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DAECA281279E97E000BE577C /* HTTPClientURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */; };
 		DAF57E3727955E5200DB7F93 /* DogItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */; };
@@ -295,6 +296,7 @@
 		DADD769B284497EF002FD5EC /* IyashiDogFeatureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogFeatureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DADED8862844B60A00597972 /* DogViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
 		DADED88A2845DC3400597972 /* DogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewController.swift; sourceTree = "<group>"; };
+		DAE23E742858227A003B1EFB /* DogImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageViewModel.swift; sourceTree = "<group>"; };
 		DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientURLSession.swift; sourceTree = "<group>"; };
 		DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogItemsMapper.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 			isa = PBXGroup;
 			children = (
 				DAD0BDB02851C40700745D9F /* DogViewModel.swift */,
+				DAE23E742858227A003B1EFB /* DogImageViewModel.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1163,6 +1166,7 @@
 				DAD0BDB12851C40700745D9F /* DogViewModel.swift in Sources */,
 				DAD0BD992851A30E00745D9F /* DogImageCell.swift in Sources */,
 				DAD0BD9C2851A30E00745D9F /* DogRefreshViewController.swift in Sources */,
+				DAE23E752858227A003B1EFB /* DogImageViewModel.swift in Sources */,
 				DAD0BD9B2851A30E00745D9F /* DogImageCellViewController.swift in Sources */,
 				DAD0BD9D2851A30E00745D9F /* DogViewController.swift in Sources */,
 				DAD0BD9E2851A30E00745D9F /* DogUIComposer.swift in Sources */,

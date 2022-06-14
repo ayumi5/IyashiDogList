@@ -30,7 +30,7 @@ public final class DogUIComposer {
     private static func adaptDogsToCellControllers(forwardingTo controller: DogViewController, imageLoader: DogImageDataLoader) -> ([Dog]) -> Void {
         return { [weak controller] dogs in
             controller?.tableModel = dogs.map { dog in
-                DogImageCellViewController(model: dog, imageLoader: imageLoader)
+                return DogImageCellViewController(viewModel: DogImageViewModel(model: dog, imageLoader: imageLoader))
             }
         }
     }

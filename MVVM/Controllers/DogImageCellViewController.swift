@@ -6,48 +6,44 @@
 //
 
 import UIKit
-import IyashiDogFeature
 
 final class DogImageCellViewController: NSObject {
-    private var task: DogImageDataLoaderTask?
-    private let model: Dog
-    private let imageLoader: DogImageDataLoader
+    private let dogImageViewModel: DogImageViewModel
     
-    init(model: Dog, imageLoader: DogImageDataLoader) {
-        self.model = model
-        self.imageLoader = imageLoader
+    init(viewModel: DogImageViewModel) {
+        self.dogImageViewModel = viewModel
+    }
+    
+    private func bind(to cell: DogImageCell) {
+        cell.onRetry = dogImageViewModel.loadImage
+        
+        dogImageViewModel.onImageLoad = { [weak cell] image in
+            cell?.dogImageView.image = image
+        }
+        
+        dogImageViewModel.onLoadingStateChange = { [weak cell] isLoading in
+            cell?.dogImageContainer.isShimmering = isLoading
+        }
+        
+        dogImageViewModel.onShouldRetryVisible = { [weak cell] shouldRetry in
+            cell?.retryButton.isHidden = (shouldRetry != true)
+        }
     }
     
     func view(in tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DogImageCell") as! DogImageCell
-
-        cell.dogImageView.image = nil
-        cell.dogImageContainer.startShimmering()
-        cell.retryButton.isHidden = true
+        bind(to: cell)
         
-        let loadImage = { [weak self, weak cell] in
-            guard let self = self else { return }
-            
-            self.task = self.imageLoader.loadImageData(from: self.model.imageURL) { [weak cell] result in
-                let imageData = try? result.get()
-                let image = imageData.map(UIImage.init) ?? nil
-                cell?.dogImageView.image = image
-                cell?.retryButton.isHidden = (image != nil)
-                cell?.dogImageContainer.stopShimmering()
-            }
-        }
-        cell.onRetry = loadImage
-        
-        loadImage()
+        dogImageViewModel.loadImage()
         
         return cell
     }
     
     func preload() {
-        task = imageLoader.loadImageData(from: model.imageURL) { _ in }
+        dogImageViewModel.loadImage()
     }
     
     func cancelLoad() {
-        task?.cancel()
+        dogImageViewModel.cancelImageLoad()
     }
 }
