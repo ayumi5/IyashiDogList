@@ -8,9 +8,9 @@
 import UIKit
 
 final class DogImageCellViewController: NSObject {
-    private let dogImageViewModel: DogImageViewModel
+    private let dogImageViewModel: DogImageViewModel<UIImage>
     
-    init(viewModel: DogImageViewModel) {
+    init(viewModel: DogImageViewModel<UIImage>) {
         self.dogImageViewModel = viewModel
     }
     

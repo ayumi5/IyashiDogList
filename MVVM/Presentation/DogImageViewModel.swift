@@ -6,37 +6,45 @@
 //
 
 import IyashiDogFeature
-import UIKit
+import Foundation
 
-final class DogImageViewModel {
+final class DogImageViewModel<Image> {
     typealias Observer<T> = (T) -> Void
     
     private var task: DogImageDataLoaderTask?
     private let model: Dog
     private let imageLoader: DogImageDataLoader
-    var onImageLoad: Observer<UIImage?>?
+    var onImageLoad: Observer<Image?>?
     var onLoadingStateChange: Observer<Bool>?
     var onShouldRetryVisible: Observer<Bool>?
+    let imageTransformer: (Data) -> Image?
     
-    init(model: Dog, imageLoader: DogImageDataLoader) {
+    init(model: Dog, imageLoader: DogImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
         self.model = model
         self.imageLoader = imageLoader
+        self.imageTransformer = imageTransformer
     }
     
     func loadImage() {
         onLoadingStateChange?(true)
         onShouldRetryVisible?(false)
         task = imageLoader.loadImageData(from: model.imageURL) { [weak self] result in
-            let imageData = try? result.get()
-            let image = imageData.map(UIImage.init) ?? nil
-            self?.onImageLoad?(image)
-            self?.onShouldRetryVisible?((image == nil))
-            self?.onLoadingStateChange?(false)
+            self?.handleImage(result: result)
         }
     }
     
     func cancelImageLoad() {
         task?.cancel()
         task = nil
+    }
+    
+    private func handleImage(result: DogImageDataLoader.Result) {
+        if let image = (try? result.get()).flatMap(imageTransformer) {
+            onImageLoad?(image)
+        } else {
+            onShouldRetryVisible?(true)
+        }
+        
+        onLoadingStateChange?(false)
     }
 }
