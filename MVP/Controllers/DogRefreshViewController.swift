@@ -16,8 +16,8 @@ final class DogRefreshViewController: NSObject, DogLoadingView {
         presenter?.loadDog()
     }
     
-    func display(_ isLoading: Bool) {
-        if isLoading {
+    func display(_ viewModel: DogLoadingViewModel) {
+        if viewModel.isLoading {
             view?.beginRefreshing()
         } else {
             view?.endRefreshing()

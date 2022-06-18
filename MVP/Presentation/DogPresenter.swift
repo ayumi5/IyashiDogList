@@ -7,12 +7,20 @@
 
 import IyashiDogFeature
 
+struct DogLoadingViewModel {
+    var isLoading: Bool
+}
+
+struct DogViewModel {
+    var dogs: [Dog]
+}
+
 protocol DogLoadingView: AnyObject {
-    func display(_ isLoading: Bool)
+    func display(_ viewModel: DogLoadingViewModel)
 }
 
 protocol DogView {
-    func display(_ dogs: [Dog])
+    func display(_ viewModel: DogViewModel)
 }
 
 final class DogPresenter {
@@ -25,12 +33,12 @@ final class DogPresenter {
     }
     
     func loadDog() {
-        dogLoadingView?.display(true)
+        dogLoadingView?.display(DogLoadingViewModel(isLoading: true))
         dogLoader.load { [weak self] result in
             if let dogs = try? result.get() {
-                self?.dogView?.display(dogs)
+                self?.dogView?.display(DogViewModel(dogs: dogs))
             }
-            self?.dogLoadingView?.display(false)
+            self?.dogLoadingView?.display(DogLoadingViewModel(isLoading: false))
         }
     }
     

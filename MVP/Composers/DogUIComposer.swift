@@ -36,8 +36,8 @@ private final class DogViewAdapter: DogView {
         self.imageLoader = imageLoader
     }
     
-    func display(_ dogs: [Dog]) {
-        controller?.tableModel = dogs.map { dog in
+    func display(_ viewModel: DogViewModel) {
+        controller?.tableModel = viewModel.dogs.map { dog in
             return DogImageCellViewController(viewModel: DogImageViewModel<UIImage>(model: dog, imageLoader: imageLoader, imageTransformer: UIImage.init))
         }
     }
