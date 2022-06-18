@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA2259C3284B408B00DDCD9F /* Dog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA2259C2284B408B00DDCD9F /* Dog.storyboard */; };
 		DA2BFAF827D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */; };
+		DA2C3EE5285D7A0900E75310 /* DogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2C3EE4285D7A0900E75310 /* DogPresenter.swift */; };
 		DA370B9B278E7170002B2A91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9A278E7170002B2A91 /* AppDelegate.swift */; };
 		DA370B9D278E7170002B2A91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9C278E7170002B2A91 /* SceneDelegate.swift */; };
 		DA370B9F278E7170002B2A91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA370B9E278E7170002B2A91 /* ViewController.swift */; };
@@ -293,6 +294,7 @@
 /* Begin PBXFileReference section */
 		DA2259C2284B408B00DDCD9F /* Dog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dog.storyboard; sourceTree = "<group>"; };
 		DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDogCacheUseCaseTests.swift; sourceTree = "<group>"; };
+		DA2C3EE4285D7A0900E75310 /* DogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogPresenter.swift; sourceTree = "<group>"; };
 		DA370B97278E7170002B2A91 /* IyashiDogList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IyashiDogList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA370B9A278E7170002B2A91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA370B9C278E7170002B2A91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 			children = (
 				DAE23EA5285838B5003B1EFB /* DogImageViewModel.swift */,
 				DAE23EA6285838B5003B1EFB /* DogViewModel.swift */,
+				DA2C3EE4285D7A0900E75310 /* DogPresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1460,6 +1463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2C3EE5285D7A0900E75310 /* DogPresenter.swift in Sources */,
 				DAE23EB0285838B5003B1EFB /* DogViewModel.swift in Sources */,
 				DAE23EA9285838B5003B1EFB /* DogImageCellViewController.swift in Sources */,
 				DAE23EB1285838B5003B1EFB /* DogImageCell.swift in Sources */,

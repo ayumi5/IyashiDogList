@@ -8,23 +8,19 @@
 import Foundation
 import UIKit
 
-final class DogRefreshViewController: NSObject {
+final class DogRefreshViewController: NSObject, DogLoadingView {
     @IBOutlet private var view: UIRefreshControl?
-    var dogViewModel: DogViewModel? {
-        didSet { bind() }
-    }
+    var presenter: DogPresenter?
     
     @IBAction func refresh() {
-        dogViewModel?.loadDog()
+        presenter?.loadDog()
     }
     
-    private func bind() {
-        dogViewModel?.onLoadDogStateChange = { [weak self] isLoading in
-            if isLoading {
-                self?.view?.beginRefreshing()
-            } else {
-                self?.view?.endRefreshing()
-            }
+    func display(_ isLoading: Bool) {
+        if isLoading {
+            view?.beginRefreshing()
+        } else {
+            view?.endRefreshing()
         }
     }
 }
