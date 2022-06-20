@@ -10,10 +10,10 @@ import UIKit
 
 final class DogRefreshViewController: NSObject, DogLoadingView {
     @IBOutlet private var view: UIRefreshControl?
-    var presenter: DogPresenter?
+    var loadDog: (() -> Void)?
     
     @IBAction func refresh() {
-        presenter?.loadDog()
+        loadDog?()
     }
     
     func display(_ viewModel: DogLoadingViewModel) {

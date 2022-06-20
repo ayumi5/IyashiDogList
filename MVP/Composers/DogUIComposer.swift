@@ -13,7 +13,6 @@ public final class DogUIComposer {
     private init() {}
     
     static public func dogComposed(with loader: DogLoader, imageLoader: DogImageDataLoader) -> DogViewController {
-        
         let bundle = Bundle(for: DogViewController.self)
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
@@ -21,7 +20,7 @@ public final class DogUIComposer {
         let dogRefreshVC = dogVC.dogRefreshViewController
         presenter.dogLoadingView = dogRefreshVC
         presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
-        dogRefreshVC?.presenter = presenter
+        dogRefreshVC?.loadDog = presenter.loadDog
         
         return dogVC
     }
