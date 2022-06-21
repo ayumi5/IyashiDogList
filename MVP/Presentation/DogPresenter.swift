@@ -15,7 +15,7 @@ struct DogViewModel {
     var dogs: [Dog]
 }
 
-protocol DogLoadingView: AnyObject {
+protocol DogLoadingView {
     func display(_ viewModel: DogLoadingViewModel)
 }
 
@@ -24,7 +24,7 @@ protocol DogView {
 }
 
 final class DogPresenter {
-    weak var dogLoadingView: DogLoadingView?
+    var dogLoadingView: DogLoadingView?
     var dogView: DogView?
     
     func didStartLoadingFeed() {

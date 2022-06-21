@@ -17,11 +17,11 @@ public final class DogUIComposer {
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
         let presenter = DogPresenter()
-        let dogRefreshVC = dogVC.dogRefreshViewController
-        presenter.dogLoadingView = dogRefreshVC
-        presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
+        let dogRefreshVC = dogVC.dogRefreshViewController!
         let presentationAdapter = DogPresentationAdapter(loader: loader, presenter: presenter)
-        dogRefreshVC?.delegate = presentationAdapter
+        dogRefreshVC.delegate = presentationAdapter
+        presenter.dogLoadingView = WeakRefVirtualProxy(dogRefreshVC)
+        presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
         
         return dogVC
     }
@@ -48,6 +48,20 @@ private final class DogViewAdapter: DogView {
                 return DogImageCellViewController(viewModel: DogImageViewModel<UIImage>(model: dog, imageLoader: imageLoader, imageTransformer: UIImage.init))
             }
         }
+    }
+}
+
+private final class WeakRefVirtualProxy<T: AnyObject> {
+    private weak var object: T?
+    
+    init(_ object: T) {
+        self.object = object
+    }
+}
+
+extension WeakRefVirtualProxy: DogLoadingView where T: DogLoadingView {
+    func display(_ viewModel: DogLoadingViewModel) {
+        object?.display(viewModel)
     }
 }
 
