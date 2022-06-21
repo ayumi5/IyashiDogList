@@ -16,12 +16,11 @@ public final class DogUIComposer {
         let bundle = Bundle(for: DogViewController.self)
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
-        let presenter = DogPresenter()
         let dogRefreshVC = dogVC.dogRefreshViewController!
-        let presentationAdapter = DogPresentationAdapter(loader: loader, presenter: presenter)
+        let presentationAdapter = DogPresentationAdapter(loader: loader)
         dogRefreshVC.delegate = presentationAdapter
-        presenter.dogLoadingView = WeakRefVirtualProxy(dogRefreshVC)
-        presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
+        let presenter = DogPresenter(dogLoadingView: WeakRefVirtualProxy(dogRefreshVC), dogView: DogViewAdapter(controller: dogVC, imageLoader: imageLoader))
+        presentationAdapter.dogPresenter = presenter
         
         return dogVC
     }
