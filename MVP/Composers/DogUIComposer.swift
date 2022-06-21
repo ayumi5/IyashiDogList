@@ -37,15 +37,11 @@ private final class DogViewAdapter: DogView {
     
     func display(_ viewModel: DogViewModel) {
         controller?.tableModel = viewModel.dogs.map { dog in
-            return DogImageCellViewController(viewModel: DogImageViewModel<UIImage>(model: dog, imageLoader: imageLoader, imageTransformer: UIImage.init))
-        }
-    }
-    
-    private static func adaptDogsToCellControllers(forwardingTo controller: DogViewController, imageLoader: DogImageDataLoader) -> ([Dog]) -> Void {
-        return { [weak controller] dogs in
-            controller?.tableModel = dogs.map { dog in
-                return DogImageCellViewController(viewModel: DogImageViewModel<UIImage>(model: dog, imageLoader: imageLoader, imageTransformer: UIImage.init))
-            }
+            let adapter = DogImagePresentationAdapter<WeakRefVirtualProxy<DogImageCellViewController>, UIImage>(model: dog, loader: imageLoader)
+            let imageCell = DogImageCellViewController(delegate: adapter)
+            let presenter = DogImagePresenter(view: WeakRefVirtualProxy(imageCell), imageTransformer: UIImage.init)
+            adapter.presenter = presenter
+            return imageCell
         }
     }
 }
@@ -60,6 +56,12 @@ private final class WeakRefVirtualProxy<T: AnyObject> {
 
 extension WeakRefVirtualProxy: DogLoadingView where T: DogLoadingView {
     func display(_ viewModel: DogLoadingViewModel) {
+        object?.display(viewModel)
+    }
+}
+
+extension WeakRefVirtualProxy: DogImageView where T: DogImageView, T.Image == UIImage {
+    func display(_ viewModel: DogImageViewModel<UIImage>) {
         object?.display(viewModel)
     }
 }

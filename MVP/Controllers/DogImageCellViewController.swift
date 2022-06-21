@@ -7,43 +7,42 @@
 
 import UIKit
 
-final class DogImageCellViewController: NSObject {
-    private let dogImageViewModel: DogImageViewModel<UIImage>
+protocol DogImageCellViewControllerDelegate {
+    func loadDogImage()
+    func cancelLoad()
+}
+
+final class DogImageCellViewController: NSObject, DogImageView {
+    typealias Image = UIImage
     
-    init(viewModel: DogImageViewModel<UIImage>) {
-        self.dogImageViewModel = viewModel
+    private let delegate: DogImageCellViewControllerDelegate
+    private var cell: DogImageCell?
+    
+    init(delegate: DogImageCellViewControllerDelegate) {
+        self.delegate = delegate
     }
     
-    private func bind(to cell: DogImageCell) {
-        cell.onRetry = dogImageViewModel.loadImage
-        
-        dogImageViewModel.onImageLoad = { [weak cell] image in
-            cell?.dogImageView.image = image
-        }
-        
-        dogImageViewModel.onLoadingStateChange = { [weak cell] isLoading in
-            cell?.dogImageContainer.isShimmering = isLoading
-        }
-        
-        dogImageViewModel.onShouldRetryVisible = { [weak cell] shouldRetry in
-            cell?.retryButton.isHidden = (shouldRetry != true)
-        }
+    func display(_ viewModel: DogImageViewModel<UIImage>) {
+        cell?.onRetry = delegate.loadDogImage
+        cell?.dogImageView.image = viewModel.image
+        cell?.dogImageContainer.isShimmering = viewModel.isLoading
+        cell?.retryButton.isHidden = !viewModel.shouldRetry
     }
     
     func view(in tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DogImageCell") as! DogImageCell
-        bind(to: cell)
-        
-        dogImageViewModel.loadImage()
+        self.cell = cell
+        delegate.loadDogImage()
         
         return cell
     }
     
     func preload() {
-        dogImageViewModel.loadImage()
+        delegate.loadDogImage()
     }
     
     func cancelLoad() {
-        dogImageViewModel.cancelImageLoad()
+        self.cell = nil
+        delegate.cancelLoad()
     }
 }
