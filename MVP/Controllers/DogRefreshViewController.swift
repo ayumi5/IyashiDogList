@@ -8,12 +8,16 @@
 import Foundation
 import UIKit
 
+protocol DogRefreshViewControllerDelegate {
+    func didRequestDogRefresh()
+}
+
 final class DogRefreshViewController: NSObject, DogLoadingView {
     @IBOutlet private var view: UIRefreshControl?
-    var loadDog: (() -> Void)?
+    var delegate: DogRefreshViewControllerDelegate?
     
     @IBAction func refresh() {
-        loadDog?()
+        delegate?.didRequestDogRefresh()
     }
     
     func display(_ viewModel: DogLoadingViewModel) {

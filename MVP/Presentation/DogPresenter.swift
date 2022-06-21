@@ -41,7 +41,7 @@ final class DogPresenter {
     }
 }
 
-final class DogPresentationAdapter {
+final class DogPresentationAdapter: DogRefreshViewControllerDelegate {
     private let dogLoader: DogLoader
     private let dogPresenter: DogPresenter
     
@@ -50,7 +50,7 @@ final class DogPresentationAdapter {
         self.dogPresenter = presenter
     }
     
-    func loadDog() {
+    func didRequestDogRefresh() {
         dogPresenter.didStartLoadingFeed()
         dogLoader.load { [weak self] result in
             switch result {
