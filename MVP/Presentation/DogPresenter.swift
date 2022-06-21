@@ -32,14 +32,38 @@ final class DogPresenter {
         self.dogLoader = dogLoader
     }
     
-    func loadDog() {
+    func didStartLoadingFeed() {
         dogLoadingView?.display(DogLoadingViewModel(isLoading: true))
-        dogLoader.load { [weak self] result in
-            if let dogs = try? result.get() {
-                self?.dogView?.display(DogViewModel(dogs: dogs))
-            }
-            self?.dogLoadingView?.display(DogLoadingViewModel(isLoading: false))
-        }
     }
     
+    func didFinishLoading(with dogs: [Dog]) {
+        dogView?.display(DogViewModel(dogs: dogs))
+        dogLoadingView?.display(DogLoadingViewModel(isLoading: false))
+    }
+    
+    func didFinishLoading(with error: Error) {
+        dogLoadingView?.display(DogLoadingViewModel(isLoading: false))
+    }
+}
+
+final class DogPresentationAdapter {
+    private let dogLoader: DogLoader
+    private let dogPresenter: DogPresenter
+    
+    init(loader: DogLoader, presenter: DogPresenter) {
+        self.dogLoader = loader
+        self.dogPresenter = presenter
+    }
+    
+    func loadDog() {
+        dogPresenter.didStartLoadingFeed()
+        dogLoader.load { [weak self] result in
+            switch result {
+            case let .success(dogs):
+                self?.dogPresenter.didFinishLoading(with: dogs)
+            case let .failure(error):
+                self?.dogPresenter.didFinishLoading(with: error)
+            }
+        }
+    }
 }

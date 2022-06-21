@@ -20,7 +20,8 @@ public final class DogUIComposer {
         let dogRefreshVC = dogVC.dogRefreshViewController
         presenter.dogLoadingView = dogRefreshVC
         presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
-        dogRefreshVC?.loadDog = presenter.loadDog
+        let presentationAdapter = DogPresentationAdapter(loader: loader, presenter: presenter)
+        dogRefreshVC?.loadDog = presentationAdapter.loadDog
         
         return dogVC
     }
