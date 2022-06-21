@@ -24,13 +24,8 @@ protocol DogView {
 }
 
 final class DogPresenter {
-    private let dogLoader: DogLoader
     weak var dogLoadingView: DogLoadingView?
     var dogView: DogView?
-    
-    init(dogLoader: DogLoader) {
-        self.dogLoader = dogLoader
-    }
     
     func didStartLoadingFeed() {
         dogLoadingView?.display(DogLoadingViewModel(isLoading: true))

@@ -16,7 +16,7 @@ public final class DogUIComposer {
         let bundle = Bundle(for: DogViewController.self)
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
-        let presenter = DogPresenter(dogLoader: loader)
+        let presenter = DogPresenter()
         let dogRefreshVC = dogVC.dogRefreshViewController
         presenter.dogLoadingView = dogRefreshVC
         presenter.dogView = DogViewAdapter(controller: dogVC, imageLoader: imageLoader)
