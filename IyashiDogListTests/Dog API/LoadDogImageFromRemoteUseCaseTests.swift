@@ -14,6 +14,10 @@ final class RemoteDogImageDataLoader {
     init(client: HTTPClient) {
         self.client = client
     }
+    
+    func loadImageData(from url: URL) {
+        client.get(from: url) { _ in }
+    }
 }
 
 class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
@@ -22,6 +26,14 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let (_, client) = makeSUT()
 
         XCTAssertEqual(client.requestedURLs, [])
+    }
+    
+    func test_loadImageData_requestsDataFromURL() {
+        let (sut, client) = makeSUT()
+        let url = URL(string: "https://a-url.com")!
+        
+        sut.loadImageData(from: url)
+        XCTAssertEqual(client.requestedURLs, [url])
     }
     
     // MARK: - Helpers
