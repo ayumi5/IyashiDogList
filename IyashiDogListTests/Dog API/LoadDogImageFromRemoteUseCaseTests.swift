@@ -9,6 +9,7 @@ import XCTest
 import IyashiDogList
 
 final class RemoteDogImageDataLoader {
+    typealias Result = Swift.Result<Data, Swift.Error>
     private let client: HTTPClient
     
     enum Error: Swift.Error {
@@ -20,14 +21,17 @@ final class RemoteDogImageDataLoader {
         self.client = client
     }
     
-    func loadImageData(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
+    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) {
         client.get(from: url) { result in
-            switch result {
-            case let .success((_, response)):
-                if response.statusCode != 200 {
+            do {
+                let (data, response) = try result.get()
+                
+                guard data.isEmpty == false, response.statusCode == 200 else {
                     completion(.failure(Error.invalidData))
+                    return
                 }
-            case let .failure(error):
+                
+            } catch {
                 completion(.failure(error))
             }
         }
@@ -80,6 +84,14 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         }
     }
     
+    func test_loadImageData_deliversInvalidDataErrorOn200HTTPResponseWithEmptyData() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut: sut, toCompleteWith: .failure(RemoteDogImageDataLoader.Error.invalidData), when: {
+            let emptyData = Data()
+            client.completeDogImageLoading(with: emptyData, withStatusCode: 200)
+        })
+    }
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
@@ -91,13 +103,12 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         return (sut, client)
     }
     
-    private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: HTTPClient.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: RemoteDogImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for load completion")
         sut.loadImageData(from: URL(string: "https://a-url.com")!) { receivedResult in
             switch (receivedResult, expectedResult) {
-            case let (.success((receivedData, receivedResponse)), .success((expectedData, expectedResponse))):
+            case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
-                XCTAssertEqual(receivedResponse, expectedResponse, file: file, line: line)
             case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
             default:
