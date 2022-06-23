@@ -11,18 +11,27 @@ import IyashiDogList
 final class RemoteDogImageDataLoader {
     typealias Result = Swift.Result<Data, Swift.Error>
     private let client: HTTPClient
+    private var task: HTTPClientTask?
     
     enum Error: Swift.Error {
         case connectivity
         case invalidData
     }
     
+    struct HTTPClientTaskWrapper {
+        var wrapped: HTTPClientTask
+        
+        func cancel() {
+            wrapped.cancel()
+        }
+    }
+    
     init(client: HTTPClient) {
         self.client = client
     }
     
-    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) {
-        client.get(from: url) { result in
+    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTaskWrapper {
+        let task = HTTPClientTaskWrapper(wrapped: client.get(from: url) { result in
             do {
                 let (data, response) = try result.get()
                 
@@ -36,7 +45,14 @@ final class RemoteDogImageDataLoader {
             } catch {
                 completion(.failure(error))
             }
-        }
+        })
+                                                   
+        return task
+    }
+    
+    func cancelLoad() {
+        task?.cancel()
+        task = nil
     }
 }
 
@@ -52,7 +68,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSUT()
         let url = URL(string: "https://a-url.com")!
         
-        sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
         XCTAssertEqual(client.requestedURLs, [url])
     }
     
@@ -60,8 +76,8 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSUT()
         let url = URL(string: "https://a-url.com")!
         
-        sut.loadImageData(from: url) { _ in }
-        sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
+        _ = sut.loadImageData(from: url) { _ in }
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
@@ -117,7 +133,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: RemoteDogImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for load completion")
-        sut.loadImageData(from: URL(string: "https://a-url.com")!) { receivedResult in
+        _ = sut.loadImageData(from: URL(string: "https://a-url.com")!) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
@@ -136,11 +152,23 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     private class LoaderSpy: HTTPClient {
         var requestedURLs = [URL]()
+        var cancelledURLs = [URL]()
         private var completions = [(HTTPClient.Result) -> Void]()
         
-        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
+        struct TaskSpy: HTTPClientTask {
+            var action: () -> Void
+            func cancel() {
+                action()
+            }
+        }
+        
+        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
             requestedURLs.append(url)
             completions.append(completion)
+            
+            return TaskSpy(action: { [weak self] in
+                self?.cancelledURLs.append(url)
+            })
         }
         
         func completeDogImageLoading(with error: Error, at index: Int = 0) {

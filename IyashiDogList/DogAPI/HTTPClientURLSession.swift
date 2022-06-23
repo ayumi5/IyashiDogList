@@ -12,8 +12,16 @@ public final class HTTPClientURLSession: HTTPClient {
     
     private struct InvalidResponseError: Error {}
     
-    public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        URLSession.shared.dataTask(with: url) {data, response, error in
+    private struct URLSessionWrapper: HTTPClientTask {
+        var wrapped: URLSessionDataTask
+        
+        func cancel() {
+            wrapped.cancel()
+        }
+    }
+    
+    public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
+        let task = URLSession.shared.dataTask(with: url) {data, response, error in
             if let error = error {
                 completion(.failure(error))
             } else if let data = data, let response = response as? HTTPURLResponse {
@@ -21,6 +29,8 @@ public final class HTTPClientURLSession: HTTPClient {
             } else {
                 completion(.failure(InvalidResponseError()))
             }
-        }.resume()
+        }
+        task.resume()
+        return  URLSessionWrapper(wrapped: task)
     }
 }

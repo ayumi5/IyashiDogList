@@ -26,7 +26,7 @@ class HTTPClientURLSessionTests: XCTestCase {
             XCTAssertEqual(request.url, url)
             exp.fulfill()
         }
-        sut.get(from: url) { _ in }
+        _ = sut.get(from: url) { _ in }
         wait(for: [exp], timeout: 1.0)
     }
     
@@ -100,7 +100,7 @@ class HTTPClientURLSessionTests: XCTestCase {
         let url = anyURL()
         URLProtocolStub.stub(url: url, data: data, response: response, error: error)
         let exp = XCTestExpectation(description: "Wait for completion")
-        sut.get(from: url) { receivedResult in
+        _ = sut.get(from: url) { receivedResult in
             result = receivedResult
             exp.fulfill()
         }
