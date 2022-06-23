@@ -94,8 +94,8 @@ class HTTPClientURLSessionTests: XCTestCase {
         return NSError(domain: "test", code: 0)
     }
     
-    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClientResult? {
-        var result: HTTPClientResult?
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClient.Result? {
+        var result: HTTPClient.Result?
         let sut = makeSUT(file: file, line: line)
         let url = anyURL()
         URLProtocolStub.stub(url: url, data: data, response: response, error: error)
@@ -124,7 +124,7 @@ class HTTPClientURLSessionTests: XCTestCase {
     private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
         let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         switch result {
-        case let .success(data, response):
+        case let .success((data, response)):
             return (data, response)
         default:
             XCTFail("Expected failure with error: \(String(describing: error)), instead got \(String(describing: result))", file: file, line: line)

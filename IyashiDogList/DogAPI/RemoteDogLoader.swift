@@ -28,12 +28,10 @@ public final class RemoteDogLoader: DogLoader {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             switch result {
-            case let .success(data, response):
+            case let .success((data, response)):
                 completion(RemoteDogLoader.map(data, from: response))
             case .failure:
                 completion(.failure(Error.connectivity))
-            default:
-                break
             }
         }
     }

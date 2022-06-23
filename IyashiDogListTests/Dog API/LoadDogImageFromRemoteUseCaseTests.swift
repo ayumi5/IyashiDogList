@@ -20,17 +20,15 @@ final class RemoteDogImageDataLoader {
         self.client = client
     }
     
-    func loadImageData(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
+    func loadImageData(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
         client.get(from: url) { result in
             switch result {
-            case let .success(_, response):
+            case let .success((_, response)):
                 if response.statusCode != 200 {
                     completion(.failure(Error.invalidData))
                 }
             case let .failure(error):
                 completion(.failure(error))
-            default:
-                break
             }
         }
     }
@@ -93,11 +91,11 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         return (sut, client)
     }
     
-    private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: HTTPClientResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: HTTPClient.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for load completion")
         sut.loadImageData(from: URL(string: "https://a-url.com")!) { receivedResult in
             switch (receivedResult, expectedResult) {
-            case let (.success(receivedData, receivedResponse), .success(expectedData, expectedResponse)):
+            case let (.success((receivedData, receivedResponse)), .success((expectedData, expectedResponse))):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
                 XCTAssertEqual(receivedResponse, expectedResponse, file: file, line: line)
             case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
@@ -115,9 +113,9 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     private class LoaderSpy: HTTPClient {
         var requestedURLs = [URL]()
-        private var completions = [(HTTPClientResult?) -> Void]()
+        private var completions = [(HTTPClient.Result) -> Void]()
         
-        func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
+        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
             requestedURLs.append(url)
             completions.append(completion)
         }
@@ -128,7 +126,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         
         func completeDogImageLoading(with data: Data, withStatusCode code: Int, at index: Int = 0) {
             let response = HTTPURLResponse(url: requestedURLs[index], statusCode: code, httpVersion: nil, headerFields: nil)!
-            completions[index](.success(data, response))
+            completions[index](.success((data, response)))
         }
     }
 }
