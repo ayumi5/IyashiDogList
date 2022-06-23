@@ -11,12 +11,16 @@ import IyashiDogList
 final class RemoteDogImageDataLoader {
     private let client: HTTPClient
     
+    enum Error: Swift.Error {
+        case connectivity
+    }
+    
     init(client: HTTPClient) {
         self.client = client
     }
     
-    func loadImageData(from url: URL) {
-        client.get(from: url) { _ in }
+    func loadImageData(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
+        client.get(from: url, completion: completion)
     }
 }
 
@@ -32,18 +36,40 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSUT()
         let url = URL(string: "https://a-url.com")!
         
-        sut.loadImageData(from: url)
+        sut.loadImageData(from: url) { _ in }
         XCTAssertEqual(client.requestedURLs, [url])
     }
     
-    // MARK: - Helpers
-    private class LoaderSpy: HTTPClient {
-        var requestedURLs = [URL]()
+    func test_loadImageDataTwice_requestsDataFromURLTwice() {
+        let (sut, client) = makeSUT()
+        let url = URL(string: "https://a-url.com")!
         
-        func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
-            requestedURLs.append(url)
-        }
+        sut.loadImageData(from: url) { _ in }
+        sut.loadImageData(from: url) { _ in }
+        XCTAssertEqual(client.requestedURLs, [url, url])
     }
+    
+    func test_loadImageData_deliversConnnectivityErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        let connectivityError = RemoteDogImageDataLoader.Error.connectivity as NSError
+        
+        let exp = expectation(description: "wait for load completion")
+        sut.loadImageData(from: URL(string: "https://a-url.com")!) { result in
+            switch result {
+            case let .failure(error as NSError):
+                XCTAssertEqual(error, connectivityError)
+            default:
+                XCTFail("Expected failure with \(connectivityError)")
+            }
+            exp.fulfill()
+        }
+        
+        client.completeDogImageLoading(with: connectivityError)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
         let client = LoaderSpy()
@@ -52,5 +78,19 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         
         return (sut, client)
+    }
+    
+    private class LoaderSpy: HTTPClient {
+        var requestedURLs = [URL]()
+        private var completions = [(HTTPClientResult?) -> Void]()
+        
+        func get(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
+            requestedURLs.append(url)
+            completions.append(completion)
+        }
+        
+        func completeDogImageLoading(with error: Error, at index: Int = 0) {
+            completions[index](.failure(error))
+        }
     }
 }
