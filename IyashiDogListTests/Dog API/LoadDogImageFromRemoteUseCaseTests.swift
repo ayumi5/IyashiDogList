@@ -13,6 +13,7 @@ final class RemoteDogImageDataLoader {
     
     enum Error: Swift.Error {
         case connectivity
+        case invalidData
     }
     
     init(client: HTTPClient) {
@@ -20,7 +21,18 @@ final class RemoteDogImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (HTTPClientResult?) -> Void) {
-        client.get(from: url, completion: completion)
+        client.get(from: url) { result in
+            switch result {
+            case let .success(_, response):
+                if response.statusCode != 200 {
+                    completion(.failure(Error.invalidData))
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            default:
+                break
+            }
+        }
     }
 }
 
@@ -69,6 +81,28 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_loadImageData_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let invalidDataError = RemoteDogImageDataLoader.Error.invalidData as NSError
+        
+        let exp = expectation(description: "wait for load completion")
+        sut.loadImageData(from: URL(string: "https://a-url.com")!) { result in
+            switch result {
+            case let .failure(error as NSError):
+                XCTAssertEqual(error, invalidDataError)
+            default:
+                XCTFail("Expected failure with \(invalidDataError)")
+            }
+            
+            exp.fulfill()
+        }
+        
+        client.completeDogImageLoading(with: Data(), withStatusCode: 300)
+        
+        wait(for: [exp], timeout: 1.0)
+        
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
@@ -91,6 +125,11 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         
         func completeDogImageLoading(with error: Error, at index: Int = 0) {
             completions[index](.failure(error))
+        }
+        
+        func completeDogImageLoading(with data: Data, withStatusCode code: Int, at index: Int = 0) {
+            let response = HTTPURLResponse(url: requestedURLs[index], statusCode: code, httpVersion: nil, headerFields: nil)!
+            completions[index](.success(data, response))
         }
     }
 }
