@@ -31,6 +31,8 @@ final class RemoteDogImageDataLoader {
                     return
                 }
                 
+                completion(.success(data))
+                
             } catch {
                 completion(.failure(error))
             }
@@ -92,6 +94,16 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
             client.completeDogImageLoading(with: emptyData, withStatusCode: 200)
         })
     }
+    
+    func test_loadImageData_deliversReceivedImageDataOn200HTTPResponseWithNonEmptyData() {
+        let (sut, client) = makeSUT()
+        let validData = Data("valid data".utf8)
+        
+        expect(sut: sut, toCompleteWith: .success(validData), when: {
+            client.completeDogImageLoading(with: validData, withStatusCode: 200)
+        })
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
