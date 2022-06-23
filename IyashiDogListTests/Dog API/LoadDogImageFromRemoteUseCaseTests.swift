@@ -120,6 +120,16 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         })
     }
     
+    func test_cancelLoadImageDataURLTask_cancelsURLRequest() {
+        let (sut, client) = makeSUT()
+        let url = URL(string: "https://a-url.com")!
+        let task = sut.loadImageData(from: url) { _ in }
+        XCTAssertEqual(client.cancelledURLs, [])
+        
+        task.cancel()
+        XCTAssertEqual(client.cancelledURLs, [url])
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
