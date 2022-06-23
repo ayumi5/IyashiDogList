@@ -63,43 +63,20 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     func test_loadImageData_deliversConnnectivityErrorOnClientError() {
         let (sut, client) = makeSUT()
-        let connectivityError = RemoteDogImageDataLoader.Error.connectivity as NSError
+        let connectivityError = RemoteDogImageDataLoader.Error.connectivity
         
-        let exp = expectation(description: "wait for load completion")
-        sut.loadImageData(from: URL(string: "https://a-url.com")!) { result in
-            switch result {
-            case let .failure(error as NSError):
-                XCTAssertEqual(error, connectivityError)
-            default:
-                XCTFail("Expected failure with \(connectivityError)")
-            }
-            exp.fulfill()
-        }
-        
-        client.completeDogImageLoading(with: connectivityError)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut: sut, toCompleteWith: .failure(connectivityError), when: {
+            client.completeDogImageLoading(with: connectivityError)
+        })
     }
     
     func test_loadImageData_deliversInvalidDataErrorOnNon200HTTPResponse() {
         let (sut, client) = makeSUT()
-        let invalidDataError = RemoteDogImageDataLoader.Error.invalidData as NSError
+        let invalidDataError = RemoteDogImageDataLoader.Error.invalidData
         
-        let exp = expectation(description: "wait for load completion")
-        sut.loadImageData(from: URL(string: "https://a-url.com")!) { result in
-            switch result {
-            case let .failure(error as NSError):
-                XCTAssertEqual(error, invalidDataError)
-            default:
-                XCTFail("Expected failure with \(invalidDataError)")
-            }
-            
-            exp.fulfill()
-        }
-        
-        client.completeDogImageLoading(with: Data(), withStatusCode: 300)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut: sut, toCompleteWith: .failure(invalidDataError), when: {
+            client.completeDogImageLoading(with: Data(), withStatusCode: 300)
+        })
         
     }
     
@@ -112,6 +89,26 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         
         return (sut, client)
+    }
+    
+    private func expect(sut: RemoteDogImageDataLoader, toCompleteWith expectedResult: HTTPClientResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "wait for load completion")
+        sut.loadImageData(from: URL(string: "https://a-url.com")!) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData, receivedResponse), .success(expectedData, expectedResponse)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+                XCTAssertEqual(receivedResponse, expectedResponse, file: file, line: line)
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(String(describing: receivedResult)) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     private class LoaderSpy: HTTPClient {
