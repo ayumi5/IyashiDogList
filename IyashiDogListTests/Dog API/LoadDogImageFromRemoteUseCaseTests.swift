@@ -74,10 +74,12 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let (sut, client) = makeSUT()
         let invalidDataError = RemoteDogImageDataLoader.Error.invalidData
         
-        expect(sut: sut, toCompleteWith: .failure(invalidDataError), when: {
-            client.completeDogImageLoading(with: Data(), withStatusCode: 300)
-        })
-        
+        let statusCodes = [199, 201, 300, 400]
+        statusCodes.enumerated().forEach { index, code in
+            expect(sut: sut, toCompleteWith: .failure(invalidDataError), when: {
+                client.completeDogImageLoading(with: Data(), withStatusCode: code, at: index)
+            })
+        }
     }
     
     // MARK: - Helpers
