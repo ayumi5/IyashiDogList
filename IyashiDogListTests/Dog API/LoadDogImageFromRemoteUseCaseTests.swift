@@ -130,8 +130,4 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
-    
-    func anyNSError() -> NSError {
-        NSError.init(domain: "any error", code: 0)
-    }
 }

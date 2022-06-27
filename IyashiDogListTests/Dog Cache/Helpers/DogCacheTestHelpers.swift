@@ -1,5 +1,5 @@
 //
-//  FeedCacheTestHelpers.swift
+//  DogCacheTestHelpers.swift
 //  IyashiDogListTests
 //
 //  Created by 宇高あゆみ on 2022/03/03.
@@ -22,10 +22,6 @@ func uniqueDog() -> Dog {
 
 func uniqueURL() -> URL {
     URL(string: "http://unique-url-\(UUID()).com")!
-}
-
-func anyNSError() -> NSError {
-    NSError.init(domain: "any error", code: 0)
 }
 
 extension Date {
