@@ -18,11 +18,25 @@ final class RemoteDogImageDataLoader {
         case invalidData
     }
     
-    struct HTTPClientTaskWrapper {
-        var wrapped: HTTPClientTask
+    final class HTTPClientTaskWrapper {
+        var wrapped: HTTPClientTask?
+        private var completion: ((Result) -> Void)?
+        
+        init(completion: @escaping ((Result) -> Void)) {
+            self.completion = completion
+        }
+        
+        func complete(with result: Result) {
+            completion?(result)
+        }
         
         func cancel() {
-            wrapped.cancel()
+            preventFurtherCompletion()
+            wrapped?.cancel()
+        }
+        
+        private func preventFurtherCompletion() {
+            completion = nil
         }
     }
     
@@ -31,21 +45,23 @@ final class RemoteDogImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTaskWrapper {
-        let task = HTTPClientTaskWrapper(wrapped: client.get(from: url) { result in
+        let task = HTTPClientTaskWrapper(completion: completion)
+        
+        task.wrapped = client.get(from: url) { result in
             do {
                 let (data, response) = try result.get()
                 
                 guard data.isEmpty == false, response.statusCode == 200 else {
-                    completion(.failure(Error.invalidData))
+                    task.complete(with: .failure(Error.invalidData))
                     return
                 }
                 
-                completion(.success(data))
+                task.complete(with: .success(data))
                 
             } catch {
-                completion(.failure(error))
+                task.complete(with: .failure(error))
             }
-        })
+        }
                                                    
         return task
     }
@@ -130,6 +146,25 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         XCTAssertEqual(client.cancelledURLs, [url])
     }
     
+    func test_cancelLoadImageDataURLTask_doesNotDeliverResult() {
+        let (sut, client) = makeSUT()
+        var receivedResults = [RemoteDogImageDataLoader.Result]()
+        let emptyData = Data()
+        let nonEmptyData = Data("non-empty data".utf8)
+        
+        let task = sut.loadImageData(from: URL(string: "https://a-url.com")!) {
+            receivedResults.append($0)
+        }
+        task.cancel()
+        
+        client.completeDogImageLoading(with: nonEmptyData, withStatusCode: 200)
+        client.completeDogImageLoading(with: emptyData,  withStatusCode: 200)
+        client.completeDogImageLoading(with: anyNSError())
+        
+        
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
@@ -158,6 +193,10 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         action()
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func anyNSError() -> NSError {
+        NSError.init(domain: "any error", code: 0)
     }
     
     private class LoaderSpy: HTTPClient {
