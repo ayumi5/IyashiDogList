@@ -8,7 +8,10 @@
 import Foundation
 
 public final class HTTPClientURLSession: HTTPClient {
-    public init() {}
+    private let session: URLSession
+    public init(session: URLSession) {
+        self.session = session
+    }
     
     private struct InvalidResponseError: Error {}
     
