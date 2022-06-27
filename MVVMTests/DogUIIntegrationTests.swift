@@ -1,6 +1,6 @@
 //
-//  DogViewControllerTests.swift
-//  Tests
+//  DogUIIntegrationTests.swift
+//  MVVMTests
 //
 //  Created by 宇高あゆみ on 2022/05/30.
 //
@@ -8,9 +8,9 @@
 import XCTest
 import UIKit
 import IyashiDogFeature
-import MVP
+import MVVM
 
-final class DogViewControllerTests: XCTestCase {
+final class DogUIIntegrationTests: XCTestCase {
     
     func test_loadDogActions_requestDogFromLoader() {
         let (sut, loader) = makeSUT()

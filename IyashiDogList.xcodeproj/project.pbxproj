@@ -76,7 +76,7 @@
 		DAD0BD9C2851A30E00745D9F /* DogRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BD942851A30E00745D9F /* DogRefreshViewController.swift */; };
 		DAD0BD9D2851A30E00745D9F /* DogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BD952851A30E00745D9F /* DogViewController.swift */; };
 		DAD0BD9E2851A30E00745D9F /* DogUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BD972851A30E00745D9F /* DogUIComposer.swift */; };
-		DAD0BDA72851A31900745D9F /* DogViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BD9F2851A31900745D9F /* DogViewControllerTests.swift */; };
+		DAD0BDA72851A31900745D9F /* DogUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BD9F2851A31900745D9F /* DogUIIntegrationTests.swift */; };
 		DAD0BDA82851A31900745D9F /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDA12851A31900745D9F /* UIButton+TestHelpers.swift */; };
 		DAD0BDA92851A31900745D9F /* DogImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDA22851A31900745D9F /* DogImageCell+TestHelpers.swift */; };
 		DAD0BDAA2851A31900745D9F /* LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD0BDA32851A31900745D9F /* LoaderSpy.swift */; };
@@ -90,7 +90,7 @@
 		DADD76A8284497EF002FD5EC /* IyashiDogFeature.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DADD76B028449833002FD5EC /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75B7279253D40072DDCA /* Dog.swift */; };
 		DADD76B128449837002FD5EC /* DogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E75BD279295870072DDCA /* DogLoader.swift */; };
-		DADED8872844B60A00597972 /* DogViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED8862844B60A00597972 /* DogViewControllerTests.swift */; };
+		DADED8872844B60A00597972 /* DogUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED8862844B60A00597972 /* DogUIIntegrationTests.swift */; };
 		DADED8892844C32D00597972 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECA27E279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift */; };
 		DADED88B2845DC3400597972 /* DogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADED88A2845DC3400597972 /* DogViewController.swift */; };
 		DAE23E752858227A003B1EFB /* DogImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23E742858227A003B1EFB /* DogImageViewModel.swift */; };
@@ -106,7 +106,7 @@
 		DAE23EAD285838B5003B1EFB /* DogUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA1285838B5003B1EFB /* DogUIComposer.swift */; };
 		DAE23EAE285838B5003B1EFB /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */; };
 		DAE23EB1285838B5003B1EFB /* DogImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EA8285838B5003B1EFB /* DogImageCell.swift */; };
-		DAE23EBA285838C3003B1EFB /* DogViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */; };
+		DAE23EBA285838C3003B1EFB /* DogUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB2285838C3003B1EFB /* DogUIIntegrationTests.swift */; };
 		DAE23EBB285838C3003B1EFB /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB4285838C3003B1EFB /* UIButton+TestHelpers.swift */; };
 		DAE23EBC285838C3003B1EFB /* DogImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB5285838C3003B1EFB /* DogImageCell+TestHelpers.swift */; };
 		DAE23EBD285838C3003B1EFB /* LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE23EB6285838C3003B1EFB /* LoaderSpy.swift */; };
@@ -366,7 +366,7 @@
 		DAD0BD942851A30E00745D9F /* DogRefreshViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogRefreshViewController.swift; sourceTree = "<group>"; };
 		DAD0BD952851A30E00745D9F /* DogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewController.swift; sourceTree = "<group>"; };
 		DAD0BD972851A30E00745D9F /* DogUIComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogUIComposer.swift; sourceTree = "<group>"; };
-		DAD0BD9F2851A31900745D9F /* DogViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
+		DAD0BD9F2851A31900745D9F /* DogUIIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogUIIntegrationTests.swift; sourceTree = "<group>"; };
 		DAD0BDA12851A31900745D9F /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAD0BDA22851A31900745D9F /* DogImageCell+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DogImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAD0BDA32851A31900745D9F /* LoaderSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderSpy.swift; sourceTree = "<group>"; };
@@ -376,7 +376,7 @@
 		DAD0BDB02851C40700745D9F /* DogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewModel.swift; sourceTree = "<group>"; };
 		DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IyashiDogFeature.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DADD769B284497EF002FD5EC /* IyashiDogFeatureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogFeatureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DADED8862844B60A00597972 /* DogViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
+		DADED8862844B60A00597972 /* DogUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogUIIntegrationTests.swift; sourceTree = "<group>"; };
 		DADED88A2845DC3400597972 /* DogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogViewController.swift; sourceTree = "<group>"; };
 		DAE23E742858227A003B1EFB /* DogImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageViewModel.swift; sourceTree = "<group>"; };
 		DAE23E7B285832C4003B1EFB /* MVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -388,7 +388,7 @@
 		DAE23EA1285838B5003B1EFB /* DogUIComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogUIComposer.swift; sourceTree = "<group>"; };
 		DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
 		DAE23EA8285838B5003B1EFB /* DogImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogImageCell.swift; sourceTree = "<group>"; };
-		DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogViewControllerTests.swift; sourceTree = "<group>"; };
+		DAE23EB2285838C3003B1EFB /* DogUIIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DogUIIntegrationTests.swift; sourceTree = "<group>"; };
 		DAE23EB4285838C3003B1EFB /* UIButton+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAE23EB5285838C3003B1EFB /* DogImageCell+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DogImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		DAE23EB6285838C3003B1EFB /* LoaderSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderSpy.swift; sourceTree = "<group>"; };
@@ -713,7 +713,7 @@
 			isa = PBXGroup;
 			children = (
 				DA8B27A228486A2A00DAB4D3 /* Helpers */,
-				DADED8862844B60A00597972 /* DogViewControllerTests.swift */,
+				DADED8862844B60A00597972 /* DogUIIntegrationTests.swift */,
 			);
 			path = MVCTests;
 			sourceTree = "<group>";
@@ -741,7 +741,7 @@
 		DAD0BD7A2851A1FC00745D9F /* MVVMTests */ = {
 			isa = PBXGroup;
 			children = (
-				DAD0BD9F2851A31900745D9F /* DogViewControllerTests.swift */,
+				DAD0BD9F2851A31900745D9F /* DogUIIntegrationTests.swift */,
 				DAD0BDA02851A31900745D9F /* Helpers */,
 			);
 			path = MVVMTests;
@@ -829,7 +829,7 @@
 		DAE23E88285832C4003B1EFB /* MVPTests */ = {
 			isa = PBXGroup;
 			children = (
-				DAE23EB2285838C3003B1EFB /* DogViewControllerTests.swift */,
+				DAE23EB2285838C3003B1EFB /* DogUIIntegrationTests.swift */,
 				DAE23EB3285838C3003B1EFB /* Helpers */,
 			);
 			path = MVPTests;
@@ -1446,7 +1446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA8B279D2848690300DAB4D3 /* DogImageCell+TestHelpers.swift in Sources */,
-				DADED8872844B60A00597972 /* DogViewControllerTests.swift in Sources */,
+				DADED8872844B60A00597972 /* DogUIIntegrationTests.swift in Sources */,
 				DA8B279B284868BE00DAB4D3 /* UIRefrechControl+TestHelpers.swift in Sources */,
 				DA8B27992848685C00DAB4D3 /* UIButton+TestHelpers.swift in Sources */,
 				DA8B279F2848697700DAB4D3 /* DogViewController+TestHelpers.swift in Sources */,
@@ -1477,7 +1477,7 @@
 			files = (
 				DAD0BDA92851A31900745D9F /* DogImageCell+TestHelpers.swift in Sources */,
 				DAD0BDAE2851A3A400745D9F /* XCTestCase+MemoryLeakTracking.swift in Sources */,
-				DAD0BDA72851A31900745D9F /* DogViewControllerTests.swift in Sources */,
+				DAD0BDA72851A31900745D9F /* DogUIIntegrationTests.swift in Sources */,
 				DAD0BDAA2851A31900745D9F /* LoaderSpy.swift in Sources */,
 				DAD0BDAD2851A31900745D9F /* UIImage+TestHelpers.swift in Sources */,
 				DAD0BDAB2851A31900745D9F /* UIRefrechControl+TestHelpers.swift in Sources */,
@@ -1533,7 +1533,7 @@
 				DAE23EC0285838C3003B1EFB /* UIImage+TestHelpers.swift in Sources */,
 				DAE23EBE285838C3003B1EFB /* UIRefrechControl+TestHelpers.swift in Sources */,
 				DAE23EBF285838C3003B1EFB /* DogViewController+TestHelpers.swift in Sources */,
-				DAE23EBA285838C3003B1EFB /* DogViewControllerTests.swift in Sources */,
+				DAE23EBA285838C3003B1EFB /* DogUIIntegrationTests.swift in Sources */,
 				DAE23EBB285838C3003B1EFB /* UIButton+TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
