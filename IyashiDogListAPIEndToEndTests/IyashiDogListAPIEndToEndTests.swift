@@ -48,8 +48,7 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         "https://images.dog.ceo/breeds/buhund-norwegian/hakon3.jpg"
     ]
     
-    private func makeLoader(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogLoader {
-        let client = HTTPClientURLSession()
+    private func makeLoader(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogLoader {        let client = HTTPClientURLSession(session: URLSession.init(configuration: .ephemeral))
         let url = URL(string: "https://dog.ceo/api/breed/buhund/norwegian/images")!
         let sut = RemoteDogLoader(client: client, url: url)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -58,7 +57,7 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
     }
     
     private func makeImageLoader(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogImageDataLoader {
-        let client = HTTPClientURLSession()
+        let client = HTTPClientURLSession(session: URLSession.init(configuration: .ephemeral))
         let imageLoader = RemoteDogImageDataLoader(client: client)
         trackForMemoryLeaks(imageLoader, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
