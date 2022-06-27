@@ -10,24 +10,24 @@
         <!--Dog View Controller-->
         <scene sceneID="4Nu-6H-wef">
             <objects>
-                <tableViewController id="e38-H0-IcR" customClass="DogViewController" customModule="MVC" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="e38-H0-IcR" customClass="DogViewController" customModule="MVP" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="PNJ-GG-4a9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DogImageCell" rowHeight="309" id="Ydc-mT-1k1" customClass="DogImageCell" customModule="MVC" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DogImageCell" rowHeight="309" id="Ydc-mT-1k1" customClass="DogImageCell" customModule="MVP" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="309"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ydc-mT-1k1" id="gNp-fm-yr3">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC3-po-Cdv" userLabel="Image Container">
+                                        <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC3-po-Cdv" userLabel="Image Container">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N3W-6J-5tp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N3W-6J-5tp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="299"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMW-61-feb">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
@@ -47,12 +47,12 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="HMW-61-feb" firstAttribute="top" secondItem="UC3-po-Cdv" secondAttribute="top" id="8eO-89-djj"/>
-                                                <constraint firstAttribute="bottom" secondItem="N3W-6J-5tp" secondAttribute="bottom" id="BCD-zl-cSK"/>
+                                                <constraint firstAttribute="bottom" secondItem="N3W-6J-5tp" secondAttribute="bottom" constant="10" id="BCD-zl-cSK"/>
                                                 <constraint firstAttribute="bottom" secondItem="HMW-61-feb" secondAttribute="bottom" id="HjQ-uk-hDJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="N3W-6J-5tp" secondAttribute="trailing" id="hMr-ja-4ei"/>
+                                                <constraint firstAttribute="width" secondItem="UC3-po-Cdv" secondAttribute="height" multiplier="1:1" id="jKh-XD-n3K"/>
                                                 <constraint firstItem="N3W-6J-5tp" firstAttribute="top" secondItem="UC3-po-Cdv" secondAttribute="top" id="mhg-ST-fdi"/>
                                                 <constraint firstAttribute="trailing" secondItem="HMW-61-feb" secondAttribute="trailing" id="pOj-sR-f0v"/>
                                                 <constraint firstItem="N3W-6J-5tp" firstAttribute="leading" secondItem="UC3-po-Cdv" secondAttribute="leading" id="rUw-hT-lao"/>
@@ -60,6 +60,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
+                                    <color key="backgroundColor" systemColor="systemGray4Color"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="UC3-po-Cdv" secondAttribute="bottom" id="2oH-O5-vE2"/>
                                         <constraint firstItem="UC3-po-Cdv" firstAttribute="leading" secondItem="gNp-fm-yr3" secondAttribute="leading" id="A6v-oh-aAu"/>
@@ -92,7 +93,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9Q-m6-SgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <customObject id="fSf-EW-xgy" customClass="DogRefreshViewController" customModule="MVC" customModuleProvider="target">
+                <customObject id="fSf-EW-xgy" customClass="DogRefreshViewController" customModule="MVP" customModuleProvider="target">
                     <connections>
                         <outlet property="view" destination="8j6-jF-DMq" id="Kni-SL-5rh"/>
                     </connections>
@@ -104,6 +105,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
