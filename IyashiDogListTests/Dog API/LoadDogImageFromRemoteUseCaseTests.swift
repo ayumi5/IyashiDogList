@@ -38,7 +38,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let connectivityError = RemoteDogImageDataLoader.Error.connectivity
         
         expect(sut: sut, toCompleteWith: .failure(connectivityError), when: {
-            client.completeDogImageLoading(with: connectivityError)
+            client.complete(with: connectivityError)
         })
     }
     
@@ -49,7 +49,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let statusCodes = [199, 201, 300, 400]
         statusCodes.enumerated().forEach { index, code in
             expect(sut: sut, toCompleteWith: .failure(invalidDataError), when: {
-                client.completeDogImageLoading(with: Data(), withStatusCode: code, at: index)
+                client.complete(withStatusCode: code, data: Data(), at: index)
             })
         }
     }
@@ -59,7 +59,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         
         expect(sut: sut, toCompleteWith: .failure(RemoteDogImageDataLoader.Error.invalidData), when: {
             let emptyData = Data()
-            client.completeDogImageLoading(with: emptyData, withStatusCode: 200)
+            client.complete(withStatusCode: 200, data: emptyData)
         })
     }
     
@@ -68,7 +68,7 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         let validData = Data("valid data".utf8)
         
         expect(sut: sut, toCompleteWith: .success(validData), when: {
-            client.completeDogImageLoading(with: validData, withStatusCode: 200)
+            client.complete(withStatusCode: 200, data: validData)
         })
     }
     
@@ -93,9 +93,9 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
         }
         task.cancel()
         
-        client.completeDogImageLoading(with: nonEmptyData, withStatusCode: 200)
-        client.completeDogImageLoading(with: emptyData,  withStatusCode: 200)
-        client.completeDogImageLoading(with: anyNSError())
+        client.complete(withStatusCode: 200, data: nonEmptyData)
+        client.complete(withStatusCode: 200, data: emptyData)
+        client.complete(with: anyNSError())
         
         
         XCTAssertTrue(receivedResults.isEmpty)
@@ -103,8 +103,8 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: LoaderSpy) {
-        let client = LoaderSpy()
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RemoteDogImageDataLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
         let sut = RemoteDogImageDataLoader(client: client)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
@@ -133,36 +133,5 @@ class LoadDogImageFromRemoteUseCaseTests: XCTestCase {
     
     func anyNSError() -> NSError {
         NSError.init(domain: "any error", code: 0)
-    }
-    
-    private class LoaderSpy: HTTPClient {
-        var requestedURLs = [URL]()
-        var cancelledURLs = [URL]()
-        private var completions = [(HTTPClient.Result) -> Void]()
-        
-        struct TaskSpy: HTTPClientTask {
-            var action: () -> Void
-            func cancel() {
-                action()
-            }
-        }
-        
-        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-            requestedURLs.append(url)
-            completions.append(completion)
-            
-            return TaskSpy(action: { [weak self] in
-                self?.cancelledURLs.append(url)
-            })
-        }
-        
-        func completeDogImageLoading(with error: Error, at index: Int = 0) {
-            completions[index](.failure(error))
-        }
-        
-        func completeDogImageLoading(with data: Data, withStatusCode code: Int, at index: Int = 0) {
-            let response = HTTPURLResponse(url: requestedURLs[index], statusCode: code, httpVersion: nil, headerFields: nil)!
-            completions[index](.success((data, response)))
-        }
     }
 }

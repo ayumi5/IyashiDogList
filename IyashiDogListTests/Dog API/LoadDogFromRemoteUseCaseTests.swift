@@ -14,7 +14,7 @@ class LoadDogFromRemoteUseCaseTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
         
-        XCTAssertTrue(client.requestedUrls.isEmpty)
+        XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
     func test_load_requestDataFromURL() {
@@ -23,7 +23,7 @@ class LoadDogFromRemoteUseCaseTests: XCTestCase {
         
         sut.load { _ in }
         
-        XCTAssertEqual(client.requestedUrls, [url])
+        XCTAssertEqual(client.requestedURLs, [url])
     }
     
     func test_loadTwice_requestDataFromURLTwice() {
@@ -33,7 +33,7 @@ class LoadDogFromRemoteUseCaseTests: XCTestCase {
         sut.load { _ in }
         sut.load { _ in }
         
-        XCTAssertEqual(client.requestedUrls, [url, url])
+        XCTAssertEqual(client.requestedURLs, [url, url])
     }
     
     func test_load_deliversErrorOnClientError() {
@@ -141,35 +141,5 @@ class LoadDogFromRemoteUseCaseTests: XCTestCase {
         action()
         
         wait(for: [exp], timeout: 1.0)
-    }
-    
-    private class HTTPClientSpy: HTTPClient {
-        struct TaskSpy: HTTPClientTask {
-            func cancel() {}
-        }
-        
-        var messages =  [(url: URL, completion: (HTTPClient.Result) -> Void)]()
-
-        var requestedUrls: [URL] {
-            return messages.map { $0.url }
-        }
-        
-        func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
-            self.messages.append((url: url, completion: completion))
-            return TaskSpy()
-        }
-        
-        func complete(with error: Error, at index: Int = 0) {
-            self.messages[index].completion(.failure(error))
-        }
-        
-        func complete(withStatusCode code: Int, data: Data = Data(), at index: Int = 0) {
-            let response = HTTPURLResponse(
-                url: self.requestedUrls[index],
-                statusCode: code,
-                httpVersion: nil,
-                headerFields: nil)!
-            self.messages[index].completion(.success((data, response)))
-        }
     }
 }
