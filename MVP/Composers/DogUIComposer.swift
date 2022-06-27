@@ -17,12 +17,32 @@ public final class DogUIComposer {
         let storyboard = UIStoryboard(name: "Dog", bundle: bundle)
         let dogVC = storyboard.instantiateInitialViewController() as! DogViewController
         let dogRefreshVC = dogVC.dogRefreshViewController!
-        let presentationAdapter = DogPresentationAdapter(loader: loader)
+        let presentationAdapter = DogPresentationAdapter(loader: MainQueueDispatchDecorator(decoratee: loader))
         dogRefreshVC.delegate = presentationAdapter
         let presenter = DogPresenter(dogLoadingView: WeakRefVirtualProxy(dogRefreshVC), dogView: DogViewAdapter(controller: dogVC, imageLoader: imageLoader))
         presentationAdapter.dogPresenter = presenter
         
         return dogVC
+    }
+}
+
+private final class MainQueueDispatchDecorator: DogLoader {
+    private let decoratee: DogLoader
+    
+    init(decoratee: DogLoader) {
+        self.decoratee = decoratee
+    }
+    
+    func load(completion: @escaping (DogLoader.Result) -> Void) {
+        decoratee.load { result in
+            if Thread.isMainThread {
+                completion(result)
+            } else {
+                DispatchQueue.main.async {
+                    completion(result)
+                }
+            }
+        }
     }
 }
 
