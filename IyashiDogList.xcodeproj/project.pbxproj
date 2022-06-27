@@ -49,6 +49,7 @@
 		DA8CBDD5286933C5000F147D /* RemoteDogImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CBDD4286933C5000F147D /* RemoteDogImageDataLoader.swift */; };
 		DA8CBDD7286935D7000F147D /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CBDD6286935D7000F147D /* HTTPClientSpy.swift */; };
 		DA8CBDDC28693AC8000F147D /* IyashiDogListTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CBDDB28693AC8000F147D /* IyashiDogListTestHelpers.swift */; };
+		DA8CBDDE28695971000F147D /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CBDDD28695971000F147D /* WeakRefVirtualProxy.swift */; };
 		DAABEF9627C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */; };
 		DAB3871B2844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387262844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
@@ -353,6 +354,7 @@
 		DA8CBDD4286933C5000F147D /* RemoteDogImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDogImageDataLoader.swift; sourceTree = "<group>"; };
 		DA8CBDD6286935D7000F147D /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 		DA8CBDDB28693AC8000F147D /* IyashiDogListTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListTestHelpers.swift; sourceTree = "<group>"; };
+		DA8CBDDD28695971000F147D /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
 		DAABEF9327C32FC20042D23F /* IyashiDogListAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IyashiDogListAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -857,6 +859,7 @@
 			isa = PBXGroup;
 			children = (
 				DAE23EA3285838B5003B1EFB /* UIView+Shimmering.swift */,
+				DA8CBDDD28695971000F147D /* WeakRefVirtualProxy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1519,6 +1522,7 @@
 				DAE23EAD285838B5003B1EFB /* DogUIComposer.swift in Sources */,
 				DA8CBDCC2863F056000F147D /* DogPresentationAdapter.swift in Sources */,
 				DAE23EAB285838B5003B1EFB /* DogViewController.swift in Sources */,
+				DA8CBDDE28695971000F147D /* WeakRefVirtualProxy.swift in Sources */,
 				DA8CBDD02863F147000F147D /* DogImageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
