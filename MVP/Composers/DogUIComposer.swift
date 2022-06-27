@@ -19,28 +19,44 @@ public final class DogUIComposer {
         let dogRefreshVC = dogVC.dogRefreshViewController!
         let presentationAdapter = DogPresentationAdapter(loader: MainQueueDispatchDecorator(decoratee: loader))
         dogRefreshVC.delegate = presentationAdapter
-        let presenter = DogPresenter(dogLoadingView: WeakRefVirtualProxy(dogRefreshVC), dogView: DogViewAdapter(controller: dogVC, imageLoader: imageLoader))
+        let presenter = DogPresenter(dogLoadingView: WeakRefVirtualProxy(dogRefreshVC), dogView: DogViewAdapter(controller: dogVC, imageLoader: MainQueueDispatchDecorator(decoratee: imageLoader)))
         presentationAdapter.dogPresenter = presenter
         
         return dogVC
     }
 }
 
-private final class MainQueueDispatchDecorator: DogLoader {
-    private let decoratee: DogLoader
+private final class MainQueueDispatchDecorator<T> {
+    private let decoratee: T
     
-    init(decoratee: DogLoader) {
+    init(decoratee: T) {
         self.decoratee = decoratee
     }
     
+    func dispatch(completion: @escaping () -> Void) {
+        guard Thread.isMainThread else {
+            return DispatchQueue.main.async(execute: completion)
+        }
+        
+        completion()
+    }
+}
+
+extension MainQueueDispatchDecorator: DogLoader where T == DogLoader {
     func load(completion: @escaping (DogLoader.Result) -> Void) {
-        decoratee.load { result in
-            if Thread.isMainThread {
+        decoratee.load { [weak self] result in
+            self?.dispatch {
                 completion(result)
-            } else {
-                DispatchQueue.main.async {
-                    completion(result)
-                }
+            }
+        }
+    }
+}
+
+extension MainQueueDispatchDecorator: DogImageDataLoader where T == DogImageDataLoader {
+    func loadImageData(from url: URL, completion: @escaping (DogImageDataLoader.Result) -> Void) -> DogImageDataLoaderTask {
+        decoratee.loadImageData(from: url) { [weak self] result in
+            self?.dispatch {
+                completion(result)
             }
         }
     }
