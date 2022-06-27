@@ -12,7 +12,7 @@ import IyashiDogFeature
 class IyashiDogListAPIEndToEndTests: XCTestCase {
     
     func test_endToEndTestServerGETDogResult_matchesFixedData() {
-        let sut = makeSUT()
+        let sut = makeLoader()
         
         switch getDogResult(sut) {
         case let .success(dogs):
@@ -27,6 +27,19 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         }
     }
     
+    func test_endToEndTestServerGETDogImageDataResult_deliversData() {
+        let sut = makeImageLoader()
+        
+        switch getDogImageDataResult(sut) {
+        case let .success(data)?:
+            XCTAssertFalse(data.isEmpty, "Expected non-empty image data")
+        case let .failure(error)?:
+            XCTFail("Expected successful image data result, got \(error) instead")
+        default:
+            XCTFail("Expected successful image data result, got no result instead")
+        }
+    }
+    
     // MARK: - Helpers
     
     private let expectedImageURLStringList = [
@@ -35,13 +48,22 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         "https://images.dog.ceo/breeds/buhund-norwegian/hakon3.jpg"
     ]
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogLoader {
+    private func makeLoader(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogLoader {
         let client = HTTPClientURLSession()
         let url = URL(string: "https://dog.ceo/api/breed/buhund/norwegian/images")!
         let sut = RemoteDogLoader(client: client, url: url)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
         return sut
+    }
+    
+    private func makeImageLoader(file: StaticString = #filePath, line: UInt = #line) -> RemoteDogImageDataLoader {
+        let client = HTTPClientURLSession()
+        let imageLoader = RemoteDogImageDataLoader(client: client)
+        trackForMemoryLeaks(imageLoader, file: file, line: line)
+        trackForMemoryLeaks(client, file: file, line: line)
+        
+        return imageLoader
     }
     
     private func getDogResult(_ sut: RemoteDogLoader) -> DogLoader.Result? {
@@ -51,6 +73,22 @@ class IyashiDogListAPIEndToEndTests: XCTestCase {
         sut.load { result in
             receivedResult = result
             
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 5.0)
+        
+        return receivedResult
+    }
+    
+    private func getDogImageDataResult(_ sut: RemoteDogImageDataLoader) -> DogImageDataLoader.Result? {
+        var receivedResult: DogImageDataLoader.Result?
+        
+        let exp = expectation(description: "Wait for load completion")
+        let imageURL = URL(string: "https://images.dog.ceo/breeds/buhund-norwegian/hakon1.jpg")!
+        
+        _ = sut.loadImageData(from: imageURL) { result in
+            receivedResult = result
             exp.fulfill()
         }
         
