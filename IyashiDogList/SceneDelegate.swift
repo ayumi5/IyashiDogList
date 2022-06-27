@@ -26,18 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func configureWindow() {
+        let rootVC = DogUIComposer.dogComposed(
+            with: makeRemoteDogLoader(),
+            imageLoader: makeRemoteDogImageLoader())
+        rootVC.title = "doggiz 🐕"
         let navigation = UINavigationController(
-            rootViewController:
-                DogUIComposer.dogComposed(
-                    with: makeRemoteDogLoader(),
-                    imageLoader: makeRemoteDogImageLoader()))
+            rootViewController: rootVC)
         window?.rootViewController = navigation
         
         window?.makeKeyAndVisible()
     }
     
     private func makeRemoteDogLoader() -> DogLoader {
-        let remoteURL = URL(string: "https://dog.ceo/api/breed/corgi/images")!
+        let remoteURL = URL(string: "https://dog.ceo/api/breed/labrador/images")!
         
         return RemoteDogLoader(client: httpClient, url: remoteURL)
     }
