@@ -23,6 +23,7 @@ A small app developed with the purpose of practicing the following concepts
 - TDD
 - SOLID principles
 - UI Design Patterns(MVC, MVVM, MVP)
+- CI
 
 ## Built With
 
