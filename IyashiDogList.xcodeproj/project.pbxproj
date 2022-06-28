@@ -57,6 +57,7 @@
 		DAB387272844B2600094C13A /* MVC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAB3872F2844B2CD0094C13A /* IyashiDogFeature.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; };
 		DAB387302844B2CD0094C13A /* IyashiDogFeature.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DADD7694284497EE002FD5EC /* IyashiDogFeature.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DABBDB4B286A8C77002141C4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DABBDB4A286A8C77002141C4 /* Settings.bundle */; };
 		DAC3408B2844AE6600D55E26 /* LocalDogLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */; };
 		DAC3408C2844AE6C00D55E26 /* CoreDataDogStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28727D0AF2F00AD81C0 /* CoreDataDogStore.xcdatamodeld */; };
 		DAC3408D2844AE6E00D55E26 /* CoreDataDogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6AB28A27D0B2BC00AD81C0 /* CoreDataDogStore.swift */; };
@@ -361,6 +362,7 @@
 		DAABEF9527C32FC20042D23F /* IyashiDogListAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IyashiDogListAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB3871A2844B2600094C13A /* MVCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DABBDB4A286A8C77002141C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DAD0BD6D2851A1FC00745D9F /* MVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAD0BD742851A1FC00745D9F /* MVVMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVVMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAD0BD8E2851A30E00745D9F /* UIView+Shimmering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 		DA370B8E278E7170002B2A91 = {
 			isa = PBXGroup;
 			children = (
+				DABBDB4A286A8C77002141C4 /* Settings.bundle */,
 				DA370B99278E7170002B2A91 /* IyashiDogList */,
 				DA370BB0278E7172002B2A91 /* IyashiDogListTests */,
 				DAABEF9427C32FC20042D23F /* IyashiDogListAPIEndToEndTests */,
@@ -1284,6 +1287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABBDB4B286A8C77002141C4 /* Settings.bundle in Resources */,
 				DA370BA7278E7172002B2A91 /* LaunchScreen.storyboard in Resources */,
 				DA370BA4278E7172002B2A91 /* Assets.xcassets in Resources */,
 				DA370BA2278E7170002B2A91 /* Main.storyboard in Resources */,
