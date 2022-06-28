@@ -1,5 +1,6 @@
 <div id="top"></div>
 
+![](https://github.com/ayumi5/IyashiDogList/actions/workflows/CI.yml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- PROJECT LOGO -->
 <br />
