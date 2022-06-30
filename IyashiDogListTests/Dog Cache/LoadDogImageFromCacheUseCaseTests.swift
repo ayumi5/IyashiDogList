@@ -15,6 +15,7 @@ final class LocalDogImageDataLoader {
     private let store: DogImageDataStoreSpy
     
     enum LoadError: Swift.Error {
+        case failed
         case notFound
     }
     
@@ -52,8 +53,8 @@ final class LocalDogImageDataLoader {
                 } else {
                     task.complete(with: .success(data))
                 }
-            case let .failure(error):
-                task.complete(with: .failure(error))
+            case .failure:
+                task.complete(with: .failure(LoadError.failed))
             }
         }
         return task
@@ -77,12 +78,11 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [.retrieve(from: url)])
     }
     
-    func test_loadImageData_failsOnRetrievalError() {
+    func test_loadImageData_deliversFailedErrorOnStoreError() {
         let (sut, store) = makeSUT()
-        let retrievalError = anyNSError()
         
-        expect(sut: sut, toCompleteWith: .failure(retrievalError), when: {
-            store.complete(with: retrievalError)
+        expect(sut: sut, toCompleteWith: failure(.failed), when: {
+            store.complete(with: anyNSError())
         })
     }
     
