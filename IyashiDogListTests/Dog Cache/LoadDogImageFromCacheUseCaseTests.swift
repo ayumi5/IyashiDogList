@@ -45,7 +45,9 @@ final class LocalDogImageDataLoader {
     
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
         let task = LocalDogImageDataLoaderTask(completion: completion)
-        store.retrieve(from: url) { result in
+        store.retrieve(from: url) { [weak self] result in
+            guard self != nil else { return }
+            
             switch result {
             case let .success(data):
                 if data.isEmpty {
@@ -116,6 +118,22 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         store.complete(with: imageData)
         
         XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
+    func test_loadImageData_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = DogImageDataStoreSpy()
+        var sut: LocalDogImageDataLoader? = LocalDogImageDataLoader(store: store)
+        
+        var receivedResult: LocalDogImageDataLoader.Result?
+        _ = sut?.loadImageData(from: anyURL()) { result in
+            receivedResult = result
+        }
+        
+        sut = nil
+        store.complete(with: anyData())
+        
+        XCTAssertNil(receivedResult)
+        
     }
     
     
