@@ -603,12 +603,12 @@
 			isa = PBXGroup;
 			children = (
 				DA60010727CF35CA005553E7 /* Helpers */,
-				DAEE522B286D1F4800422B1A /* LoadDogImageFromCacheUseCaseTests.swift */,
 				DA5FBEE927D5A7D6003B1373 /* DogStoreSpecs.swift */,
-				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
-				DA60010527CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift */,
-				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
 				DA6AB28227D094FC00AD81C0 /* CoreDataDogStoreTests.swift */,
+				DA60010527CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift */,
+				DAEE522B286D1F4800422B1A /* LoadDogImageFromCacheUseCaseTests.swift */,
+				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
+				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";

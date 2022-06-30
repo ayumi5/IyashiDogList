@@ -22,26 +22,41 @@ final class LocalDogImageDataLoader {
         self.store = store
     }
     
-    private struct Task: DogImageDataLoaderTask {
+    private final class LocalDogImageDataLoaderTask: DogImageDataLoaderTask {
+        private var completion: ((Result) -> Void)?
+        
+        init(completion: @escaping (Result) -> Void) {
+            self.completion = completion
+        }
+        
         func cancel() {
+            preventFurtherCompletion()
+        }
+        
+        func complete(with result: Result) {
+            completion?(result)
+        }
+        
+        private func preventFurtherCompletion() {
+            completion = nil
         }
     }
     
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
+        let task = LocalDogImageDataLoaderTask(completion: completion)
         store.retrieve(from: url) { result in
             switch result {
             case let .success(data):
                 if data.isEmpty {
-                    completion(.failure(LoadError.notFound))
+                    task.complete(with: .failure(LoadError.notFound))
                 } else {
-                    completion(.success(data))
+                    task.complete(with: .success(data))
                 }
             case let .failure(error):
-                completion(.failure(error))
-                
+                task.complete(with: .failure(error))
             }
         }
-        return Task()
+        return task
     }
 }
 
@@ -88,6 +103,21 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         })
     }
 
+    func test_cancelLoadImageData_doesNotDeliverResultAfterCancellingTask() {
+        let (sut, store) = makeSUT()
+        
+        var receivedResults = [LocalDogImageDataLoader.Result]()
+        let task = sut.loadImageData(from: anyURL()) { result in
+            receivedResults.append(result)
+        }
+        task.cancel()
+        
+        let imageData = anyData()
+        store.complete(with: imageData)
+        
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
     
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalDogImageDataLoader, store: DogImageDataStoreSpy) {
@@ -134,7 +164,7 @@ class DogImageDataStoreSpy {
         case retrieve(from: URL)
     }
     
-    func retrieve(from url: URL, completion: @escaping RetrievalCompletion) {
+    func retrieve(from url: URL, completion: @escaping RetrievalCompletion){
         messages.append(.retrieve(from: url))
         completions.append(completion)
     }
