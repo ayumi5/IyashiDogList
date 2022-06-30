@@ -10,7 +10,7 @@ import IyashiDogList
 
 class DogImageDataStoreSpy: DogImageStore {
     var messages = [Message]()
-    private var completions = [RetrievalCompletion]()
+    private var retrievalCompletions = [RetrievalCompletion]()
     enum Message: Equatable {
         case retrieve(from: URL)
         case insert(to: URL)
@@ -22,19 +22,19 @@ class DogImageDataStoreSpy: DogImageStore {
     
     func retrieve(from url: URL, completion: @escaping RetrievalCompletion){
         messages.append(.retrieve(from: url))
-        completions.append(completion)
+        retrievalCompletions.append(completion)
     }
     
-    func complete(with error: Error, at index: Int = 0) {
-        completions[index](.failure(error))
+    func completeRetrieval(with error: Error, at index: Int = 0) {
+        retrievalCompletions[index](.failure(error))
     }
     
-    func completeWithEmptyCache(at index: Int = 0) {
+    func completeRetrievalWithEmptyCache(at index: Int = 0) {
         let emptyData = Data()
-        completions[index](.success(emptyData))
+        retrievalCompletions[index](.success(emptyData))
     }
     
-    func complete(with data: Data, at index: Int = 0) {
-        completions[index](.success(data))
+    func completeRetrieval(with data: Data, at index: Int = 0) {
+        retrievalCompletions[index](.success(data))
     }
 }

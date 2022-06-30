@@ -30,7 +30,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         expect(sut: sut, toCompleteWith: failure(.failed), when: {
-            store.complete(with: anyNSError())
+            store.completeRetrieval(with: anyNSError())
         })
     }
     
@@ -38,7 +38,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         expect(sut: sut, toCompleteWith: failure(.notFound), when: {
-            store.completeWithEmptyCache()
+            store.completeRetrievalWithEmptyCache()
         })
     }
     
@@ -47,7 +47,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let imageData = anyData()
         
         expect(sut: sut, toCompleteWith: .success(imageData), when: {
-            store.complete(with: imageData)
+            store.completeRetrieval(with: imageData)
         })
     }
 
@@ -61,7 +61,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         task.cancel()
         
         let imageData = anyData()
-        store.complete(with: imageData)
+        store.completeRetrieval(with: imageData)
         
         XCTAssertTrue(receivedResults.isEmpty)
     }
@@ -76,7 +76,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         }
         
         sut = nil
-        store.complete(with: anyData())
+        store.completeRetrieval(with: anyData())
         
         XCTAssertNil(receivedResult)
         
