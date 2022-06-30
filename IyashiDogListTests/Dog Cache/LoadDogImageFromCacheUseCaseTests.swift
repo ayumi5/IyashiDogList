@@ -9,7 +9,7 @@ import XCTest
 import IyashiDogList
 import IyashiDogFeature
 
-private final class LocalDogImageDataLoader {
+final class LocalDogImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
 
     private let store: DogImageDataStoreSpy
@@ -24,7 +24,7 @@ private final class LocalDogImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
-        store.retrieve(from: url)
+        store.retrieve(from: url, completion: completion)
         return Task()
     }
 }
@@ -45,6 +45,26 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         
         XCTAssertEqual(store.messages, [.retrieve(from: url)])
     }
+    
+    func test_loadImageData_failsOnRetrievalError() {
+        let (sut, store) = makeSUT()
+        let retrievalError = anyNSError()
+        
+        let exp = expectation(description: "Wait for load completion")
+        _ = sut.loadImageData(from: anyURL()) { result in
+            switch result {
+            case let .failure(error as NSError):
+                XCTAssertEqual(error, retrievalError)
+            default:
+                XCTFail("Expected failure with \(retrievalError), got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        
+        store.complete(with: retrievalError)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
 
     
     // MARK: - Helpers
@@ -60,12 +80,19 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
 }
 
 class DogImageDataStoreSpy {
+    typealias RetrievalCompletion = (LocalDogImageDataLoader.Result) -> Void
     var messages = [Message]()
+    private var completions = [RetrievalCompletion]()
     enum Message: Equatable {
         case retrieve(from: URL)
     }
     
-    func retrieve(from url: URL) {
+    func retrieve(from url: URL, completion: @escaping RetrievalCompletion) {
         messages.append(.retrieve(from: url))
+        completions.append(completion)
+    }
+    
+    func complete(with error: Error, at index: Int = 0) {
+        completions[index](.failure(error))
     }
 }
