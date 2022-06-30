@@ -9,6 +9,12 @@ import XCTest
 import IyashiDogList
 import IyashiDogFeature
 
+protocol DogImageStore {
+    typealias RetrievalCompletion = (DogImageDataLoader.Result) -> Void
+    
+    func retrieve(from url: URL, completion: @escaping RetrievalCompletion)
+}
+
 final class LocalDogImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
 
@@ -174,7 +180,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
 
 }
 
-class DogImageDataStoreSpy {
+class DogImageDataStoreSpy: DogImageStore {
     typealias RetrievalCompletion = (LocalDogImageDataLoader.Result) -> Void
     var messages = [Message]()
     private var completions = [RetrievalCompletion]()
