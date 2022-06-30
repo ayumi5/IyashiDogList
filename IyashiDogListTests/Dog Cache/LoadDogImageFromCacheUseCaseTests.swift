@@ -31,7 +31,7 @@ private final class LocalDogImageDataLoader {
 
 class LoadDogImageFromCacheUseCaseTests: XCTestCase {
     
-    func test_init_doesMessageStore() {
+    func test_init_doesNotMessageStore() {
         let (_, store) = makeSUT()
         
         XCTAssertEqual(store.messages, [])
