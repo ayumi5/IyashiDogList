@@ -30,8 +30,12 @@ final class LocalDogImageDataLoader {
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
         store.retrieve(from: url) { result in
             switch result {
-            case .success:
-                completion(.failure(RetrievalError.notFound))
+            case let .success(data):
+                if data.isEmpty {
+                    completion(.failure(RetrievalError.notFound))
+                } else {
+                    completion(.success(data))
+                }
             case let .failure(error):
                 completion(.failure(error))
                 
@@ -67,11 +71,20 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         })
     }
     
-    func test_loadImageData_deliversNotFoundErrorWithEmptyCache() {
+    func test_loadImageData_deliversNotFoundErrorOnEmptyCache() {
         let (sut, store) = makeSUT()
         
         expect(sut: sut, toCompleteWith: failure(.notFound), when: {
             store.completeWithEmptyCache()
+        })
+    }
+    
+    func test_loadImageData_deliversDataForURLOnFoundData() {
+        let (sut, store) = makeSUT()
+        let imageData = anyData()
+        
+        expect(sut: sut, toCompleteWith: .success(imageData), when: {
+            store.complete(with: imageData)
         })
     }
 
@@ -133,5 +146,9 @@ class DogImageDataStoreSpy {
     func completeWithEmptyCache(at index: Int = 0) {
         let emptyData = Data()
         completions[index](.success(emptyData))
+    }
+    
+    func complete(with data: Data, at index: Int = 0) {
+        completions[index](.success(data))
     }
 }
