@@ -62,38 +62,17 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         let retrievalError = anyNSError()
         
-        let exp = expectation(description: "Wait for load completion")
-        _ = sut.loadImageData(from: anyURL()) { result in
-            switch result {
-            case let .failure(error as NSError):
-                XCTAssertEqual(error, retrievalError)
-            default:
-                XCTFail("Expected failure with \(retrievalError), got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        store.complete(with: retrievalError)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut: sut, toCompleteWith: .failure(retrievalError), when: {
+            store.complete(with: retrievalError)
+        })
     }
     
     func test_loadImageData_deliversNotFoundErrorWithEmptyCache() {
         let (sut, store) = makeSUT()
         
-        let exp = expectation(description: "Wait for load completion")
-        _ = sut.loadImageData(from: anyURL()) { result in
-            switch result {
-            case let .failure(error as NSError):
-                XCTAssertEqual(error, LocalDogImageDataLoader.RetrievalError.notFound as NSError)
-            default:
-                XCTFail("Expected failure with not found error, got \(result) instead")
-            }
-            exp.fulfill()
-        }
-        
-        store.completeWithEmptyCache()
-        wait(for: [exp], timeout: 1.0)
+        expect(sut: sut, toCompleteWith: failure(.notFound), when: {
+            store.completeWithEmptyCache()
+        })
     }
 
     
@@ -107,6 +86,31 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
+    private func expect(sut: LocalDogImageDataLoader, toCompleteWith expectedResult: LocalDogImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load image data completion")
+        
+        _ = sut.loadImageData(from: anyURL()) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(String(describing: receivedResult)) instead", file: file, line: line)
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func failure(_ error: LocalDogImageDataLoader.RetrievalError) -> LocalDogImageDataLoader.Result {
+        .failure(error)
+    }
+
 }
 
 class DogImageDataStoreSpy {
