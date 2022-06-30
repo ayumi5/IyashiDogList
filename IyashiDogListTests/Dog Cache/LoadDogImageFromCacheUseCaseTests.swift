@@ -15,9 +15,7 @@ protocol DogImageStore {
     func retrieve(from url: URL, completion: @escaping RetrievalCompletion)
 }
 
-final class LocalDogImageDataLoader {
-    typealias Result = Swift.Result<Data, Error>
-
+final class LocalDogImageDataLoader: DogImageDataLoader {
     private let store: DogImageDataStoreSpy
     
     enum LoadError: Swift.Error {
@@ -30,9 +28,9 @@ final class LocalDogImageDataLoader {
     }
     
     private final class LocalDogImageDataLoaderTask: DogImageDataLoaderTask {
-        private var completion: ((Result) -> Void)?
+        private var completion: ((DogImageDataLoader.Result) -> Void)?
         
-        init(completion: @escaping (Result) -> Void) {
+        init(completion: @escaping (DogImageDataLoader.Result) -> Void) {
             self.completion = completion
         }
         
@@ -40,7 +38,7 @@ final class LocalDogImageDataLoader {
             preventFurtherCompletion()
         }
         
-        func complete(with result: Result) {
+        func complete(with result: DogImageDataLoader.Result) {
             completion?(result)
         }
         
@@ -49,7 +47,7 @@ final class LocalDogImageDataLoader {
         }
     }
     
-    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
+    func loadImageData(from url: URL, completion: @escaping (DogImageDataLoader.Result) -> Void) -> DogImageDataLoaderTask {
         let task = LocalDogImageDataLoaderTask(completion: completion)
         store.retrieve(from: url) { [weak self] result in
             guard self != nil else { return }
@@ -114,7 +112,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
     func test_cancelLoadImageData_doesNotDeliverResultAfterCancellingTask() {
         let (sut, store) = makeSUT()
         
-        var receivedResults = [LocalDogImageDataLoader.Result]()
+        var receivedResults = [DogImageDataLoader.Result]()
         let task = sut.loadImageData(from: anyURL()) { result in
             receivedResults.append(result)
         }
@@ -130,7 +128,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let store = DogImageDataStoreSpy()
         var sut: LocalDogImageDataLoader? = LocalDogImageDataLoader(store: store)
         
-        var receivedResult: LocalDogImageDataLoader.Result?
+        var receivedResult: DogImageDataLoader.Result?
         _ = sut?.loadImageData(from: anyURL()) { result in
             receivedResult = result
         }
@@ -153,7 +151,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(sut: LocalDogImageDataLoader, toCompleteWith expectedResult: LocalDogImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(sut: DogImageDataLoader, toCompleteWith expectedResult: DogImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for load image data completion")
         
         _ = sut.loadImageData(from: anyURL()) { receivedResult in
@@ -174,14 +172,13 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func failure(_ error: LocalDogImageDataLoader.LoadError) -> LocalDogImageDataLoader.Result {
+    private func failure(_ error: LocalDogImageDataLoader.LoadError) -> DogImageDataLoader.Result {
         .failure(error)
     }
 
 }
 
 class DogImageDataStoreSpy: DogImageStore {
-    typealias RetrievalCompletion = (LocalDogImageDataLoader.Result) -> Void
     var messages = [Message]()
     private var completions = [RetrievalCompletion]()
     enum Message: Equatable {
