@@ -7,12 +7,25 @@
 
 import XCTest
 import IyashiDogList
+import IyashiDogFeature
 
 private final class LocalDogImageDataLoader {
+    typealias Result = Swift.Result<Data, Error>
+
     private let store: DogImageDataStoreSpy
     
     init(store: DogImageDataStoreSpy) {
         self.store = store
+    }
+    
+    private struct Task: DogImageDataLoaderTask {
+        func cancel() {
+        }
+    }
+    
+    func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
+        store.retrieve(from: url)
+        return Task()
     }
 }
 
@@ -22,6 +35,15 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         let (_, store) = makeSUT()
         
         XCTAssertEqual(store.messages, [])
+    }
+    
+    func test_loadImageData_requestsDogImageCacheRetrievalFromURL() {
+        let (sut, store) = makeSUT()
+        let url = anyURL()
+        
+        _ = sut.loadImageData(from: url) { _ in }
+        
+        XCTAssertEqual(store.messages, [.retrieve(from: url)])
     }
 
     
@@ -40,5 +62,10 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
 class DogImageDataStoreSpy {
     var messages = [Message]()
     enum Message: Equatable {
+        case retrieve(from: URL)
+    }
+    
+    func retrieve(from url: URL) {
+        messages.append(.retrieve(from: url))
     }
 }
