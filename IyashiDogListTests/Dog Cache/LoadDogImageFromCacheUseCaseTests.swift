@@ -14,7 +14,7 @@ final class LocalDogImageDataLoader {
 
     private let store: DogImageDataStoreSpy
     
-    enum RetrievalError: Swift.Error {
+    enum LoadError: Swift.Error {
         case notFound
     }
     
@@ -32,7 +32,7 @@ final class LocalDogImageDataLoader {
             switch result {
             case let .success(data):
                 if data.isEmpty {
-                    completion(.failure(RetrievalError.notFound))
+                    completion(.failure(LoadError.notFound))
                 } else {
                     completion(.success(data))
                 }
@@ -120,7 +120,7 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func failure(_ error: LocalDogImageDataLoader.RetrievalError) -> LocalDogImageDataLoader.Result {
+    private func failure(_ error: LocalDogImageDataLoader.LoadError) -> LocalDogImageDataLoader.Result {
         .failure(error)
     }
 
