@@ -58,4 +58,8 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
         }
         return task
     }
+    
+    public func saveImageData(to url: URL) {
+        store.insert(to: url)
+    }
 }

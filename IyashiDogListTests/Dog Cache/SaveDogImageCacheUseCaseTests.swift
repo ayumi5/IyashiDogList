@@ -16,6 +16,15 @@ class SaveDogImageCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.messages, [])
     }
     
+    func test_saveImageData_requestsInsertion() {
+        let (sut, store) = makeSUT()
+        let url = anyURL()
+        
+        sut.saveImageData(to: url)
+        
+        XCTAssertEqual(store.messages, [.insert(to: url)])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalDogImageDataLoader, store: DogImageDataStoreSpy) {
         let store = DogImageDataStoreSpy()

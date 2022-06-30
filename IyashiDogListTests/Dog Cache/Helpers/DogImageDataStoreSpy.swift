@@ -13,6 +13,11 @@ class DogImageDataStoreSpy: DogImageStore {
     private var completions = [RetrievalCompletion]()
     enum Message: Equatable {
         case retrieve(from: URL)
+        case insert(to: URL)
+    }
+    
+    func insert(to url: URL) {
+        messages.append(.insert(to: url))
     }
     
     func retrieve(from url: URL, completion: @escaping RetrievalCompletion){
