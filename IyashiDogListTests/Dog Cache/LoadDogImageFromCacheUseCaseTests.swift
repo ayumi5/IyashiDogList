@@ -14,6 +14,10 @@ final class LocalDogImageDataLoader {
 
     private let store: DogImageDataStoreSpy
     
+    enum RetrievalError: Swift.Error {
+        case notFound
+    }
+    
     init(store: DogImageDataStoreSpy) {
         self.store = store
     }
@@ -24,7 +28,15 @@ final class LocalDogImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> DogImageDataLoaderTask {
-        store.retrieve(from: url, completion: completion)
+        store.retrieve(from: url) { result in
+            switch result {
+            case .success:
+                completion(.failure(RetrievalError.notFound))
+            case let .failure(error):
+                completion(.failure(error))
+                
+            }
+        }
         return Task()
     }
 }
@@ -65,6 +77,24 @@ class LoadDogImageFromCacheUseCaseTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    func test_loadImageData_deliversNotFoundErrorWithEmptyCache() {
+        let (sut, store) = makeSUT()
+        
+        let exp = expectation(description: "Wait for load completion")
+        _ = sut.loadImageData(from: anyURL()) { result in
+            switch result {
+            case let .failure(error as NSError):
+                XCTAssertEqual(error, LocalDogImageDataLoader.RetrievalError.notFound as NSError)
+            default:
+                XCTFail("Expected failure with not found error, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        
+        store.completeWithEmptyCache()
+        wait(for: [exp], timeout: 1.0)
+    }
 
     
     // MARK: - Helpers
@@ -94,5 +124,10 @@ class DogImageDataStoreSpy {
     
     func complete(with error: Error, at index: Int = 0) {
         completions[index](.failure(error))
+    }
+    
+    func completeWithEmptyCache(at index: Int = 0) {
+        let emptyData = Data()
+        completions[index](.success(emptyData))
     }
 }
