@@ -55,6 +55,7 @@
 		DAADB648286D51070097DB55 /* DogImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADB647286D51070097DB55 /* DogImageStore.swift */; };
 		DAADB64A286D51670097DB55 /* LocalDogImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADB649286D51670097DB55 /* LocalDogImageDataLoader.swift */; };
 		DAADB64C286D523D0097DB55 /* DogImageDataStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADB64B286D523D0097DB55 /* DogImageDataStoreSpy.swift */; };
+		DAADB64E286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADB64D286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift */; };
 		DAB3871B2844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387262844B2600094C13A /* MVC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; };
 		DAB387272844B2600094C13A /* MVC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB387132844B2600094C13A /* MVC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -367,6 +368,7 @@
 		DAADB647286D51070097DB55 /* DogImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageStore.swift; sourceTree = "<group>"; };
 		DAADB649286D51670097DB55 /* LocalDogImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDogImageDataLoader.swift; sourceTree = "<group>"; };
 		DAADB64B286D523D0097DB55 /* DogImageDataStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageDataStoreSpy.swift; sourceTree = "<group>"; };
+		DAADB64D286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDogImageCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		DAB387132844B2600094C13A /* MVC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MVC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB3871A2844B2600094C13A /* MVCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MVCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABBDB4A286A8C77002141C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -615,6 +617,7 @@
 				DAEE522B286D1F4800422B1A /* LoadDogImageFromCacheUseCaseTests.swift */,
 				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
 				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
+				DAADB64D286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -1430,6 +1433,7 @@
 				DA6AB28327D094FD00AD81C0 /* CoreDataDogStoreTests.swift in Sources */,
 				DAADB64C286D523D0097DB55 /* DogImageDataStoreSpy.swift in Sources */,
 				DAF57E392795618B00DB7F93 /* HTTPClientURLSessionTests.swift in Sources */,
+				DAADB64E286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift in Sources */,
 				DA60010927CF35DA005553E7 /* DogStoreSpy.swift in Sources */,
 				DA2BFAF827D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift in Sources */,
 				DAECA27F279E860400BE577C /* XCTestCase+MemoryLeakTracking.swift in Sources */,
