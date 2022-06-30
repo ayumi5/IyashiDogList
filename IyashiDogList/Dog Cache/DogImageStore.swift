@@ -9,7 +9,9 @@ import IyashiDogFeature
 import Foundation
 
 public protocol DogImageStore {
-    typealias RetrievalCompletion = (DogImageDataLoader.Result) -> Void
+    typealias Result = Swift.Result<Data, Error>
+    
+    typealias RetrievalCompletion = (Result) -> Void
     
     func retrieve(from url: URL, completion: @escaping RetrievalCompletion)
     func insert(to url: URL)
