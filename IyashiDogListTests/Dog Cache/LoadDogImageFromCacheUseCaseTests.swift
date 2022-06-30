@@ -9,64 +9,6 @@ import XCTest
 import IyashiDogList
 import IyashiDogFeature
 
-protocol DogImageStore {
-    typealias RetrievalCompletion = (DogImageDataLoader.Result) -> Void
-    
-    func retrieve(from url: URL, completion: @escaping RetrievalCompletion)
-}
-
-final class LocalDogImageDataLoader: DogImageDataLoader {
-    private let store: DogImageDataStoreSpy
-    
-    enum LoadError: Swift.Error {
-        case failed
-        case notFound
-    }
-    
-    init(store: DogImageDataStoreSpy) {
-        self.store = store
-    }
-    
-    private final class LocalDogImageDataLoaderTask: DogImageDataLoaderTask {
-        private var completion: ((DogImageDataLoader.Result) -> Void)?
-        
-        init(completion: @escaping (DogImageDataLoader.Result) -> Void) {
-            self.completion = completion
-        }
-        
-        func cancel() {
-            preventFurtherCompletion()
-        }
-        
-        func complete(with result: DogImageDataLoader.Result) {
-            completion?(result)
-        }
-        
-        private func preventFurtherCompletion() {
-            completion = nil
-        }
-    }
-    
-    func loadImageData(from url: URL, completion: @escaping (DogImageDataLoader.Result) -> Void) -> DogImageDataLoaderTask {
-        let task = LocalDogImageDataLoaderTask(completion: completion)
-        store.retrieve(from: url) { [weak self] result in
-            guard self != nil else { return }
-            
-            switch result {
-            case let .success(data):
-                if data.isEmpty {
-                    task.complete(with: .failure(LoadError.notFound))
-                } else {
-                    task.complete(with: .success(data))
-                }
-            case .failure:
-                task.complete(with: .failure(LoadError.failed))
-            }
-        }
-        return task
-    }
-}
-
 class LoadDogImageFromCacheUseCaseTests: XCTestCase {
     
     func test_init_doesNotMessageStore() {
