@@ -67,7 +67,8 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
     }
     
     public func saveImageData(_ data: Data, to url: URL, completion: @escaping (SaveResult) -> Void) {
-        store.insert(data, to: url) { result in
+        store.insert(data, to: url) { [weak self] result in
+            guard self != nil else { return }
             switch result {
             case .success:
                 completion(.success(()))

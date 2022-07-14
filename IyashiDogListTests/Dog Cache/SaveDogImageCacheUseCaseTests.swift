@@ -51,6 +51,20 @@ class SaveDogImageCacheUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
+    func test_saveImageData_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = DogImageDataStoreSpy()
+        var sut: LocalDogImageDataLoader? = LocalDogImageDataLoader(store: store)
+        
+        var receivedResult: DogImageStore.InsertionResult?
+        sut?.saveImageData(anyData(), to: anyURL()) { receivedResult = $0 }
+        
+        sut = nil
+        
+        store.completeInsertion(with: anyNSError())
+        
+        XCTAssertNil(receivedResult)
+    }
+    
     private func expect(sut: LocalDogImageDataLoader, toCompleteWith expectedResult: DogImageStore.InsertionResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for saving")
         sut.saveImageData(anyData(), to: anyURL()) { receivedResult in
