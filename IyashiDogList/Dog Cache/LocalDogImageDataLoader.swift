@@ -8,23 +8,22 @@
 import Foundation
 import IyashiDogFeature
 
-public final class LocalDogImageDataLoader: DogImageDataLoader {
-    public typealias LoadResult = DogImageDataLoader.Result
-    public typealias SaveResult = Swift.Result<Void, Error>
+public final class LocalDogImageDataLoader{
 
     private let store: DogImageStore
+    
+    public init(store: DogImageStore) {
+        self.store = store
+    }
+}
+
+// MARK: - Load
+extension LocalDogImageDataLoader: DogImageDataLoader {
+    public typealias LoadResult = DogImageDataLoader.Result
     
     public enum LoadError: Swift.Error {
         case failed
         case notFound
-    }
-    
-    public enum SaveError: Swift.Error {
-        case failed
-    }
-    
-    public init(store: DogImageStore) {
-        self.store = store
     }
     
     private final class LocalDogImageDataLoaderTask: DogImageDataLoaderTask {
@@ -64,6 +63,17 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
             }
         }
         return task
+    }
+}
+
+
+// MARK: - Save
+extension LocalDogImageDataLoader {
+    
+    public typealias SaveResult = Swift.Result<Void, Error>
+    
+    public enum SaveError: Swift.Error {
+        case failed
     }
     
     public func saveImageData(_ data: Data, to url: URL, completion: @escaping (SaveResult) -> Void) {
