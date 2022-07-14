@@ -587,11 +587,11 @@
 			isa = PBXGroup;
 			children = (
 				DA370BCF278EB7EF002B2A91 /* RemoteDogLoader.swift */,
+				DA8CBDD4286933C5000F147D /* RemoteDogImageDataLoader.swift */,
 				DA7E75BB27925F1C0072DDCA /* HTTPClient.swift */,
-				DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */,
 				DAECA280279E97E000BE577C /* HTTPClientURLSession.swift */,
 				DA60010327CF2DBB005553E7 /* RemoteDog.swift */,
-				DA8CBDD4286933C5000F147D /* RemoteDogImageDataLoader.swift */,
+				DAF57E3627955E5200DB7F93 /* DogItemsMapper.swift */,
 			);
 			path = DogAPI;
 			sourceTree = "<group>";
@@ -616,8 +616,8 @@
 				DA60010527CF2FA7005553E7 /* LoadDogFromCacheUseCaseTests.swift */,
 				DAEE522B286D1F4800422B1A /* LoadDogImageFromCacheUseCaseTests.swift */,
 				DA43BD1927C9EEC3006F97B0 /* SaveDogCacheUseCaseTests.swift */,
-				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
 				DAADB64D286D7AC30097DB55 /* SaveDogImageCacheUseCaseTests.swift */,
+				DA2BFAF727D056B300EBEAFF /* ValidateDogCacheUseCaseTests.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
@@ -653,11 +653,11 @@
 			children = (
 				DAFC90E227D342A300D450C6 /* Infrastructure */,
 				DA6000FD27CEFC17005553E7 /* LocalDogLoader.swift */,
+				DAADB649286D51670097DB55 /* LocalDogImageDataLoader.swift */,
 				DA6000FF27CEFCD2005553E7 /* DogStore.swift */,
+				DAADB647286D51070097DB55 /* DogImageStore.swift */,
 				DA60010127CF1775005553E7 /* LocalDog.swift */,
 				DA6AB28027D090F400AD81C0 /* DogCachePolicy.swift */,
-				DAADB647286D51070097DB55 /* DogImageStore.swift */,
-				DAADB649286D51670097DB55 /* LocalDogImageDataLoader.swift */,
 			);
 			path = "Dog Cache";
 			sourceTree = "<group>";
