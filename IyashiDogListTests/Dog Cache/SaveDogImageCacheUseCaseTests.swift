@@ -20,7 +20,7 @@ class SaveDogImageCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         let url = anyURL()
         
-        sut.saveImageData(to: url) { _ in }
+        sut.saveImageData(anyData(), to: url) { _ in }
         
         XCTAssertEqual(store.messages, [.insert(to: url)])
     }
@@ -30,6 +30,14 @@ class SaveDogImageCacheUseCaseTests: XCTestCase {
         
         expect(sut: sut, toCompleteWith: failure(.failed), when: {
             store.completeInsertion(with: anyNSError())
+        })
+    }
+    
+    func test_saveImageData_succeedsOnSuccessfulInsertion() {
+        let (sut, store) = makeSUT()
+        
+        expect(sut: sut, toCompleteWith: .success(()), when: {
+            store.completeInsertionSuccessfully(at: 0)
         })
     }
     
@@ -45,7 +53,7 @@ class SaveDogImageCacheUseCaseTests: XCTestCase {
     
     private func expect(sut: LocalDogImageDataLoader, toCompleteWith expectedResult: DogImageStore.InsertionResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for saving")
-        sut.saveImageData(to: anyURL()) { receivedResult in
+        sut.saveImageData(anyData(), to: anyURL()) { receivedResult in
             switch (receivedResult, expectedResult) {
             case (.success, .success): break
             case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):

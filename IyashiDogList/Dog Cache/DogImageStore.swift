@@ -16,5 +16,5 @@ public protocol DogImageStore {
     typealias InsertionCompletion = (InsertionResult) -> Void
     
     func retrieve(from url: URL, completion: @escaping RetrievalCompletion)
-    func insert(to url: URL, completion: @escaping InsertionCompletion)
+    func insert(_ data: Data, to url: URL, completion: @escaping InsertionCompletion)
 }

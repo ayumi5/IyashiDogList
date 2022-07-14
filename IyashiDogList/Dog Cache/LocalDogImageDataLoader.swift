@@ -66,12 +66,13 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
         return task
     }
     
-    public func saveImageData(to url: URL, completion: @escaping (SaveResult) -> Void) {
-        store.insert(to: url) { result in
+    public func saveImageData(_ data: Data, to url: URL, completion: @escaping (SaveResult) -> Void) {
+        store.insert(data, to: url) { result in
             switch result {
+            case .success:
+                completion(.success(()))
             case .failure:
                 completion(.failure(SaveError.failed))
-            default: break
             }
         }
     }
