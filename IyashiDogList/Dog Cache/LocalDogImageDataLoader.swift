@@ -9,6 +9,9 @@ import Foundation
 import IyashiDogFeature
 
 public final class LocalDogImageDataLoader: DogImageDataLoader {
+    public typealias LoadResult = DogImageDataLoader.Result
+    public typealias SaveResult = Swift.Result<Void, Error>
+
     private let store: DogImageStore
     
     public enum LoadError: Swift.Error {
@@ -16,14 +19,18 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
         case notFound
     }
     
+    public enum SaveError: Swift.Error {
+        case failed
+    }
+    
     public init(store: DogImageStore) {
         self.store = store
     }
     
     private final class LocalDogImageDataLoaderTask: DogImageDataLoaderTask {
-        private var completion: ((DogImageDataLoader.Result) -> Void)?
+        private var completion: ((LoadResult) -> Void)?
         
-        init(completion: @escaping (DogImageDataLoader.Result) -> Void) {
+        init(completion: @escaping (LoadResult) -> Void) {
             self.completion = completion
         }
         
@@ -31,7 +38,7 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
             preventFurtherCompletion()
         }
         
-        func complete(with result: DogImageDataLoader.Result) {
+        func complete(with result: LoadResult) {
             completion?(result)
         }
         
@@ -40,7 +47,7 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
         }
     }
     
-    public func loadImageData(from url: URL, completion: @escaping (DogImageDataLoader.Result) -> Void) -> DogImageDataLoaderTask {
+    public func loadImageData(from url: URL, completion: @escaping (LoadResult) -> Void) -> DogImageDataLoaderTask {
         let task = LocalDogImageDataLoaderTask(completion: completion)
         store.retrieve(from: url) { [weak self] result in
             guard self != nil else { return }
@@ -59,7 +66,13 @@ public final class LocalDogImageDataLoader: DogImageDataLoader {
         return task
     }
     
-    public func saveImageData(to url: URL) {
-        store.insert(to: url)
+    public func saveImageData(to url: URL, completion: @escaping (SaveResult) -> Void) {
+        store.insert(to: url) { result in
+            switch result {
+            case .failure:
+                completion(.failure(SaveError.failed))
+            default: break
+            }
+        }
     }
 }
