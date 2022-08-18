@@ -11,7 +11,7 @@
 <h3 align="center">Iyashi Dog List</h3>
 
   <p align="center">
-    Display a list of cute doggie images for Iyashi🐶
+    Display a list of cute doggie images for Iyashi (comfort)🐶
   </p>
 </div>
 
